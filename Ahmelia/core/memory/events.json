@@ -1,0 +1,3313 @@
+{
+  "events": [
+    {
+      "action": "create_file",
+      "target": "",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "confirmed",
+        "Category": "test_production_verified",
+        "Reason": "test production verified"
+      },
+      "metadata": {
+        "objective": "Empieza creando un programa base para el juego de supervivencia.",
+        "skill_id": "software.development",
+        "capability_id": "programming.create_file",
+        "instrument_id": "programming",
+        "work_id": "work_1792085896738528700_5",
+        "attempt_number": 1
+      },
+      "timestamp": "2026-10-15T12:38:16.7524306-05:00",
+      "session_id": "work_1792085896738528700_5",
+      "experience_id": "work:work_1792085896738528700_5:attempt:1"
+    },
+    {
+      "action": "create_file",
+      "target": "",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "confirmed",
+        "Category": "production_result",
+        "Reason": "resultado de producción evaluado por el proveedor de programación"
+      },
+      "metadata": {
+        "objective": "Quiero crear un programa Go llamado alfa",
+        "skill_id": "software.development",
+        "capability_id": "programming.create_file",
+        "instrument_id": "programming",
+        "target_environment": "C:\\Users\\User\\AppData\\Local\\Temp\\TestB9630E2E_CorrectionPreservesConversationContinuity778172333\\001\\workspace",
+        "verification_profile": "build[go build ./...]=success;tests[go test ./...]=passed",
+        "work_id": "work_1792085931718633300_12",
+        "attempt_number": 1,
+        "verification_source": "programming",
+        "observation_details": "el proveedor de programación confirmó el estado de producción mediante su evidencia de construcción/pruebas disponible"
+      },
+      "timestamp": "2026-10-15T12:38:54.0784349-05:00",
+      "session_id": "work_1792085931718633300_12",
+      "experience_id": "work:work_1792085931718633300_12:attempt:1"
+    },
+    {
+      "action": "create_file",
+      "target": "",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "confirmed",
+        "Category": "production_result",
+        "Reason": "resultado de producción evaluado por el proveedor de programación"
+      },
+      "metadata": {
+        "objective": "beta",
+        "skill_id": "software.development",
+        "capability_id": "programming.create_file",
+        "instrument_id": "programming",
+        "target_environment": "C:\\Users\\User\\AppData\\Local\\Temp\\TestB9630E2E_CorrectionPreservesConversationContinuity778172333\\001\\beta",
+        "verification_profile": "build[go build ./...]=success;tests[go test ./...]=passed",
+        "work_id": "work_1792085931718633300_12",
+        "attempt_number": 2,
+        "verification_source": "programming",
+        "observation_details": "el proveedor de programación confirmó el estado de producción mediante su evidencia de construcción/pruebas disponible"
+      },
+      "timestamp": "2026-10-15T12:38:56.9676023-05:00",
+      "session_id": "work_1792085931718633300_12",
+      "experience_id": "work:work_1792085931718633300_12:attempt:2"
+    },
+    {
+      "action": "create_file",
+      "target": "",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "confirmed",
+        "Category": "test_production_verified",
+        "Reason": "test production verified"
+      },
+      "metadata": {
+        "objective": "Empieza creando un programa base para el juego de supervivencia.",
+        "skill_id": "software.development",
+        "capability_id": "programming.create_file",
+        "instrument_id": "programming",
+        "work_id": "work_1792087623863145400_5",
+        "attempt_number": 1
+      },
+      "timestamp": "2026-10-15T13:07:03.8750994-05:00",
+      "session_id": "work_1792087623863145400_5",
+      "experience_id": "work:work_1792087623863145400_5:attempt:1"
+    },
+    {
+      "action": "create_file",
+      "target": "",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "confirmed",
+        "Category": "production_result",
+        "Reason": "resultado de producción evaluado por el proveedor de programación"
+      },
+      "metadata": {
+        "objective": "Quiero crear un programa Go llamado alfa",
+        "skill_id": "software.development",
+        "capability_id": "programming.create_file",
+        "instrument_id": "programming",
+        "target_environment": "C:\\Users\\User\\AppData\\Local\\Temp\\TestB9630E2E_CorrectionPreservesConversationContinuity769330098\\001\\workspace",
+        "verification_profile": "build[go build ./...]=success;tests[go test ./...]=passed",
+        "work_id": "work_1792087650065971600_12",
+        "attempt_number": 1,
+        "verification_source": "programming",
+        "observation_details": "el proveedor de programación confirmó el estado de producción mediante su evidencia de construcción/pruebas disponible"
+      },
+      "timestamp": "2026-10-15T13:07:30.790328-05:00",
+      "session_id": "work_1792087650065971600_12",
+      "experience_id": "work:work_1792087650065971600_12:attempt:1"
+    },
+    {
+      "action": "create_file",
+      "target": "",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "confirmed",
+        "Category": "production_result",
+        "Reason": "resultado de producción evaluado por el proveedor de programación"
+      },
+      "metadata": {
+        "objective": "beta",
+        "skill_id": "software.development",
+        "capability_id": "programming.create_file",
+        "instrument_id": "programming",
+        "target_environment": "C:\\Users\\User\\AppData\\Local\\Temp\\TestB9630E2E_CorrectionPreservesConversationContinuity769330098\\001\\beta",
+        "verification_profile": "build[go build ./...]=success;tests[go test ./...]=passed",
+        "work_id": "work_1792087650065971600_12",
+        "attempt_number": 2,
+        "verification_source": "programming",
+        "observation_details": "el proveedor de programación confirmó el estado de producción mediante su evidencia de construcción/pruebas disponible"
+      },
+      "timestamp": "2026-10-15T13:07:32.1453912-05:00",
+      "session_id": "work_1792087650065971600_12",
+      "experience_id": "work:work_1792087650065971600_12:attempt:2"
+    },
+    {
+      "action": "create_file",
+      "target": "",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "confirmed",
+        "Category": "production_result",
+        "Reason": "resultado de producción evaluado por el proveedor de programación"
+      },
+      "metadata": {
+        "objective": "Quiero trabajar en la escena principal",
+        "skill_id": "software.development",
+        "capability_id": "programming.create_file",
+        "instrument_id": "programming",
+        "target_environment": "C:\\Users\\User\\AppData\\Local\\Temp\\TestB963214E2E_InterruptionResumeAndPersistenceKeepTheSameIntera74110268\\001\\workspace",
+        "verification_profile": "build[go build ./...]=success;tests[go test ./...]=passed",
+        "work_id": "work_1792087661449739400_13",
+        "attempt_number": 1,
+        "verification_source": "programming",
+        "observation_details": "el proveedor de programación confirmó el estado de producción mediante su evidencia de construcción/pruebas disponible"
+      },
+      "timestamp": "2026-10-15T13:07:42.1602739-05:00",
+      "session_id": "work_1792087661449739400_13",
+      "experience_id": "work:work_1792087661449739400_13:attempt:1"
+    },
+    {
+      "action": "create_file",
+      "target": "",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "confirmed",
+        "Category": "production_result",
+        "Reason": "resultado de producción evaluado por el proveedor de programación"
+      },
+      "metadata": {
+        "objective": "Quiero crear un programa Go llamado alfa",
+        "skill_id": "software.development",
+        "capability_id": "programming.create_file",
+        "instrument_id": "programming",
+        "target_environment": "C:\\Users\\User\\AppData\\Local\\Temp\\TestF9CorrectionChangesMeaningThroughFullEnginePipeline545144335\\002\\workspace",
+        "verification_profile": "build[go build ./...]=success;tests[go test ./...]=passed",
+        "work_id": "work_1792090566430883600_1",
+        "attempt_number": 1,
+        "verification_source": "programming",
+        "observation_details": "el proveedor de programación confirmó el estado de producción mediante su evidencia de construcción/pruebas disponible"
+      },
+      "timestamp": "2026-10-15T13:56:07.6402026-05:00",
+      "session_id": "work_1792090566430883600_1",
+      "experience_id": "work:work_1792090566430883600_1:attempt:1"
+    },
+    {
+      "action": "create_file",
+      "target": "",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "confirmed",
+        "Category": "production_result",
+        "Reason": "resultado de producción evaluado por el proveedor de programación"
+      },
+      "metadata": {
+        "objective": "beta",
+        "skill_id": "software.development",
+        "capability_id": "programming.create_file",
+        "instrument_id": "programming",
+        "target_environment": "C:\\Users\\User\\AppData\\Local\\Temp\\TestF9CorrectionChangesMeaningThroughFullEnginePipeline545144335\\002\\beta",
+        "verification_profile": "build[go build ./...]=success;tests[go test ./...]=passed",
+        "work_id": "work_1792090566430883600_1",
+        "attempt_number": 2,
+        "verification_source": "programming",
+        "observation_details": "el proveedor de programación confirmó el estado de producción mediante su evidencia de construcción/pruebas disponible"
+      },
+      "timestamp": "2026-10-15T13:56:10.634612-05:00",
+      "session_id": "work_1792090566430883600_1",
+      "experience_id": "work:work_1792090566430883600_1:attempt:2"
+    },
+    {
+      "action": "create_file",
+      "target": "",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "confirmed",
+        "Category": "production_result",
+        "Reason": "resultado de producción evaluado por el proveedor de programación"
+      },
+      "metadata": {
+        "objective": "Quiero crear un programa Go llamado alfa",
+        "skill_id": "software.development",
+        "capability_id": "programming.create_file",
+        "instrument_id": "programming",
+        "target_environment": "C:\\Users\\User\\AppData\\Local\\Temp\\TestF9UnrelatedCorrectionWithMaterializedWorkDoesNotEnterRepairP1777886753\\002\\workspace",
+        "verification_profile": "build[go build ./...]=success;tests[go test ./...]=passed",
+        "work_id": "work_1792090577630064400_2",
+        "attempt_number": 1,
+        "verification_source": "programming",
+        "observation_details": "el proveedor de programación confirmó el estado de producción mediante su evidencia de construcción/pruebas disponible"
+      },
+      "timestamp": "2026-10-15T13:56:19.6596704-05:00",
+      "session_id": "work_1792090577630064400_2",
+      "experience_id": "work:work_1792090577630064400_2:attempt:1"
+    },
+    {
+      "action": "create_file",
+      "target": "",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "confirmed",
+        "Category": "production_result",
+        "Reason": "resultado de producción evaluado por el proveedor de programación"
+      },
+      "metadata": {
+        "objective": "Quiero crear un programa Go llamado alfa",
+        "skill_id": "software.development",
+        "capability_id": "programming.create_file",
+        "instrument_id": "programming",
+        "target_environment": "C:\\Users\\User\\AppData\\Local\\Temp\\TestF9RepairRequiresVerifiedMaterializedResult4229108378\\002\\workspace",
+        "verification_profile": "build[go build ./...]=success;tests[go test ./...]=passed",
+        "work_id": "work_1792090586284306800_3",
+        "attempt_number": 1,
+        "verification_source": "programming",
+        "observation_details": "el proveedor de programación confirmó el estado de producción mediante su evidencia de construcción/pruebas disponible"
+      },
+      "timestamp": "2026-10-15T13:56:27.5326113-05:00",
+      "session_id": "work_1792090586284306800_3",
+      "experience_id": "work:work_1792090586284306800_3:attempt:1"
+    },
+    {
+      "action": "create_file",
+      "target": "",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "confirmed",
+        "Category": "production_result",
+        "Reason": "resultado de producción evaluado por el proveedor de programación"
+      },
+      "metadata": {
+        "objective": "Quiero crear un programa Go llamado alfa",
+        "skill_id": "software.development",
+        "capability_id": "programming.create_file",
+        "instrument_id": "programming",
+        "target_environment": "C:\\Users\\User\\AppData\\Local\\Temp\\TestF9CorrectionChangesMeaningThroughFullEnginePipeline838807720\\002\\workspace",
+        "verification_profile": "build[go build ./...]=success;tests[go test ./...]=passed",
+        "work_id": "work_1792096323931379500_1",
+        "attempt_number": 1,
+        "verification_source": "programming",
+        "observation_details": "el proveedor de programación confirmó el estado de producción mediante su evidencia de construcción/pruebas disponible"
+      },
+      "timestamp": "2026-10-15T15:32:04.9920266-05:00",
+      "session_id": "work_1792096323931379500_1",
+      "experience_id": "work:work_1792096323931379500_1:attempt:1"
+    },
+    {
+      "action": "create_file",
+      "target": "",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "confirmed",
+        "Category": "production_result",
+        "Reason": "resultado de producción evaluado por el proveedor de programación"
+      },
+      "metadata": {
+        "objective": "beta",
+        "skill_id": "software.development",
+        "capability_id": "programming.create_file",
+        "instrument_id": "programming",
+        "target_environment": "C:\\Users\\User\\AppData\\Local\\Temp\\TestF9CorrectionChangesMeaningThroughFullEnginePipeline838807720\\002\\beta",
+        "verification_profile": "build[go build ./...]=success;tests[go test ./...]=passed",
+        "work_id": "work_1792096323931379500_1",
+        "attempt_number": 2,
+        "verification_source": "programming",
+        "observation_details": "el proveedor de programación confirmó el estado de producción mediante su evidencia de construcción/pruebas disponible"
+      },
+      "timestamp": "2026-10-15T15:32:09.6195704-05:00",
+      "session_id": "work_1792096323931379500_1",
+      "experience_id": "work:work_1792096323931379500_1:attempt:2"
+    },
+    {
+      "action": "create_file",
+      "target": "",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "confirmed",
+        "Category": "production_result",
+        "Reason": "resultado de producción evaluado por el proveedor de programación"
+      },
+      "metadata": {
+        "objective": "Quiero crear un programa Go llamado alfa",
+        "skill_id": "software.development",
+        "capability_id": "programming.create_file",
+        "instrument_id": "programming",
+        "target_environment": "C:\\Users\\User\\AppData\\Local\\Temp\\TestF9UnrelatedCorrectionWithMaterializedWorkDoesNotEnterRepairP1109983154\\002\\workspace",
+        "verification_profile": "build[go build ./...]=success;tests[go test ./...]=passed",
+        "work_id": "work_1792096339887901500_2",
+        "attempt_number": 1,
+        "verification_source": "programming",
+        "observation_details": "el proveedor de programación confirmó el estado de producción mediante su evidencia de construcción/pruebas disponible"
+      },
+      "timestamp": "2026-10-15T15:32:22.4667824-05:00",
+      "session_id": "work_1792096339887901500_2",
+      "experience_id": "work:work_1792096339887901500_2:attempt:1"
+    },
+    {
+      "action": "create_file",
+      "target": "",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "confirmed",
+        "Category": "production_result",
+        "Reason": "resultado de producción evaluado por el proveedor de programación"
+      },
+      "metadata": {
+        "objective": "Quiero crear un programa Go llamado alfa",
+        "skill_id": "software.development",
+        "capability_id": "programming.create_file",
+        "instrument_id": "programming",
+        "target_environment": "C:\\Users\\User\\AppData\\Local\\Temp\\TestF9RepairRequiresVerifiedMaterializedResult1693389725\\002\\workspace",
+        "verification_profile": "build[go build ./...]=success;tests[go test ./...]=passed",
+        "work_id": "work_1792096350263113300_3",
+        "attempt_number": 1,
+        "verification_source": "programming",
+        "observation_details": "el proveedor de programación confirmó el estado de producción mediante su evidencia de construcción/pruebas disponible"
+      },
+      "timestamp": "2026-10-15T15:32:32.078869-05:00",
+      "session_id": "work_1792096350263113300_3",
+      "experience_id": "work:work_1792096350263113300_3:attempt:1"
+    },
+    {
+      "action": "create_file",
+      "target": "",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "confirmed",
+        "Category": "production_result",
+        "Reason": "resultado de producción evaluado por el proveedor de programación"
+      },
+      "metadata": {
+        "objective": "Quiero crear un programa Go llamado alfa",
+        "skill_id": "software.development",
+        "capability_id": "programming.create_file",
+        "instrument_id": "programming",
+        "target_environment": "C:\\Users\\User\\AppData\\Local\\Temp\\TestF9CorrectionChangesMeaningThroughFullEnginePipeline2563245238\\002\\workspace",
+        "verification_profile": "build[go build ./...]=success;tests[go test ./...]=passed",
+        "work_id": "work_1792097886374770100_1",
+        "attempt_number": 1,
+        "verification_source": "programming",
+        "observation_details": "el proveedor de programación confirmó el estado de producción mediante su evidencia de construcción/pruebas disponible"
+      },
+      "timestamp": "2026-10-15T15:58:07.1449102-05:00",
+      "session_id": "work_1792097886374770100_1",
+      "experience_id": "work:work_1792097886374770100_1:attempt:1"
+    },
+    {
+      "action": "create_file",
+      "target": "",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "confirmed",
+        "Category": "production_result",
+        "Reason": "resultado de producción evaluado por el proveedor de programación"
+      },
+      "metadata": {
+        "objective": "beta",
+        "skill_id": "software.development",
+        "capability_id": "programming.create_file",
+        "instrument_id": "programming",
+        "target_environment": "C:\\Users\\User\\AppData\\Local\\Temp\\TestF9CorrectionChangesMeaningThroughFullEnginePipeline2563245238\\002\\beta",
+        "verification_profile": "build[go build ./...]=success;tests[go test ./...]=passed",
+        "work_id": "work_1792097886374770100_1",
+        "attempt_number": 2,
+        "verification_source": "programming",
+        "observation_details": "el proveedor de programación confirmó el estado de producción mediante su evidencia de construcción/pruebas disponible"
+      },
+      "timestamp": "2026-10-15T15:58:08.6130612-05:00",
+      "session_id": "work_1792097886374770100_1",
+      "experience_id": "work:work_1792097886374770100_1:attempt:2"
+    },
+    {
+      "action": "create_file",
+      "target": "",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "confirmed",
+        "Category": "production_result",
+        "Reason": "resultado de producción evaluado por el proveedor de programación"
+      },
+      "metadata": {
+        "objective": "Quiero crear un programa Go llamado alfa",
+        "skill_id": "software.development",
+        "capability_id": "programming.create_file",
+        "instrument_id": "programming",
+        "target_environment": "C:\\Users\\User\\AppData\\Local\\Temp\\TestF9UnrelatedCorrectionWithMaterializedWorkDoesNotEnterRepairP2654190656\\002\\workspace",
+        "verification_profile": "build[go build ./...]=success;tests[go test ./...]=passed",
+        "work_id": "work_1792097894191146400_2",
+        "attempt_number": 1,
+        "verification_source": "programming",
+        "observation_details": "el proveedor de programación confirmó el estado de producción mediante su evidencia de construcción/pruebas disponible"
+      },
+      "timestamp": "2026-10-15T15:58:15.1660612-05:00",
+      "session_id": "work_1792097894191146400_2",
+      "experience_id": "work:work_1792097894191146400_2:attempt:1"
+    },
+    {
+      "action": "create_file",
+      "target": "",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "confirmed",
+        "Category": "production_result",
+        "Reason": "resultado de producción evaluado por el proveedor de programación"
+      },
+      "metadata": {
+        "objective": "Quiero crear un programa Go llamado alfa",
+        "skill_id": "software.development",
+        "capability_id": "programming.create_file",
+        "instrument_id": "programming",
+        "target_environment": "C:\\Users\\User\\AppData\\Local\\Temp\\TestF9RepairRequiresVerifiedMaterializedResult119490309\\002\\workspace",
+        "verification_profile": "build[go build ./...]=success;tests[go test ./...]=passed",
+        "work_id": "work_1792097899884534100_3",
+        "attempt_number": 1,
+        "verification_source": "programming",
+        "observation_details": "el proveedor de programación confirmó el estado de producción mediante su evidencia de construcción/pruebas disponible"
+      },
+      "timestamp": "2026-10-15T15:58:20.6470173-05:00",
+      "session_id": "work_1792097899884534100_3",
+      "experience_id": "work:work_1792097899884534100_3:attempt:1"
+    },
+    {
+      "action": "noop",
+      "target": "",
+      "outcome": {
+        "Success": false,
+        "evidence_status": "unknown",
+        "Category": "",
+        "Reason": "la acción no fue ejecutada por el motor"
+      },
+      "metadata": {},
+      "timestamp": "2026-10-15T15:59:28.8731271-05:00",
+      "session_id": "b93.4-test"
+    },
+    {
+      "action": "noop",
+      "target": "",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "unknown",
+        "Category": "",
+        "Reason": ""
+      },
+      "metadata": {},
+      "timestamp": "2026-10-15T15:59:30.4616967-05:00",
+      "session_id": "b93.4-test"
+    },
+    {
+      "action": "create_file",
+      "target": "",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "confirmed",
+        "Category": "test_production_verified",
+        "Reason": "test production verified"
+      },
+      "metadata": {
+        "objective": "Empieza creando un programa base para el juego de supervivencia.",
+        "skill_id": "software.development",
+        "capability_id": "programming.create_file",
+        "instrument_id": "programming",
+        "work_id": "work_1792098066321305400_5",
+        "attempt_number": 1
+      },
+      "timestamp": "2026-10-15T16:01:06.3331463-05:00",
+      "session_id": "work_1792098066321305400_5",
+      "experience_id": "work:work_1792098066321305400_5:attempt:1"
+    },
+    {
+      "action": "noop",
+      "target": "",
+      "outcome": {
+        "Success": false,
+        "evidence_status": "unknown",
+        "Category": "",
+        "Reason": "la acción no fue ejecutada por el motor"
+      },
+      "metadata": {},
+      "timestamp": "2026-10-15T16:01:29.5152866-05:00",
+      "session_id": "b93.4-test"
+    },
+    {
+      "action": "noop",
+      "target": "",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "unknown",
+        "Category": "",
+        "Reason": ""
+      },
+      "metadata": {},
+      "timestamp": "2026-10-15T16:01:31.2051234-05:00",
+      "session_id": "b93.4-test"
+    },
+    {
+      "action": "create_file",
+      "target": "",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "confirmed",
+        "Category": "test_production_verified",
+        "Reason": "test production verified"
+      },
+      "metadata": {
+        "objective": "Empieza creando un programa base para el juego de supervivencia.",
+        "skill_id": "software.development",
+        "capability_id": "programming.create_file",
+        "instrument_id": "programming",
+        "work_id": "work_1792098161177198600_5",
+        "attempt_number": 1
+      },
+      "timestamp": "2026-10-15T16:02:41.192323-05:00",
+      "session_id": "work_1792098161177198600_5",
+      "experience_id": "work:work_1792098161177198600_5:attempt:1"
+    },
+    {
+      "action": "abrir_programa",
+      "target": "chrome",
+      "outcome": {
+        "Success": false,
+        "evidence_status": "insufficient",
+        "Category": "program_not_found",
+        "Reason": "programa no encontrado: chrome"
+      },
+      "metadata": {},
+      "timestamp": "2026-10-15T16:03:11.9549223-05:00",
+      "session_id": "1792098191"
+    },
+    {
+      "action": "abrir_programa",
+      "target": "chrome",
+      "outcome": {
+        "Success": false,
+        "evidence_status": "insufficient",
+        "Category": "execution_failed",
+        "Reason": "programa no encontrado: chrome"
+      },
+      "metadata": {
+        "objective": "abre chrome",
+        "capability_id": "abrir_programa",
+        "instrument_id": "core.local_action"
+      },
+      "timestamp": "2026-10-15T16:03:11.9559795-05:00",
+      "session_id": "authority"
+    },
+    {
+      "action": "create_file",
+      "target": "",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "confirmed",
+        "Category": "production_result",
+        "Reason": "resultado de producción evaluado por el proveedor de programación"
+      },
+      "metadata": {
+        "objective": "Quiero crear un programa Go llamado alfa",
+        "skill_id": "software.development",
+        "capability_id": "programming.create_file",
+        "instrument_id": "programming",
+        "target_environment": "C:\\Users\\User\\AppData\\Local\\Temp\\TestF9CorrectionChangesMeaningThroughFullEnginePipeline3235466997\\002\\workspace",
+        "verification_profile": "build[go build ./...]=success;tests[go test ./...]=passed",
+        "work_id": "work_1792098996428022500_1",
+        "attempt_number": 1,
+        "verification_source": "programming",
+        "observation_details": "el proveedor de programación confirmó el estado de producción mediante su evidencia de construcción/pruebas disponible"
+      },
+      "timestamp": "2026-10-15T16:16:38.778734-05:00",
+      "session_id": "work_1792098996428022500_1",
+      "experience_id": "work:work_1792098996428022500_1:attempt:1"
+    },
+    {
+      "action": "create_file",
+      "target": "",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "confirmed",
+        "Category": "production_result",
+        "Reason": "resultado de producción evaluado por el proveedor de programación"
+      },
+      "metadata": {
+        "objective": "beta",
+        "skill_id": "software.development",
+        "capability_id": "programming.create_file",
+        "instrument_id": "programming",
+        "target_environment": "C:\\Users\\User\\AppData\\Local\\Temp\\TestF9CorrectionChangesMeaningThroughFullEnginePipeline3235466997\\002\\beta",
+        "verification_profile": "build[go build ./...]=success;tests[go test ./...]=passed",
+        "work_id": "work_1792098996428022500_1",
+        "attempt_number": 2,
+        "verification_source": "programming",
+        "observation_details": "el proveedor de programación confirmó el estado de producción mediante su evidencia de construcción/pruebas disponible"
+      },
+      "timestamp": "2026-10-15T16:16:42.6061564-05:00",
+      "session_id": "work_1792098996428022500_1",
+      "experience_id": "work:work_1792098996428022500_1:attempt:2"
+    },
+    {
+      "action": "create_file",
+      "target": "",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "confirmed",
+        "Category": "production_result",
+        "Reason": "resultado de producción evaluado por el proveedor de programación"
+      },
+      "metadata": {
+        "objective": "Quiero crear un programa Go llamado alfa",
+        "skill_id": "software.development",
+        "capability_id": "programming.create_file",
+        "instrument_id": "programming",
+        "target_environment": "C:\\Users\\User\\AppData\\Local\\Temp\\TestF9UnrelatedCorrectionWithMaterializedWorkDoesNotEnterRepairP2918230885\\002\\workspace",
+        "verification_profile": "build[go build ./...]=success;tests[go test ./...]=passed",
+        "work_id": "work_1792099008718456600_2",
+        "attempt_number": 1,
+        "verification_source": "programming",
+        "observation_details": "el proveedor de programación confirmó el estado de producción mediante su evidencia de construcción/pruebas disponible"
+      },
+      "timestamp": "2026-10-15T16:16:50.7679126-05:00",
+      "session_id": "work_1792099008718456600_2",
+      "experience_id": "work:work_1792099008718456600_2:attempt:1"
+    },
+    {
+      "action": "create_file",
+      "target": "",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "confirmed",
+        "Category": "production_result",
+        "Reason": "resultado de producción evaluado por el proveedor de programación"
+      },
+      "metadata": {
+        "objective": "Quiero crear un programa Go llamado alfa",
+        "skill_id": "software.development",
+        "capability_id": "programming.create_file",
+        "instrument_id": "programming",
+        "target_environment": "C:\\Users\\User\\AppData\\Local\\Temp\\TestF9RepairRequiresVerifiedMaterializedResult2324732748\\002\\workspace",
+        "verification_profile": "build[go build ./...]=success;tests[go test ./...]=passed",
+        "work_id": "work_1792099017599614500_3",
+        "attempt_number": 1,
+        "verification_source": "programming",
+        "observation_details": "el proveedor de programación confirmó el estado de producción mediante su evidencia de construcción/pruebas disponible"
+      },
+      "timestamp": "2026-10-15T16:16:59.0918734-05:00",
+      "session_id": "work_1792099017599614500_3",
+      "experience_id": "work:work_1792099017599614500_3:attempt:1"
+    },
+    {
+      "action": "create_file",
+      "target": "",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "confirmed",
+        "Category": "production_result",
+        "Reason": "resultado de producción evaluado por el proveedor de programación"
+      },
+      "metadata": {
+        "objective": "Quiero crear un programa Go llamado alfa",
+        "skill_id": "software.development",
+        "capability_id": "programming.create_file",
+        "instrument_id": "programming",
+        "target_environment": "C:\\Users\\User\\AppData\\Local\\Temp\\TestF9CorrectionChangesMeaningThroughFullEnginePipeline2281343868\\002\\workspace",
+        "verification_profile": "build[go build ./...]=success;tests[go test ./...]=passed",
+        "work_id": "work_1792100938678246200_1",
+        "attempt_number": 1,
+        "verification_source": "programming",
+        "observation_details": "el proveedor de programación confirmó el estado de producción mediante su evidencia de construcción/pruebas disponible"
+      },
+      "timestamp": "2026-10-15T16:49:00.9475589-05:00",
+      "session_id": "work_1792100938678246200_1",
+      "experience_id": "work:work_1792100938678246200_1:attempt:1"
+    },
+    {
+      "action": "create_file",
+      "target": "",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "confirmed",
+        "Category": "production_result",
+        "Reason": "resultado de producción evaluado por el proveedor de programación"
+      },
+      "metadata": {
+        "objective": "beta",
+        "skill_id": "software.development",
+        "capability_id": "programming.create_file",
+        "instrument_id": "programming",
+        "target_environment": "C:\\Users\\User\\AppData\\Local\\Temp\\TestF9CorrectionChangesMeaningThroughFullEnginePipeline2281343868\\002\\beta",
+        "verification_profile": "build[go build ./...]=success;tests[go test ./...]=passed",
+        "work_id": "work_1792100938678246200_1",
+        "attempt_number": 2,
+        "verification_source": "programming",
+        "observation_details": "el proveedor de programación confirmó el estado de producción mediante su evidencia de construcción/pruebas disponible"
+      },
+      "timestamp": "2026-10-15T16:49:03.7570569-05:00",
+      "session_id": "work_1792100938678246200_1",
+      "experience_id": "work:work_1792100938678246200_1:attempt:2"
+    },
+    {
+      "action": "create_file",
+      "target": "",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "confirmed",
+        "Category": "production_result",
+        "Reason": "resultado de producción evaluado por el proveedor de programación"
+      },
+      "metadata": {
+        "objective": "Quiero crear un programa Go llamado alfa",
+        "skill_id": "software.development",
+        "capability_id": "programming.create_file",
+        "instrument_id": "programming",
+        "target_environment": "C:\\Users\\User\\AppData\\Local\\Temp\\TestF9UnrelatedCorrectionWithMaterializedWorkDoesNotEnterRepairP1130481355\\002\\workspace",
+        "verification_profile": "build[go build ./...]=success;tests[go test ./...]=passed",
+        "work_id": "work_1792100953331615600_2",
+        "attempt_number": 1,
+        "verification_source": "programming",
+        "observation_details": "el proveedor de programación confirmó el estado de producción mediante su evidencia de construcción/pruebas disponible"
+      },
+      "timestamp": "2026-10-15T16:49:15.1772975-05:00",
+      "session_id": "work_1792100953331615600_2",
+      "experience_id": "work:work_1792100953331615600_2:attempt:1"
+    },
+    {
+      "action": "create_file",
+      "target": "",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "confirmed",
+        "Category": "production_result",
+        "Reason": "resultado de producción evaluado por el proveedor de programación"
+      },
+      "metadata": {
+        "objective": "Quiero crear un programa Go llamado alfa",
+        "skill_id": "software.development",
+        "capability_id": "programming.create_file",
+        "instrument_id": "programming",
+        "target_environment": "C:\\Users\\User\\AppData\\Local\\Temp\\TestF9RepairRequiresVerifiedMaterializedResult1784642346\\002\\workspace",
+        "verification_profile": "build[go build ./...]=success;tests[go test ./...]=passed",
+        "work_id": "work_1792100962252518000_3",
+        "attempt_number": 1,
+        "verification_source": "programming",
+        "observation_details": "el proveedor de programación confirmó el estado de producción mediante su evidencia de construcción/pruebas disponible"
+      },
+      "timestamp": "2026-10-15T16:49:24.228367-05:00",
+      "session_id": "work_1792100962252518000_3",
+      "experience_id": "work:work_1792100962252518000_3:attempt:1"
+    },
+    {
+      "action": "create_file",
+      "target": "",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "confirmed",
+        "Category": "production_result",
+        "Reason": "resultado de producción evaluado por el proveedor de programación"
+      },
+      "metadata": {
+        "objective": "Quiero crear un programa Go llamado alfa",
+        "skill_id": "software.development",
+        "capability_id": "programming.create_file",
+        "instrument_id": "programming",
+        "target_environment": "C:\\Users\\User\\AppData\\Local\\Temp\\TestF9CorrectionChangesMeaningThroughFullEnginePipeline1248343816\\002\\workspace",
+        "verification_profile": "build[go build ./...]=success;tests[go test ./...]=passed",
+        "work_id": "work_1792101615928487200_1",
+        "attempt_number": 1,
+        "verification_source": "programming",
+        "observation_details": "el proveedor de programación confirmó el estado de producción mediante su evidencia de construcción/pruebas disponible"
+      },
+      "timestamp": "2026-10-15T17:00:16.7021381-05:00",
+      "session_id": "work_1792101615928487200_1",
+      "experience_id": "work:work_1792101615928487200_1:attempt:1"
+    },
+    {
+      "action": "create_file",
+      "target": "",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "confirmed",
+        "Category": "production_result",
+        "Reason": "resultado de producción evaluado por el proveedor de programación"
+      },
+      "metadata": {
+        "objective": "beta",
+        "skill_id": "software.development",
+        "capability_id": "programming.create_file",
+        "instrument_id": "programming",
+        "target_environment": "C:\\Users\\User\\AppData\\Local\\Temp\\TestF9CorrectionChangesMeaningThroughFullEnginePipeline1248343816\\002\\beta",
+        "verification_profile": "build[go build ./...]=success;tests[go test ./...]=passed",
+        "work_id": "work_1792101615928487200_1",
+        "attempt_number": 2,
+        "verification_source": "programming",
+        "observation_details": "el proveedor de programación confirmó el estado de producción mediante su evidencia de construcción/pruebas disponible"
+      },
+      "timestamp": "2026-10-15T17:00:19.471391-05:00",
+      "session_id": "work_1792101615928487200_1",
+      "experience_id": "work:work_1792101615928487200_1:attempt:2"
+    },
+    {
+      "action": "create_file",
+      "target": "",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "confirmed",
+        "Category": "production_result",
+        "Reason": "resultado de producción evaluado por el proveedor de programación"
+      },
+      "metadata": {
+        "objective": "Quiero crear un programa Go llamado alfa",
+        "skill_id": "software.development",
+        "capability_id": "programming.create_file",
+        "instrument_id": "programming",
+        "target_environment": "C:\\Users\\User\\AppData\\Local\\Temp\\TestF9UnrelatedCorrectionWithMaterializedWorkDoesNotEnterRepairP2985362286\\002\\workspace",
+        "verification_profile": "build[go build ./...]=success;tests[go test ./...]=passed",
+        "work_id": "work_1792101626599551800_2",
+        "attempt_number": 1,
+        "verification_source": "programming",
+        "observation_details": "el proveedor de programación confirmó el estado de producción mediante su evidencia de construcción/pruebas disponible"
+      },
+      "timestamp": "2026-10-15T17:00:27.9375571-05:00",
+      "session_id": "work_1792101626599551800_2",
+      "experience_id": "work:work_1792101626599551800_2:attempt:1"
+    },
+    {
+      "action": "create_file",
+      "target": "",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "confirmed",
+        "Category": "production_result",
+        "Reason": "resultado de producción evaluado por el proveedor de programación"
+      },
+      "metadata": {
+        "objective": "Quiero crear un programa Go llamado alfa",
+        "skill_id": "software.development",
+        "capability_id": "programming.create_file",
+        "instrument_id": "programming",
+        "target_environment": "C:\\Users\\User\\AppData\\Local\\Temp\\TestF9RepairRequiresVerifiedMaterializedResult4209676867\\002\\workspace",
+        "verification_profile": "build[go build ./...]=success;tests[go test ./...]=passed",
+        "work_id": "work_1792101635924797100_3",
+        "attempt_number": 1,
+        "verification_source": "programming",
+        "observation_details": "el proveedor de programación confirmó el estado de producción mediante su evidencia de construcción/pruebas disponible"
+      },
+      "timestamp": "2026-10-15T17:00:37.6800383-05:00",
+      "session_id": "work_1792101635924797100_3",
+      "experience_id": "work:work_1792101635924797100_3:attempt:1"
+    },
+    {
+      "action": "create_file",
+      "target": "",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "confirmed",
+        "Category": "production_result",
+        "Reason": "resultado de producción evaluado por el proveedor de programación"
+      },
+      "metadata": {
+        "objective": "Quiero crear un programa Go llamado alfa",
+        "skill_id": "software.development",
+        "capability_id": "programming.create_file",
+        "instrument_id": "programming",
+        "target_environment": "C:\\Users\\User\\AppData\\Local\\Temp\\TestF9CorrectionChangesMeaningThroughFullEnginePipeline3739764963\\002\\workspace",
+        "verification_profile": "build[go build ./...]=success;tests[go test ./...]=passed",
+        "work_id": "work_1792103603595780400_1",
+        "attempt_number": 1,
+        "verification_source": "programming",
+        "observation_details": "el proveedor de programación confirmó el estado de producción mediante su evidencia de construcción/pruebas disponible"
+      },
+      "timestamp": "2026-10-15T17:33:24.3314353-05:00",
+      "session_id": "work_1792103603595780400_1",
+      "experience_id": "work:work_1792103603595780400_1:attempt:1"
+    },
+    {
+      "action": "create_file",
+      "target": "",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "confirmed",
+        "Category": "production_result",
+        "Reason": "resultado de producción evaluado por el proveedor de programación"
+      },
+      "metadata": {
+        "objective": "beta",
+        "skill_id": "software.development",
+        "capability_id": "programming.create_file",
+        "instrument_id": "programming",
+        "target_environment": "C:\\Users\\User\\AppData\\Local\\Temp\\TestF9CorrectionChangesMeaningThroughFullEnginePipeline3739764963\\002\\beta",
+        "verification_profile": "build[go build ./...]=success;tests[go test ./...]=passed",
+        "work_id": "work_1792103603595780400_1",
+        "attempt_number": 2,
+        "verification_source": "programming",
+        "observation_details": "el proveedor de programación confirmó el estado de producción mediante su evidencia de construcción/pruebas disponible"
+      },
+      "timestamp": "2026-10-15T17:33:25.8000411-05:00",
+      "session_id": "work_1792103603595780400_1",
+      "experience_id": "work:work_1792103603595780400_1:attempt:2"
+    },
+    {
+      "action": "create_file",
+      "target": "",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "confirmed",
+        "Category": "production_result",
+        "Reason": "resultado de producción evaluado por el proveedor de programación"
+      },
+      "metadata": {
+        "objective": "Quiero crear un programa Go llamado alfa",
+        "skill_id": "software.development",
+        "capability_id": "programming.create_file",
+        "instrument_id": "programming",
+        "target_environment": "C:\\Users\\User\\AppData\\Local\\Temp\\TestF9UnrelatedCorrectionWithMaterializedWorkDoesNotEnterRepairP1609232953\\002\\workspace",
+        "verification_profile": "build[go build ./...]=success;tests[go test ./...]=passed",
+        "work_id": "work_1792103611074089000_2",
+        "attempt_number": 1,
+        "verification_source": "programming",
+        "observation_details": "el proveedor de programación confirmó el estado de producción mediante su evidencia de construcción/pruebas disponible"
+      },
+      "timestamp": "2026-10-15T17:33:31.8409892-05:00",
+      "session_id": "work_1792103611074089000_2",
+      "experience_id": "work:work_1792103611074089000_2:attempt:1"
+    },
+    {
+      "action": "create_file",
+      "target": "",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "confirmed",
+        "Category": "production_result",
+        "Reason": "resultado de producción evaluado por el proveedor de programación"
+      },
+      "metadata": {
+        "objective": "Quiero crear un programa Go llamado alfa",
+        "skill_id": "software.development",
+        "capability_id": "programming.create_file",
+        "instrument_id": "programming",
+        "target_environment": "C:\\Users\\User\\AppData\\Local\\Temp\\TestF9RepairRequiresVerifiedMaterializedResult3193503389\\002\\workspace",
+        "verification_profile": "build[go build ./...]=success;tests[go test ./...]=passed",
+        "work_id": "work_1792103616424767500_3",
+        "attempt_number": 1,
+        "verification_source": "programming",
+        "observation_details": "el proveedor de programación confirmó el estado de producción mediante su evidencia de construcción/pruebas disponible"
+      },
+      "timestamp": "2026-10-15T17:33:37.2390213-05:00",
+      "session_id": "work_1792103616424767500_3",
+      "experience_id": "work:work_1792103616424767500_3:attempt:1"
+    },
+    {
+      "action": "create_file",
+      "target": "",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "confirmed",
+        "Category": "production_result",
+        "Reason": "resultado de producción evaluado por el proveedor de programación"
+      },
+      "metadata": {
+        "objective": "Quiero crear un programa Go llamado alfa",
+        "skill_id": "software.development",
+        "capability_id": "programming.create_file",
+        "instrument_id": "programming",
+        "target_environment": "C:\\Users\\User\\AppData\\Local\\Temp\\TestF9CorrectionChangesMeaningThroughFullEnginePipeline4112091881\\002\\workspace",
+        "verification_profile": "build[go build ./...]=success;tests[go test ./...]=passed",
+        "work_id": "work_1792103786456253500_1",
+        "attempt_number": 1,
+        "verification_source": "programming",
+        "observation_details": "el proveedor de programación confirmó el estado de producción mediante su evidencia de construcción/pruebas disponible"
+      },
+      "timestamp": "2026-10-15T17:36:28.6243267-05:00",
+      "session_id": "work_1792103786456253500_1",
+      "experience_id": "work:work_1792103786456253500_1:attempt:1"
+    },
+    {
+      "action": "create_file",
+      "target": "",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "confirmed",
+        "Category": "production_result",
+        "Reason": "resultado de producción evaluado por el proveedor de programación"
+      },
+      "metadata": {
+        "objective": "beta",
+        "skill_id": "software.development",
+        "capability_id": "programming.create_file",
+        "instrument_id": "programming",
+        "target_environment": "C:\\Users\\User\\AppData\\Local\\Temp\\TestF9CorrectionChangesMeaningThroughFullEnginePipeline4112091881\\002\\beta",
+        "verification_profile": "build[go build ./...]=success;tests[go test ./...]=passed",
+        "work_id": "work_1792103786456253500_1",
+        "attempt_number": 2,
+        "verification_source": "programming",
+        "observation_details": "el proveedor de programación confirmó el estado de producción mediante su evidencia de construcción/pruebas disponible"
+      },
+      "timestamp": "2026-10-15T17:36:31.447105-05:00",
+      "session_id": "work_1792103786456253500_1",
+      "experience_id": "work:work_1792103786456253500_1:attempt:2"
+    },
+    {
+      "action": "create_file",
+      "target": "",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "confirmed",
+        "Category": "production_result",
+        "Reason": "resultado de producción evaluado por el proveedor de programación"
+      },
+      "metadata": {
+        "objective": "Quiero crear un programa Go llamado alfa",
+        "skill_id": "software.development",
+        "capability_id": "programming.create_file",
+        "instrument_id": "programming",
+        "target_environment": "C:\\Users\\User\\AppData\\Local\\Temp\\TestF9UnrelatedCorrectionWithMaterializedWorkDoesNotEnterRepairP2461929352\\002\\workspace",
+        "verification_profile": "build[go build ./...]=success;tests[go test ./...]=passed",
+        "work_id": "work_1792103797145083300_2",
+        "attempt_number": 1,
+        "verification_source": "programming",
+        "observation_details": "el proveedor de programación confirmó el estado de producción mediante su evidencia de construcción/pruebas disponible"
+      },
+      "timestamp": "2026-10-15T17:36:37.9413106-05:00",
+      "session_id": "work_1792103797145083300_2",
+      "experience_id": "work:work_1792103797145083300_2:attempt:1"
+    },
+    {
+      "action": "create_file",
+      "target": "",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "confirmed",
+        "Category": "production_result",
+        "Reason": "resultado de producción evaluado por el proveedor de programación"
+      },
+      "metadata": {
+        "objective": "Quiero crear un programa Go llamado alfa",
+        "skill_id": "software.development",
+        "capability_id": "programming.create_file",
+        "instrument_id": "programming",
+        "target_environment": "C:\\Users\\User\\AppData\\Local\\Temp\\TestF9RepairRequiresVerifiedMaterializedResult414445199\\002\\workspace",
+        "verification_profile": "build[go build ./...]=success;tests[go test ./...]=passed",
+        "work_id": "work_1792103802804532700_3",
+        "attempt_number": 1,
+        "verification_source": "programming",
+        "observation_details": "el proveedor de programación confirmó el estado de producción mediante su evidencia de construcción/pruebas disponible"
+      },
+      "timestamp": "2026-10-15T17:36:43.5730024-05:00",
+      "session_id": "work_1792103802804532700_3",
+      "experience_id": "work:work_1792103802804532700_3:attempt:1"
+    },
+    {
+      "action": "noop",
+      "target": "",
+      "outcome": {
+        "Success": false,
+        "evidence_status": "unknown",
+        "Category": "",
+        "Reason": "la acción no fue ejecutada por el motor"
+      },
+      "metadata": {},
+      "timestamp": "2026-10-16T10:29:05.5474609-05:00",
+      "session_id": "b93.4-test"
+    },
+    {
+      "action": "create_file",
+      "target": "",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "confirmed",
+        "Category": "test_production_verified",
+        "Reason": "test production verified"
+      },
+      "metadata": {
+        "objective": "Empieza creando un programa base para el juego de supervivencia.",
+        "skill_id": "software.development",
+        "capability_id": "programming.create_file",
+        "instrument_id": "programming",
+        "work_id": "work_1792164781210091400_5",
+        "attempt_number": 1
+      },
+      "timestamp": "2026-10-16T10:33:01.2255825-05:00",
+      "session_id": "work_1792164781210091400_5",
+      "experience_id": "work:work_1792164781210091400_5:attempt:1"
+    },
+    {
+      "action": "abrir_programa",
+      "target": "chrome",
+      "outcome": {
+        "Success": false,
+        "evidence_status": "insufficient",
+        "Category": "program_not_found",
+        "Reason": "programa no encontrado: chrome"
+      },
+      "metadata": {},
+      "timestamp": "2026-10-16T10:33:42.0860333-05:00",
+      "session_id": "1792164820"
+    },
+    {
+      "action": "abrir_programa",
+      "target": "chrome",
+      "outcome": {
+        "Success": false,
+        "evidence_status": "insufficient",
+        "Category": "execution_failed",
+        "Reason": "programa no encontrado: chrome"
+      },
+      "metadata": {
+        "objective": "abre chrome",
+        "capability_id": "abrir_programa",
+        "instrument_id": "core.local_action"
+      },
+      "timestamp": "2026-10-16T10:33:42.0947995-05:00",
+      "session_id": "authority"
+    },
+    {
+      "action": "create_file",
+      "target": "",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "confirmed",
+        "Category": "production_result",
+        "Reason": "resultado de producción evaluado por el proveedor de programación"
+      },
+      "metadata": {
+        "objective": "Quiero crear un programa Go llamado f10_reasoning",
+        "skill_id": "software.development",
+        "capability_id": "programming.create_file",
+        "instrument_id": "programming",
+        "target_environment": "C:\\Users\\User\\Desktop\\Ahmelia-Knowledge\\.gotmp-validation\\TestF10AdversarialWhyDecisionUsesRecordedDecisionPath1451221512\\002\\workspace",
+        "verification_profile": "build[go build ./...]=success;tests[go test ./...]=passed",
+        "work_id": "work_1792164852456198800_12",
+        "attempt_number": 1,
+        "verification_source": "programming",
+        "observation_details": "el proveedor de programación confirmó el estado de producción mediante su evidencia de construcción/pruebas disponible"
+      },
+      "timestamp": "2026-10-16T10:34:14.4708727-05:00",
+      "session_id": "work_1792164852456198800_12",
+      "experience_id": "work:work_1792164852456198800_12:attempt:1"
+    },
+    {
+      "action": "create_file",
+      "target": "",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "confirmed",
+        "Category": "production_result",
+        "Reason": "resultado de producción evaluado por el proveedor de programación"
+      },
+      "metadata": {
+        "objective": "Quiero crear un programa Go llamado f10_compuesto",
+        "skill_id": "software.development",
+        "capability_id": "programming.create_file",
+        "instrument_id": "programming",
+        "target_environment": "C:\\Users\\User\\Desktop\\Ahmelia-Knowledge\\.gotmp-validation\\TestF10AdversarialCompoundContinuationDoesNotForkWork4144715549\\002\\workspace",
+        "verification_profile": "build[go build ./...]=success;tests[go test ./...]=passed",
+        "work_id": "work_1792164860848316200_14",
+        "attempt_number": 1,
+        "verification_source": "programming",
+        "observation_details": "el proveedor de programación confirmó el estado de producción mediante su evidencia de construcción/pruebas disponible"
+      },
+      "timestamp": "2026-10-16T10:34:22.3772364-05:00",
+      "session_id": "work_1792164860848316200_14",
+      "experience_id": "work:work_1792164860848316200_14:attempt:1"
+    },
+    {
+      "action": "create_file",
+      "target": "",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "confirmed",
+        "Category": "production_result",
+        "Reason": "resultado de producción evaluado por el proveedor de programación"
+      },
+      "metadata": {
+        "objective": "Quiero crear un programa Go llamado f10_project",
+        "skill_id": "software.development",
+        "capability_id": "programming.create_file",
+        "instrument_id": "programming",
+        "target_environment": "C:\\Users\\User\\Desktop\\Ahmelia-Knowledge\\.gotmp-validation\\TestF10AdversarialProjectQuestionSeparatesWorkEvidenceFromIntern2530587601\\002\\workspace",
+        "verification_profile": "build[go build ./...]=success;tests[go test ./...]=passed",
+        "work_id": "work_1792164868075828400_15",
+        "attempt_number": 1,
+        "verification_source": "programming",
+        "observation_details": "el proveedor de programación confirmó el estado de producción mediante su evidencia de construcción/pruebas disponible"
+      },
+      "timestamp": "2026-10-16T10:34:30.3606459-05:00",
+      "session_id": "work_1792164868075828400_15",
+      "experience_id": "work:work_1792164868075828400_15:attempt:1"
+    },
+    {
+      "action": "create_file",
+      "target": "",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "confirmed",
+        "Category": "production_result",
+        "Reason": "resultado de producción evaluado por el proveedor de programación"
+      },
+      "metadata": {
+        "objective": "Quiero crear un programa Go llamado f10_mix",
+        "skill_id": "software.development",
+        "capability_id": "programming.create_file",
+        "instrument_id": "programming",
+        "target_environment": "C:\\Users\\User\\Desktop\\Ahmelia-Knowledge\\.gotmp-validation\\TestF10AdversarialMixedSequenceIsStateSafe1214805423\\002\\workspace",
+        "verification_profile": "build[go build ./...]=success;tests[go test ./...]=passed",
+        "work_id": "work_1792164887023539300_19",
+        "attempt_number": 1,
+        "verification_source": "programming",
+        "observation_details": "el proveedor de programación confirmó el estado de producción mediante su evidencia de construcción/pruebas disponible"
+      },
+      "timestamp": "2026-10-16T10:34:47.8796985-05:00",
+      "session_id": "work_1792164887023539300_19",
+      "experience_id": "work:work_1792164887023539300_19:attempt:1"
+    },
+    {
+      "action": "create_file",
+      "target": "",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "confirmed",
+        "Category": "production_result",
+        "Reason": "resultado de producción evaluado por el proveedor de programación"
+      },
+      "metadata": {
+        "objective": "Crea una función Go Par que devuelva si un entero es par, añade pruebas y explícame cómo verificaste el objetivo",
+        "skill_id": "software.development",
+        "capability_id": "programming.create_file",
+        "instrument_id": "programming",
+        "target_environment": "C:\\Users\\User\\Desktop\\Ahmelia-Knowledge\\.gotmp-validation\\TestProductionRequestWithAccentsReachesCanonicalAuthoritytext344203152\\002\\workspace",
+        "verification_profile": "build[go build ./...]=success;tests[go test ./...]=passed",
+        "work_id": "work_1792164900376210100_20",
+        "attempt_number": 1,
+        "verification_source": "programming",
+        "observation_details": "el proveedor de programación confirmó el estado de producción mediante su evidencia de construcción/pruebas disponible"
+      },
+      "timestamp": "2026-10-16T10:35:01.6617375-05:00",
+      "session_id": "work_1792164900376210100_20",
+      "experience_id": "work:work_1792164900376210100_20:attempt:1"
+    },
+    {
+      "action": "create_file",
+      "target": "",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "confirmed",
+        "Category": "production_result",
+        "Reason": "resultado de producción evaluado por el proveedor de programación"
+      },
+      "metadata": {
+        "objective": "Crea una función Go Par que devuelva si un entero es par, añade pruebas y explícame cómo verificaste el objetivo",
+        "skill_id": "software.development",
+        "capability_id": "programming.create_file",
+        "instrument_id": "programming",
+        "target_environment": "C:\\Users\\User\\Desktop\\Ahmelia-Knowledge\\.gotmp-validation\\TestProductionRequestWithAccentsReachesCanonicalAuthorityvoice2185981699\\002\\workspace",
+        "verification_profile": "build[go build ./...]=success;tests[go test ./...]=passed",
+        "work_id": "work_1792164905845497200_21",
+        "attempt_number": 1,
+        "verification_source": "programming",
+        "observation_details": "el proveedor de programación confirmó el estado de producción mediante su evidencia de construcción/pruebas disponible"
+      },
+      "timestamp": "2026-10-16T10:35:08.2571797-05:00",
+      "session_id": "work_1792164905845497200_21",
+      "experience_id": "work:work_1792164905845497200_21:attempt:1"
+    },
+    {
+      "action": "create_file",
+      "target": "",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "confirmed",
+        "Category": "production_result",
+        "Reason": "resultado de producción evaluado por el proveedor de programación"
+      },
+      "metadata": {
+        "objective": "Quiero crear un programa Go llamado alfa",
+        "skill_id": "software.development",
+        "capability_id": "programming.create_file",
+        "instrument_id": "programming",
+        "target_environment": "C:\\Users\\User\\Desktop\\Ahmelia-Knowledge\\.gotmp-validation\\TestF9CorrectionChangesMeaningThroughFullEnginePipeline1665339515\\002\\workspace",
+        "verification_profile": "build[go build ./...]=success;tests[go test ./...]=passed",
+        "work_id": "work_1792164916948252500_22",
+        "attempt_number": 1,
+        "verification_source": "programming",
+        "observation_details": "el proveedor de programación confirmó el estado de producción mediante su evidencia de construcción/pruebas disponible"
+      },
+      "timestamp": "2026-10-16T10:35:18.9900673-05:00",
+      "session_id": "work_1792164916948252500_22",
+      "experience_id": "work:work_1792164916948252500_22:attempt:1"
+    },
+    {
+      "action": "create_file",
+      "target": "",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "confirmed",
+        "Category": "production_result",
+        "Reason": "resultado de producción evaluado por el proveedor de programación"
+      },
+      "metadata": {
+        "objective": "beta",
+        "skill_id": "software.development",
+        "capability_id": "programming.create_file",
+        "instrument_id": "programming",
+        "target_environment": "C:\\Users\\User\\Desktop\\Ahmelia-Knowledge\\.gotmp-validation\\TestF9CorrectionChangesMeaningThroughFullEnginePipeline1665339515\\002\\beta",
+        "verification_profile": "build[go build ./...]=success;tests[go test ./...]=passed",
+        "work_id": "work_1792164916948252500_22",
+        "attempt_number": 2,
+        "verification_source": "programming",
+        "observation_details": "el proveedor de programación confirmó el estado de producción mediante su evidencia de construcción/pruebas disponible"
+      },
+      "timestamp": "2026-10-16T10:35:22.5167407-05:00",
+      "session_id": "work_1792164916948252500_22",
+      "experience_id": "work:work_1792164916948252500_22:attempt:2"
+    },
+    {
+      "action": "create_file",
+      "target": "",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "confirmed",
+        "Category": "production_result",
+        "Reason": "resultado de producción evaluado por el proveedor de programación"
+      },
+      "metadata": {
+        "objective": "Quiero crear un programa Go llamado alfa",
+        "skill_id": "software.development",
+        "capability_id": "programming.create_file",
+        "instrument_id": "programming",
+        "target_environment": "C:\\Users\\User\\Desktop\\Ahmelia-Knowledge\\.gotmp-validation\\TestF9UnrelatedCorrectionWithMaterializedWorkDoesNotEnterRepairP4140780604\\002\\workspace",
+        "verification_profile": "build[go build ./...]=success;tests[go test ./...]=passed",
+        "work_id": "work_1792164929685693900_23",
+        "attempt_number": 1,
+        "verification_source": "programming",
+        "observation_details": "el proveedor de programación confirmó el estado de producción mediante su evidencia de construcción/pruebas disponible"
+      },
+      "timestamp": "2026-10-16T10:35:31.6976881-05:00",
+      "session_id": "work_1792164929685693900_23",
+      "experience_id": "work:work_1792164929685693900_23:attempt:1"
+    },
+    {
+      "action": "create_file",
+      "target": "",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "confirmed",
+        "Category": "production_result",
+        "Reason": "resultado de producción evaluado por el proveedor de programación"
+      },
+      "metadata": {
+        "objective": "Quiero crear un programa Go llamado alfa",
+        "skill_id": "software.development",
+        "capability_id": "programming.create_file",
+        "instrument_id": "programming",
+        "target_environment": "C:\\Users\\User\\Desktop\\Ahmelia-Knowledge\\.gotmp-validation\\TestF9RepairRequiresVerifiedMaterializedResult3971667504\\002\\workspace",
+        "verification_profile": "build[go build ./...]=success;tests[go test ./...]=passed",
+        "work_id": "work_1792164937900636000_24",
+        "attempt_number": 1,
+        "verification_source": "programming",
+        "observation_details": "el proveedor de programación confirmó el estado de producción mediante su evidencia de construcción/pruebas disponible"
+      },
+      "timestamp": "2026-10-16T10:35:40.1483804-05:00",
+      "session_id": "work_1792164937900636000_24",
+      "experience_id": "work:work_1792164937900636000_24:attempt:1"
+    },
+    {
+      "action": "create_file",
+      "target": "",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "confirmed",
+        "Category": "production_result",
+        "Reason": "resultado de producción evaluado por el proveedor de programación"
+      },
+      "metadata": {
+        "objective": "Quiero crear un programa Go llamado alfa",
+        "skill_id": "software.development",
+        "capability_id": "programming.create_file",
+        "instrument_id": "programming",
+        "target_environment": "C:\\Users\\User\\Desktop\\Ahmelia-Knowledge\\.gotmp-validation\\TestB9630E2E_CorrectionPreservesConversationContinuity3580465645\\001\\workspace",
+        "verification_profile": "build[go build ./...]=success;tests[go test ./...]=passed",
+        "work_id": "work_1792165038725385100_36",
+        "attempt_number": 1,
+        "verification_source": "programming",
+        "observation_details": "el proveedor de programación confirmó el estado de producción mediante su evidencia de construcción/pruebas disponible"
+      },
+      "timestamp": "2026-10-16T10:37:22.2954345-05:00",
+      "session_id": "work_1792165038725385100_36",
+      "experience_id": "work:work_1792165038725385100_36:attempt:1"
+    },
+    {
+      "action": "create_file",
+      "target": "",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "confirmed",
+        "Category": "production_result",
+        "Reason": "resultado de producción evaluado por el proveedor de programación"
+      },
+      "metadata": {
+        "objective": "beta",
+        "skill_id": "software.development",
+        "capability_id": "programming.create_file",
+        "instrument_id": "programming",
+        "target_environment": "C:\\Users\\User\\Desktop\\Ahmelia-Knowledge\\.gotmp-validation\\TestB9630E2E_CorrectionPreservesConversationContinuity3580465645\\001\\beta",
+        "verification_profile": "build[go build ./...]=success;tests[go test ./...]=passed",
+        "work_id": "work_1792165038725385100_36",
+        "attempt_number": 2,
+        "verification_source": "programming",
+        "observation_details": "el proveedor de programación confirmó el estado de producción mediante su evidencia de construcción/pruebas disponible"
+      },
+      "timestamp": "2026-10-16T10:37:28.750988-05:00",
+      "session_id": "work_1792165038725385100_36",
+      "experience_id": "work:work_1792165038725385100_36:attempt:2"
+    },
+    {
+      "action": "create_file",
+      "target": "",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "confirmed",
+        "Category": "production_result",
+        "Reason": "resultado de producción evaluado por el proveedor de programación"
+      },
+      "metadata": {
+        "objective": "Quiero trabajar en la escena principal",
+        "skill_id": "software.development",
+        "capability_id": "programming.create_file",
+        "instrument_id": "programming",
+        "target_environment": "C:\\Users\\User\\Desktop\\Ahmelia-Knowledge\\.gotmp-validation\\TestB963214E2E_InterruptionResumeAndPersistenceKeepTheSameIntera254385802\\001\\workspace",
+        "verification_profile": "build[go build ./...]=success;tests[go test ./...]=passed",
+        "work_id": "work_1792165070874393000_37",
+        "attempt_number": 1,
+        "verification_source": "programming",
+        "observation_details": "el proveedor de programación confirmó el estado de producción mediante su evidencia de construcción/pruebas disponible"
+      },
+      "timestamp": "2026-10-16T10:37:53.0979033-05:00",
+      "session_id": "work_1792165070874393000_37",
+      "experience_id": "work:work_1792165070874393000_37:attempt:1"
+    },
+    {
+      "action": "create_file",
+      "target": "",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "confirmed",
+        "Category": "production_result",
+        "Reason": "resultado de producción evaluado por el proveedor de programación"
+      },
+      "metadata": {
+        "objective": "Quiero crear un programa Go llamado alfa",
+        "skill_id": "software.development",
+        "capability_id": "programming.create_file",
+        "instrument_id": "programming",
+        "target_environment": "C:\\Users\\User\\AppData\\Local\\Temp\\TestF9CorrectionChangesMeaningThroughFullEnginePipeline2730809662\\002\\workspace",
+        "verification_profile": "build[go build ./...]=success;tests[go test ./...]=passed",
+        "work_id": "work_1792165099473032100_1",
+        "attempt_number": 1,
+        "verification_source": "programming",
+        "observation_details": "el proveedor de programación confirmó el estado de producción mediante su evidencia de construcción/pruebas disponible"
+      },
+      "timestamp": "2026-10-16T10:38:20.7863638-05:00",
+      "session_id": "work_1792165099473032100_1",
+      "experience_id": "work:work_1792165099473032100_1:attempt:1"
+    },
+    {
+      "action": "create_file",
+      "target": "",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "confirmed",
+        "Category": "production_result",
+        "Reason": "resultado de producción evaluado por el proveedor de programación"
+      },
+      "metadata": {
+        "objective": "beta",
+        "skill_id": "software.development",
+        "capability_id": "programming.create_file",
+        "instrument_id": "programming",
+        "target_environment": "C:\\Users\\User\\AppData\\Local\\Temp\\TestF9CorrectionChangesMeaningThroughFullEnginePipeline2730809662\\002\\beta",
+        "verification_profile": "build[go build ./...]=success;tests[go test ./...]=passed",
+        "work_id": "work_1792165099473032100_1",
+        "attempt_number": 2,
+        "verification_source": "programming",
+        "observation_details": "el proveedor de programación confirmó el estado de producción mediante su evidencia de construcción/pruebas disponible"
+      },
+      "timestamp": "2026-10-16T10:38:24.5776737-05:00",
+      "session_id": "work_1792165099473032100_1",
+      "experience_id": "work:work_1792165099473032100_1:attempt:2"
+    },
+    {
+      "action": "create_file",
+      "target": "",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "confirmed",
+        "Category": "production_result",
+        "Reason": "resultado de producción evaluado por el proveedor de programación"
+      },
+      "metadata": {
+        "objective": "Quiero crear un programa Go llamado alfa",
+        "skill_id": "software.development",
+        "capability_id": "programming.create_file",
+        "instrument_id": "programming",
+        "target_environment": "C:\\Users\\User\\AppData\\Local\\Temp\\TestF9UnrelatedCorrectionWithMaterializedWorkDoesNotEnterRepairP3837782041\\002\\workspace",
+        "verification_profile": "build[go build ./...]=success;tests[go test ./...]=passed",
+        "work_id": "work_1792165113788486200_2",
+        "attempt_number": 1,
+        "verification_source": "programming",
+        "observation_details": "el proveedor de programación confirmó el estado de producción mediante su evidencia de construcción/pruebas disponible"
+      },
+      "timestamp": "2026-10-16T10:38:34.825682-05:00",
+      "session_id": "work_1792165113788486200_2",
+      "experience_id": "work:work_1792165113788486200_2:attempt:1"
+    },
+    {
+      "action": "create_file",
+      "target": "",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "confirmed",
+        "Category": "production_result",
+        "Reason": "resultado de producción evaluado por el proveedor de programación"
+      },
+      "metadata": {
+        "objective": "Quiero crear un programa Go llamado alfa",
+        "skill_id": "software.development",
+        "capability_id": "programming.create_file",
+        "instrument_id": "programming",
+        "target_environment": "C:\\Users\\User\\AppData\\Local\\Temp\\TestF9RepairRequiresVerifiedMaterializedResult464811535\\002\\workspace",
+        "verification_profile": "build[go build ./...]=success;tests[go test ./...]=passed",
+        "work_id": "work_1792165122166376000_3",
+        "attempt_number": 1,
+        "verification_source": "programming",
+        "observation_details": "el proveedor de programación confirmó el estado de producción mediante su evidencia de construcción/pruebas disponible"
+      },
+      "timestamp": "2026-10-16T10:38:44.161334-05:00",
+      "session_id": "work_1792165122166376000_3",
+      "experience_id": "work:work_1792165122166376000_3:attempt:1"
+    },
+    {
+      "action": "noop",
+      "target": "",
+      "outcome": {
+        "Success": false,
+        "evidence_status": "unknown",
+        "Category": "",
+        "Reason": "la acción no fue ejecutada por el motor"
+      },
+      "metadata": {},
+      "timestamp": "2026-10-16T10:39:19.929411-05:00",
+      "session_id": "b93.4-test"
+    },
+    {
+      "action": "noop",
+      "target": "",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "unknown",
+        "Category": "",
+        "Reason": ""
+      },
+      "metadata": {},
+      "timestamp": "2026-10-16T10:39:21.618935-05:00",
+      "session_id": "b93.4-test"
+    },
+    {
+      "action": "create_file",
+      "target": "",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "confirmed",
+        "Category": "test_production_verified",
+        "Reason": "test production verified"
+      },
+      "metadata": {
+        "objective": "Empieza creando un programa base para el juego de supervivencia.",
+        "skill_id": "software.development",
+        "capability_id": "programming.create_file",
+        "instrument_id": "programming",
+        "work_id": "work_1792165255250432600_5",
+        "attempt_number": 1
+      },
+      "timestamp": "2026-10-16T10:40:55.2669787-05:00",
+      "session_id": "work_1792165255250432600_5",
+      "experience_id": "work:work_1792165255250432600_5:attempt:1"
+    },
+    {
+      "action": "abrir_programa",
+      "target": "chrome",
+      "outcome": {
+        "Success": false,
+        "evidence_status": "insufficient",
+        "Category": "program_not_found",
+        "Reason": "programa no encontrado: chrome"
+      },
+      "metadata": {},
+      "timestamp": "2026-10-16T10:41:31.0436835-05:00",
+      "session_id": "1792165289"
+    },
+    {
+      "action": "abrir_programa",
+      "target": "chrome",
+      "outcome": {
+        "Success": false,
+        "evidence_status": "insufficient",
+        "Category": "execution_failed",
+        "Reason": "programa no encontrado: chrome"
+      },
+      "metadata": {
+        "objective": "abre chrome",
+        "capability_id": "abrir_programa",
+        "instrument_id": "core.local_action"
+      },
+      "timestamp": "2026-10-16T10:41:31.0471968-05:00",
+      "session_id": "authority"
+    },
+    {
+      "action": "create_file",
+      "target": "",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "confirmed",
+        "Category": "production_result",
+        "Reason": "resultado de producción evaluado por el proveedor de programación"
+      },
+      "metadata": {
+        "objective": "Quiero crear un programa Go llamado f10_reasoning",
+        "skill_id": "software.development",
+        "capability_id": "programming.create_file",
+        "instrument_id": "programming",
+        "target_environment": "C:\\Users\\User\\Desktop\\Ahmelia-Knowledge\\.gotmp-validation\\TestF10AdversarialWhyDecisionUsesRecordedDecisionPath596103523\\002\\workspace",
+        "verification_profile": "build[go build ./...]=success;tests[go test ./...]=passed",
+        "work_id": "work_1792165316089054800_12",
+        "attempt_number": 1,
+        "verification_source": "programming",
+        "observation_details": "el proveedor de programación confirmó el estado de producción mediante su evidencia de construcción/pruebas disponible"
+      },
+      "timestamp": "2026-10-16T10:41:57.5487319-05:00",
+      "session_id": "work_1792165316089054800_12",
+      "experience_id": "work:work_1792165316089054800_12:attempt:1"
+    },
+    {
+      "action": "create_file",
+      "target": "",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "confirmed",
+        "Category": "production_result",
+        "Reason": "resultado de producción evaluado por el proveedor de programación"
+      },
+      "metadata": {
+        "objective": "Quiero crear un programa Go llamado f10_compuesto",
+        "skill_id": "software.development",
+        "capability_id": "programming.create_file",
+        "instrument_id": "programming",
+        "target_environment": "C:\\Users\\User\\Desktop\\Ahmelia-Knowledge\\.gotmp-validation\\TestF10AdversarialCompoundContinuationDoesNotForkWork3548763968\\002\\workspace",
+        "verification_profile": "build[go build ./...]=success;tests[go test ./...]=passed",
+        "work_id": "work_1792165322707638700_14",
+        "attempt_number": 1,
+        "verification_source": "programming",
+        "observation_details": "el proveedor de programación confirmó el estado de producción mediante su evidencia de construcción/pruebas disponible"
+      },
+      "timestamp": "2026-10-16T10:42:03.5074413-05:00",
+      "session_id": "work_1792165322707638700_14",
+      "experience_id": "work:work_1792165322707638700_14:attempt:1"
+    },
+    {
+      "action": "create_file",
+      "target": "",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "confirmed",
+        "Category": "production_result",
+        "Reason": "resultado de producción evaluado por el proveedor de programación"
+      },
+      "metadata": {
+        "objective": "Quiero crear un programa Go llamado f10_project",
+        "skill_id": "software.development",
+        "capability_id": "programming.create_file",
+        "instrument_id": "programming",
+        "target_environment": "C:\\Users\\User\\Desktop\\Ahmelia-Knowledge\\.gotmp-validation\\TestF10AdversarialProjectQuestionSeparatesWorkEvidenceFromIntern858505753\\002\\workspace",
+        "verification_profile": "build[go build ./...]=success;tests[go test ./...]=passed",
+        "work_id": "work_1792165328281994900_15",
+        "attempt_number": 1,
+        "verification_source": "programming",
+        "observation_details": "el proveedor de programación confirmó el estado de producción mediante su evidencia de construcción/pruebas disponible"
+      },
+      "timestamp": "2026-10-16T10:42:09.1288259-05:00",
+      "session_id": "work_1792165328281994900_15",
+      "experience_id": "work:work_1792165328281994900_15:attempt:1"
+    },
+    {
+      "action": "create_file",
+      "target": "",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "confirmed",
+        "Category": "production_result",
+        "Reason": "resultado de producción evaluado por el proveedor de programación"
+      },
+      "metadata": {
+        "objective": "Quiero crear un programa Go llamado f10_mix",
+        "skill_id": "software.development",
+        "capability_id": "programming.create_file",
+        "instrument_id": "programming",
+        "target_environment": "C:\\Users\\User\\Desktop\\Ahmelia-Knowledge\\.gotmp-validation\\TestF10AdversarialMixedSequenceIsStateSafe1823741474\\002\\workspace",
+        "verification_profile": "build[go build ./...]=success;tests[go test ./...]=passed",
+        "work_id": "work_1792165339199927600_19",
+        "attempt_number": 1,
+        "verification_source": "programming",
+        "observation_details": "el proveedor de programación confirmó el estado de producción mediante su evidencia de construcción/pruebas disponible"
+      },
+      "timestamp": "2026-10-16T10:42:19.9980157-05:00",
+      "session_id": "work_1792165339199927600_19",
+      "experience_id": "work:work_1792165339199927600_19:attempt:1"
+    },
+    {
+      "action": "create_file",
+      "target": "",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "confirmed",
+        "Category": "production_result",
+        "Reason": "resultado de producción evaluado por el proveedor de programación"
+      },
+      "metadata": {
+        "objective": "Crea una función Go Par que devuelva si un entero es par, añade pruebas y explícame cómo verificaste el objetivo",
+        "skill_id": "software.development",
+        "capability_id": "programming.create_file",
+        "instrument_id": "programming",
+        "target_environment": "C:\\Users\\User\\Desktop\\Ahmelia-Knowledge\\.gotmp-validation\\TestProductionRequestWithAccentsReachesCanonicalAuthoritytext4077918837\\002\\workspace",
+        "verification_profile": "build[go build ./...]=success;tests[go test ./...]=passed",
+        "work_id": "work_1792165347340850800_20",
+        "attempt_number": 1,
+        "verification_source": "programming",
+        "observation_details": "el proveedor de programación confirmó el estado de producción mediante su evidencia de construcción/pruebas disponible"
+      },
+      "timestamp": "2026-10-16T10:42:28.1099494-05:00",
+      "session_id": "work_1792165347340850800_20",
+      "experience_id": "work:work_1792165347340850800_20:attempt:1"
+    },
+    {
+      "action": "create_file",
+      "target": "",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "confirmed",
+        "Category": "production_result",
+        "Reason": "resultado de producción evaluado por el proveedor de programación"
+      },
+      "metadata": {
+        "objective": "Crea una función Go Par que devuelva si un entero es par, añade pruebas y explícame cómo verificaste el objetivo",
+        "skill_id": "software.development",
+        "capability_id": "programming.create_file",
+        "instrument_id": "programming",
+        "target_environment": "C:\\Users\\User\\Desktop\\Ahmelia-Knowledge\\.gotmp-validation\\TestProductionRequestWithAccentsReachesCanonicalAuthorityvoice330511122\\002\\workspace",
+        "verification_profile": "build[go build ./...]=success;tests[go test ./...]=passed",
+        "work_id": "work_1792165351213054200_21",
+        "attempt_number": 1,
+        "verification_source": "programming",
+        "observation_details": "el proveedor de programación confirmó el estado de producción mediante su evidencia de construcción/pruebas disponible"
+      },
+      "timestamp": "2026-10-16T10:42:31.9794826-05:00",
+      "session_id": "work_1792165351213054200_21",
+      "experience_id": "work:work_1792165351213054200_21:attempt:1"
+    },
+    {
+      "action": "create_file",
+      "target": "",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "confirmed",
+        "Category": "production_result",
+        "Reason": "resultado de producción evaluado por el proveedor de programación"
+      },
+      "metadata": {
+        "objective": "Quiero crear un programa Go llamado alfa",
+        "skill_id": "software.development",
+        "capability_id": "programming.create_file",
+        "instrument_id": "programming",
+        "target_environment": "C:\\Users\\User\\Desktop\\Ahmelia-Knowledge\\.gotmp-validation\\TestF9CorrectionChangesMeaningThroughFullEnginePipeline3473746841\\002\\workspace",
+        "verification_profile": "build[go build ./...]=success;tests[go test ./...]=passed",
+        "work_id": "work_1792165360494711600_22",
+        "attempt_number": 1,
+        "verification_source": "programming",
+        "observation_details": "el proveedor de programación confirmó el estado de producción mediante su evidencia de construcción/pruebas disponible"
+      },
+      "timestamp": "2026-10-16T10:42:42.8791827-05:00",
+      "session_id": "work_1792165360494711600_22",
+      "experience_id": "work:work_1792165360494711600_22:attempt:1"
+    },
+    {
+      "action": "create_file",
+      "target": "",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "confirmed",
+        "Category": "production_result",
+        "Reason": "resultado de producción evaluado por el proveedor de programación"
+      },
+      "metadata": {
+        "objective": "beta",
+        "skill_id": "software.development",
+        "capability_id": "programming.create_file",
+        "instrument_id": "programming",
+        "target_environment": "C:\\Users\\User\\Desktop\\Ahmelia-Knowledge\\.gotmp-validation\\TestF9CorrectionChangesMeaningThroughFullEnginePipeline3473746841\\002\\beta",
+        "verification_profile": "build[go build ./...]=success;tests[go test ./...]=passed",
+        "work_id": "work_1792165360494711600_22",
+        "attempt_number": 2,
+        "verification_source": "programming",
+        "observation_details": "el proveedor de programación confirmó el estado de producción mediante su evidencia de construcción/pruebas disponible"
+      },
+      "timestamp": "2026-10-16T10:42:46.0145398-05:00",
+      "session_id": "work_1792165360494711600_22",
+      "experience_id": "work:work_1792165360494711600_22:attempt:2"
+    },
+    {
+      "action": "create_file",
+      "target": "",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "confirmed",
+        "Category": "production_result",
+        "Reason": "resultado de producción evaluado por el proveedor de programación"
+      },
+      "metadata": {
+        "objective": "Quiero crear un programa Go llamado alfa",
+        "skill_id": "software.development",
+        "capability_id": "programming.create_file",
+        "instrument_id": "programming",
+        "target_environment": "C:\\Users\\User\\Desktop\\Ahmelia-Knowledge\\.gotmp-validation\\TestF9UnrelatedCorrectionWithMaterializedWorkDoesNotEnterRepairP3044387268\\002\\workspace",
+        "verification_profile": "build[go build ./...]=success;tests[go test ./...]=passed",
+        "work_id": "work_1792165371262909700_23",
+        "attempt_number": 1,
+        "verification_source": "programming",
+        "observation_details": "el proveedor de programación confirmó el estado de producción mediante su evidencia de construcción/pruebas disponible"
+      },
+      "timestamp": "2026-10-16T10:42:52.0660651-05:00",
+      "session_id": "work_1792165371262909700_23",
+      "experience_id": "work:work_1792165371262909700_23:attempt:1"
+    },
+    {
+      "action": "create_file",
+      "target": "",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "confirmed",
+        "Category": "production_result",
+        "Reason": "resultado de producción evaluado por el proveedor de programación"
+      },
+      "metadata": {
+        "objective": "Quiero crear un programa Go llamado alfa",
+        "skill_id": "software.development",
+        "capability_id": "programming.create_file",
+        "instrument_id": "programming",
+        "target_environment": "C:\\Users\\User\\Desktop\\Ahmelia-Knowledge\\.gotmp-validation\\TestF9RepairRequiresVerifiedMaterializedResult1439838950\\002\\workspace",
+        "verification_profile": "build[go build ./...]=success;tests[go test ./...]=passed",
+        "work_id": "work_1792165377322503100_24",
+        "attempt_number": 1,
+        "verification_source": "programming",
+        "observation_details": "el proveedor de programación confirmó el estado de producción mediante su evidencia de construcción/pruebas disponible"
+      },
+      "timestamp": "2026-10-16T10:42:58.619588-05:00",
+      "session_id": "work_1792165377322503100_24",
+      "experience_id": "work:work_1792165377322503100_24:attempt:1"
+    },
+    {
+      "action": "create_file",
+      "target": "",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "confirmed",
+        "Category": "production_result",
+        "Reason": "resultado de producción evaluado por el proveedor de programación"
+      },
+      "metadata": {
+        "objective": "Quiero crear un programa Go llamado alfa",
+        "skill_id": "software.development",
+        "capability_id": "programming.create_file",
+        "instrument_id": "programming",
+        "target_environment": "C:\\Users\\User\\Desktop\\Ahmelia-Knowledge\\.gotmp-validation\\TestB9630E2E_CorrectionPreservesConversationContinuity299082836\\001\\workspace",
+        "verification_profile": "build[go build ./...]=success;tests[go test ./...]=passed",
+        "work_id": "work_1792165481738519600_36",
+        "attempt_number": 1,
+        "verification_source": "programming",
+        "observation_details": "el proveedor de programación confirmó el estado de producción mediante su evidencia de construcción/pruebas disponible"
+      },
+      "timestamp": "2026-10-16T10:44:50.8957695-05:00",
+      "session_id": "work_1792165481738519600_36",
+      "experience_id": "work:work_1792165481738519600_36:attempt:1"
+    },
+    {
+      "action": "create_file",
+      "target": "",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "confirmed",
+        "Category": "production_result",
+        "Reason": "resultado de producción evaluado por el proveedor de programación"
+      },
+      "metadata": {
+        "objective": "beta",
+        "skill_id": "software.development",
+        "capability_id": "programming.create_file",
+        "instrument_id": "programming",
+        "target_environment": "C:\\Users\\User\\Desktop\\Ahmelia-Knowledge\\.gotmp-validation\\TestB9630E2E_CorrectionPreservesConversationContinuity299082836\\001\\beta",
+        "verification_profile": "build[go build ./...]=success;tests[go test ./...]=passed",
+        "work_id": "work_1792165481738519600_36",
+        "attempt_number": 2,
+        "verification_source": "programming",
+        "observation_details": "el proveedor de programación confirmó el estado de producción mediante su evidencia de construcción/pruebas disponible"
+      },
+      "timestamp": "2026-10-16T10:44:57.0283211-05:00",
+      "session_id": "work_1792165481738519600_36",
+      "experience_id": "work:work_1792165481738519600_36:attempt:2"
+    },
+    {
+      "action": "create_file",
+      "target": "",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "confirmed",
+        "Category": "production_result",
+        "Reason": "resultado de producción evaluado por el proveedor de programación"
+      },
+      "metadata": {
+        "objective": "Quiero trabajar en la escena principal",
+        "skill_id": "software.development",
+        "capability_id": "programming.create_file",
+        "instrument_id": "programming",
+        "target_environment": "C:\\Users\\User\\Desktop\\Ahmelia-Knowledge\\.gotmp-validation\\TestB963214E2E_InterruptionResumeAndPersistenceKeepTheSameIntera2770523309\\001\\workspace",
+        "verification_profile": "build[go build ./...]=success;tests[go test ./...]=passed",
+        "work_id": "work_1792165518022222500_37",
+        "attempt_number": 1,
+        "verification_source": "programming",
+        "observation_details": "el proveedor de programación confirmó el estado de producción mediante su evidencia de construcción/pruebas disponible"
+      },
+      "timestamp": "2026-10-16T10:45:20.0638342-05:00",
+      "session_id": "work_1792165518022222500_37",
+      "experience_id": "work:work_1792165518022222500_37:attempt:1"
+    },
+    {
+      "action": "noop",
+      "target": "",
+      "outcome": {
+        "Success": false,
+        "evidence_status": "unknown",
+        "Category": "",
+        "Reason": "la acción no fue ejecutada por el motor"
+      },
+      "metadata": {},
+      "timestamp": "2026-10-16T10:49:41.3964837-05:00",
+      "session_id": "b93.4-test"
+    },
+    {
+      "action": "noop",
+      "target": "",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "unknown",
+        "Category": "",
+        "Reason": ""
+      },
+      "metadata": {},
+      "timestamp": "2026-10-16T10:49:42.6861159-05:00",
+      "session_id": "b93.4-test"
+    },
+    {
+      "action": "create_file",
+      "target": "",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "confirmed",
+        "Category": "test_production_verified",
+        "Reason": "test production verified"
+      },
+      "metadata": {
+        "objective": "Empieza creando un programa base para el juego de supervivencia.",
+        "skill_id": "software.development",
+        "capability_id": "programming.create_file",
+        "instrument_id": "programming",
+        "work_id": "work_1792165865059503200_5",
+        "attempt_number": 1
+      },
+      "timestamp": "2026-10-16T10:51:05.0804176-05:00",
+      "session_id": "work_1792165865059503200_5",
+      "experience_id": "work:work_1792165865059503200_5:attempt:1"
+    },
+    {
+      "action": "abrir_programa",
+      "target": "chrome",
+      "outcome": {
+        "Success": false,
+        "evidence_status": "insufficient",
+        "Category": "program_not_found",
+        "Reason": "programa no encontrado: chrome"
+      },
+      "metadata": {},
+      "timestamp": "2026-10-16T10:51:39.907116-05:00",
+      "session_id": "1792165897"
+    },
+    {
+      "action": "abrir_programa",
+      "target": "chrome",
+      "outcome": {
+        "Success": false,
+        "evidence_status": "insufficient",
+        "Category": "execution_failed",
+        "Reason": "programa no encontrado: chrome"
+      },
+      "metadata": {
+        "objective": "abre chrome",
+        "capability_id": "abrir_programa",
+        "instrument_id": "core.local_action"
+      },
+      "timestamp": "2026-10-16T10:51:39.9094148-05:00",
+      "session_id": "authority"
+    },
+    {
+      "action": "create_file",
+      "target": "",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "confirmed",
+        "Category": "production_result",
+        "Reason": "resultado de producción evaluado por el proveedor de programación"
+      },
+      "metadata": {
+        "objective": "Quiero crear un programa Go llamado f10_reasoning",
+        "skill_id": "software.development",
+        "capability_id": "programming.create_file",
+        "instrument_id": "programming",
+        "target_environment": "C:\\Users\\User\\Desktop\\Ahmelia-Knowledge\\.gotmp-validation\\TestF10AdversarialWhyDecisionUsesRecordedDecisionPath1095489358\\002\\workspace",
+        "verification_profile": "build[go build ./...]=success;tests[go test ./...]=passed",
+        "work_id": "work_1792165927141770700_12",
+        "attempt_number": 1,
+        "verification_source": "programming",
+        "observation_details": "el proveedor de programación confirmó el estado de producción mediante su evidencia de construcción/pruebas disponible"
+      },
+      "timestamp": "2026-10-16T10:52:09.2370327-05:00",
+      "session_id": "work_1792165927141770700_12",
+      "experience_id": "work:work_1792165927141770700_12:attempt:1"
+    },
+    {
+      "action": "create_file",
+      "target": "",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "confirmed",
+        "Category": "production_result",
+        "Reason": "resultado de producción evaluado por el proveedor de programación"
+      },
+      "metadata": {
+        "objective": "Quiero crear un programa Go llamado f10_compuesto",
+        "skill_id": "software.development",
+        "capability_id": "programming.create_file",
+        "instrument_id": "programming",
+        "target_environment": "C:\\Users\\User\\Desktop\\Ahmelia-Knowledge\\.gotmp-validation\\TestF10AdversarialCompoundContinuationDoesNotForkWork2260220994\\002\\workspace",
+        "verification_profile": "build[go build ./...]=success;tests[go test ./...]=passed",
+        "work_id": "work_1792165935897868000_14",
+        "attempt_number": 1,
+        "verification_source": "programming",
+        "observation_details": "el proveedor de programación confirmó el estado de producción mediante su evidencia de construcción/pruebas disponible"
+      },
+      "timestamp": "2026-10-16T10:52:17.981637-05:00",
+      "session_id": "work_1792165935897868000_14",
+      "experience_id": "work:work_1792165935897868000_14:attempt:1"
+    },
+    {
+      "action": "create_file",
+      "target": "",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "confirmed",
+        "Category": "production_result",
+        "Reason": "resultado de producción evaluado por el proveedor de programación"
+      },
+      "metadata": {
+        "objective": "Quiero crear un programa Go llamado f10_project",
+        "skill_id": "software.development",
+        "capability_id": "programming.create_file",
+        "instrument_id": "programming",
+        "target_environment": "C:\\Users\\User\\Desktop\\Ahmelia-Knowledge\\.gotmp-validation\\TestF10AdversarialProjectQuestionSeparatesWorkEvidenceFromIntern1904408594\\002\\workspace",
+        "verification_profile": "build[go build ./...]=success;tests[go test ./...]=passed",
+        "work_id": "work_1792165944161335400_15",
+        "attempt_number": 1,
+        "verification_source": "programming",
+        "observation_details": "el proveedor de programación confirmó el estado de producción mediante su evidencia de construcción/pruebas disponible"
+      },
+      "timestamp": "2026-10-16T10:52:25.9916727-05:00",
+      "session_id": "work_1792165944161335400_15",
+      "experience_id": "work:work_1792165944161335400_15:attempt:1"
+    },
+    {
+      "action": "create_file",
+      "target": "",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "confirmed",
+        "Category": "production_result",
+        "Reason": "resultado de producción evaluado por el proveedor de programación"
+      },
+      "metadata": {
+        "objective": "Quiero crear un programa Go llamado f10_mix",
+        "skill_id": "software.development",
+        "capability_id": "programming.create_file",
+        "instrument_id": "programming",
+        "target_environment": "C:\\Users\\User\\Desktop\\Ahmelia-Knowledge\\.gotmp-validation\\TestF10AdversarialMixedSequenceIsStateSafe1965290254\\002\\workspace",
+        "verification_profile": "build[go build ./...]=success;tests[go test ./...]=passed",
+        "work_id": "work_1792165959128590300_19",
+        "attempt_number": 1,
+        "verification_source": "programming",
+        "observation_details": "el proveedor de programación confirmó el estado de producción mediante su evidencia de construcción/pruebas disponible"
+      },
+      "timestamp": "2026-10-16T10:52:40.7895384-05:00",
+      "session_id": "work_1792165959128590300_19",
+      "experience_id": "work:work_1792165959128590300_19:attempt:1"
+    },
+    {
+      "action": "create_file",
+      "target": "",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "confirmed",
+        "Category": "production_result",
+        "Reason": "resultado de producción evaluado por el proveedor de programación"
+      },
+      "metadata": {
+        "objective": "Crea una función Go Par que devuelva si un entero es par, añade pruebas y explícame cómo verificaste el objetivo",
+        "skill_id": "software.development",
+        "capability_id": "programming.create_file",
+        "instrument_id": "programming",
+        "target_environment": "C:\\Users\\User\\Desktop\\Ahmelia-Knowledge\\.gotmp-validation\\TestProductionRequestWithAccentsReachesCanonicalAuthoritytext356827034\\002\\workspace",
+        "verification_profile": "build[go build ./...]=success;tests[go test ./...]=passed",
+        "work_id": "work_1792165977120818300_20",
+        "attempt_number": 1,
+        "verification_source": "programming",
+        "observation_details": "el proveedor de programación confirmó el estado de producción mediante su evidencia de construcción/pruebas disponible"
+      },
+      "timestamp": "2026-10-16T10:52:59.3039354-05:00",
+      "session_id": "work_1792165977120818300_20",
+      "experience_id": "work:work_1792165977120818300_20:attempt:1"
+    },
+    {
+      "action": "create_file",
+      "target": "",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "confirmed",
+        "Category": "production_result",
+        "Reason": "resultado de producción evaluado por el proveedor de programación"
+      },
+      "metadata": {
+        "objective": "Crea una función Go Par que devuelva si un entero es par, añade pruebas y explícame cómo verificaste el objetivo",
+        "skill_id": "software.development",
+        "capability_id": "programming.create_file",
+        "instrument_id": "programming",
+        "target_environment": "C:\\Users\\User\\Desktop\\Ahmelia-Knowledge\\.gotmp-validation\\TestProductionRequestWithAccentsReachesCanonicalAuthorityvoice1282803772\\002\\workspace",
+        "verification_profile": "build[go build ./...]=success;tests[go test ./...]=passed",
+        "work_id": "work_1792165984318853200_21",
+        "attempt_number": 1,
+        "verification_source": "programming",
+        "observation_details": "el proveedor de programación confirmó el estado de producción mediante su evidencia de construcción/pruebas disponible"
+      },
+      "timestamp": "2026-10-16T10:53:06.0693303-05:00",
+      "session_id": "work_1792165984318853200_21",
+      "experience_id": "work:work_1792165984318853200_21:attempt:1"
+    },
+    {
+      "action": "create_file",
+      "target": "",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "confirmed",
+        "Category": "production_result",
+        "Reason": "resultado de producción evaluado por el proveedor de programación"
+      },
+      "metadata": {
+        "objective": "Quiero crear un programa Go llamado alfa",
+        "skill_id": "software.development",
+        "capability_id": "programming.create_file",
+        "instrument_id": "programming",
+        "target_environment": "C:\\Users\\User\\Desktop\\Ahmelia-Knowledge\\.gotmp-validation\\TestF9CorrectionChangesMeaningThroughFullEnginePipeline137131571\\002\\workspace",
+        "verification_profile": "build[go build ./...]=success;tests[go test ./...]=passed",
+        "work_id": "work_1792165998523658300_22",
+        "attempt_number": 1,
+        "verification_source": "programming",
+        "observation_details": "el proveedor de programación confirmó el estado de producción mediante su evidencia de construcción/pruebas disponible"
+      },
+      "timestamp": "2026-10-16T10:53:20.4020927-05:00",
+      "session_id": "work_1792165998523658300_22",
+      "experience_id": "work:work_1792165998523658300_22:attempt:1"
+    },
+    {
+      "action": "create_file",
+      "target": "",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "confirmed",
+        "Category": "production_result",
+        "Reason": "resultado de producción evaluado por el proveedor de programación"
+      },
+      "metadata": {
+        "objective": "beta",
+        "skill_id": "software.development",
+        "capability_id": "programming.create_file",
+        "instrument_id": "programming",
+        "target_environment": "C:\\Users\\User\\Desktop\\Ahmelia-Knowledge\\.gotmp-validation\\TestF9CorrectionChangesMeaningThroughFullEnginePipeline137131571\\002\\beta",
+        "verification_profile": "build[go build ./...]=success;tests[go test ./...]=passed",
+        "work_id": "work_1792165998523658300_22",
+        "attempt_number": 2,
+        "verification_source": "programming",
+        "observation_details": "el proveedor de programación confirmó el estado de producción mediante su evidencia de construcción/pruebas disponible"
+      },
+      "timestamp": "2026-10-16T10:53:23.8100627-05:00",
+      "session_id": "work_1792165998523658300_22",
+      "experience_id": "work:work_1792165998523658300_22:attempt:2"
+    },
+    {
+      "action": "create_file",
+      "target": "",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "confirmed",
+        "Category": "production_result",
+        "Reason": "resultado de producción evaluado por el proveedor de programación"
+      },
+      "metadata": {
+        "objective": "Quiero crear un programa Go llamado alfa",
+        "skill_id": "software.development",
+        "capability_id": "programming.create_file",
+        "instrument_id": "programming",
+        "target_environment": "C:\\Users\\User\\Desktop\\Ahmelia-Knowledge\\.gotmp-validation\\TestF9UnrelatedCorrectionWithMaterializedWorkDoesNotEnterRepairP4117983282\\002\\workspace",
+        "verification_profile": "build[go build ./...]=success;tests[go test ./...]=passed",
+        "work_id": "work_1792166012537624700_23",
+        "attempt_number": 1,
+        "verification_source": "programming",
+        "observation_details": "el proveedor de programación confirmó el estado de producción mediante su evidencia de construcción/pruebas disponible"
+      },
+      "timestamp": "2026-10-16T10:53:33.9049802-05:00",
+      "session_id": "work_1792166012537624700_23",
+      "experience_id": "work:work_1792166012537624700_23:attempt:1"
+    },
+    {
+      "action": "create_file",
+      "target": "",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "confirmed",
+        "Category": "production_result",
+        "Reason": "resultado de producción evaluado por el proveedor de programación"
+      },
+      "metadata": {
+        "objective": "Quiero crear un programa Go llamado alfa",
+        "skill_id": "software.development",
+        "capability_id": "programming.create_file",
+        "instrument_id": "programming",
+        "target_environment": "C:\\Users\\User\\Desktop\\Ahmelia-Knowledge\\.gotmp-validation\\TestF9RepairRequiresVerifiedMaterializedResult567491095\\002\\workspace",
+        "verification_profile": "build[go build ./...]=success;tests[go test ./...]=passed",
+        "work_id": "work_1792166021715135900_24",
+        "attempt_number": 1,
+        "verification_source": "programming",
+        "observation_details": "el proveedor de programación confirmó el estado de producción mediante su evidencia de construcción/pruebas disponible"
+      },
+      "timestamp": "2026-10-16T10:53:44.1464355-05:00",
+      "session_id": "work_1792166021715135900_24",
+      "experience_id": "work:work_1792166021715135900_24:attempt:1"
+    },
+    {
+      "action": "create_file",
+      "target": "",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "confirmed",
+        "Category": "production_result",
+        "Reason": "resultado de producción evaluado por el proveedor de programación"
+      },
+      "metadata": {
+        "objective": "Quiero crear un programa Go llamado alfa",
+        "skill_id": "software.development",
+        "capability_id": "programming.create_file",
+        "instrument_id": "programming",
+        "target_environment": "C:\\Users\\User\\Desktop\\Ahmelia-Knowledge\\.gotmp-validation\\TestB9630E2E_CorrectionPreservesConversationContinuity3429000689\\001\\workspace",
+        "verification_profile": "build[go build ./...]=success;tests[go test ./...]=passed",
+        "work_id": "work_1792166107307160600_36",
+        "attempt_number": 1,
+        "verification_source": "programming",
+        "observation_details": "el proveedor de programación confirmó el estado de producción mediante su evidencia de construcción/pruebas disponible"
+      },
+      "timestamp": "2026-10-16T10:55:09.5379294-05:00",
+      "session_id": "work_1792166107307160600_36",
+      "experience_id": "work:work_1792166107307160600_36:attempt:1"
+    },
+    {
+      "action": "create_file",
+      "target": "",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "confirmed",
+        "Category": "production_result",
+        "Reason": "resultado de producción evaluado por el proveedor de programación"
+      },
+      "metadata": {
+        "objective": "beta",
+        "skill_id": "software.development",
+        "capability_id": "programming.create_file",
+        "instrument_id": "programming",
+        "target_environment": "C:\\Users\\User\\Desktop\\Ahmelia-Knowledge\\.gotmp-validation\\TestB9630E2E_CorrectionPreservesConversationContinuity3429000689\\001\\beta",
+        "verification_profile": "build[go build ./...]=success;tests[go test ./...]=passed",
+        "work_id": "work_1792166107307160600_36",
+        "attempt_number": 2,
+        "verification_source": "programming",
+        "observation_details": "el proveedor de programación confirmó el estado de producción mediante su evidencia de construcción/pruebas disponible"
+      },
+      "timestamp": "2026-10-16T10:55:11.9016107-05:00",
+      "session_id": "work_1792166107307160600_36",
+      "experience_id": "work:work_1792166107307160600_36:attempt:2"
+    },
+    {
+      "action": "create_file",
+      "target": "",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "confirmed",
+        "Category": "production_result",
+        "Reason": "resultado de producción evaluado por el proveedor de programación"
+      },
+      "metadata": {
+        "objective": "Quiero trabajar en la escena principal",
+        "skill_id": "software.development",
+        "capability_id": "programming.create_file",
+        "instrument_id": "programming",
+        "target_environment": "C:\\Users\\User\\Desktop\\Ahmelia-Knowledge\\.gotmp-validation\\TestB963214E2E_InterruptionResumeAndPersistenceKeepTheSameIntera852990687\\001\\workspace",
+        "verification_profile": "build[go build ./...]=success;tests[go test ./...]=passed",
+        "work_id": "work_1792166131211607000_37",
+        "attempt_number": 1,
+        "verification_source": "programming",
+        "observation_details": "el proveedor de programación confirmó el estado de producción mediante su evidencia de construcción/pruebas disponible"
+      },
+      "timestamp": "2026-10-16T10:55:33.5896131-05:00",
+      "session_id": "work_1792166131211607000_37",
+      "experience_id": "work:work_1792166131211607000_37:attempt:1"
+    },
+    {
+      "action": "abrir_programa",
+      "target": "chrome",
+      "outcome": {
+        "Success": false,
+        "evidence_status": "insufficient",
+        "Category": "program_not_found",
+        "Reason": "programa no encontrado: chrome"
+      },
+      "metadata": {},
+      "timestamp": "2026-10-16T11:03:52.0362758-05:00",
+      "session_id": "1792166630"
+    },
+    {
+      "action": "abrir_programa",
+      "target": "chrome",
+      "outcome": {
+        "Success": false,
+        "evidence_status": "insufficient",
+        "Category": "execution_failed",
+        "Reason": "programa no encontrado: chrome"
+      },
+      "metadata": {
+        "objective": "abre chrome",
+        "capability_id": "abrir_programa",
+        "instrument_id": "core.local_action"
+      },
+      "timestamp": "2026-10-16T11:03:52.038312-05:00",
+      "session_id": "authority"
+    },
+    {
+      "action": "abrir_programa",
+      "target": "chrome",
+      "outcome": {
+        "Success": false,
+        "evidence_status": "insufficient",
+        "Category": "program_not_found",
+        "Reason": "programa no encontrado: chrome"
+      },
+      "metadata": {},
+      "timestamp": "2026-10-16T11:33:02.9381891-05:00",
+      "session_id": "1792168382"
+    },
+    {
+      "action": "abrir_programa",
+      "target": "chrome",
+      "outcome": {
+        "Success": false,
+        "evidence_status": "insufficient",
+        "Category": "execution_failed",
+        "Reason": "programa no encontrado: chrome"
+      },
+      "metadata": {
+        "objective": "abre chrome",
+        "capability_id": "abrir_programa",
+        "instrument_id": "core.local_action"
+      },
+      "timestamp": "2026-10-16T11:33:02.9415695-05:00",
+      "session_id": "authority"
+    },
+    {
+      "action": "create_file",
+      "target": "",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "confirmed",
+        "Category": "production_result",
+        "Reason": "resultado de producción evaluado por el proveedor de programación"
+      },
+      "metadata": {
+        "objective": "Quiero crear un programa Go llamado alfa",
+        "skill_id": "software.development",
+        "capability_id": "programming.create_file",
+        "instrument_id": "programming",
+        "target_environment": "C:\\Users\\User\\AppData\\Local\\Temp\\TestF9CorrectionChangesMeaningThroughFullEnginePipeline1637658451\\002\\workspace",
+        "verification_profile": "build[go build ./...]=success;tests[go test ./...]=passed",
+        "work_id": "work_1792168493409465500_1",
+        "attempt_number": 1,
+        "verification_source": "programming",
+        "observation_details": "el proveedor de programación confirmó el estado de producción mediante su evidencia de construcción/pruebas disponible"
+      },
+      "timestamp": "2026-10-16T11:34:54.9996069-05:00",
+      "session_id": "work_1792168493409465500_1",
+      "experience_id": "work:work_1792168493409465500_1:attempt:1"
+    },
+    {
+      "action": "create_file",
+      "target": "",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "confirmed",
+        "Category": "production_result",
+        "Reason": "resultado de producción evaluado por el proveedor de programación"
+      },
+      "metadata": {
+        "objective": "beta",
+        "skill_id": "software.development",
+        "capability_id": "programming.create_file",
+        "instrument_id": "programming",
+        "target_environment": "C:\\Users\\User\\AppData\\Local\\Temp\\TestF9CorrectionChangesMeaningThroughFullEnginePipeline1637658451\\002\\beta",
+        "verification_profile": "build[go build ./...]=success;tests[go test ./...]=passed",
+        "work_id": "work_1792168493409465500_1",
+        "attempt_number": 2,
+        "verification_source": "programming",
+        "observation_details": "el proveedor de programación confirmó el estado de producción mediante su evidencia de construcción/pruebas disponible"
+      },
+      "timestamp": "2026-10-16T11:34:57.2630833-05:00",
+      "session_id": "work_1792168493409465500_1",
+      "experience_id": "work:work_1792168493409465500_1:attempt:2"
+    },
+    {
+      "action": "create_file",
+      "target": "",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "confirmed",
+        "Category": "production_result",
+        "Reason": "resultado de producción evaluado por el proveedor de programación"
+      },
+      "metadata": {
+        "objective": "Quiero crear un programa Go llamado alfa",
+        "skill_id": "software.development",
+        "capability_id": "programming.create_file",
+        "instrument_id": "programming",
+        "target_environment": "C:\\Users\\User\\AppData\\Local\\Temp\\TestF9UnrelatedCorrectionWithMaterializedWorkDoesNotEnterRepairP2682159273\\002\\workspace",
+        "verification_profile": "build[go build ./...]=success;tests[go test ./...]=passed",
+        "work_id": "work_1792168505772093000_2",
+        "attempt_number": 1,
+        "verification_source": "programming",
+        "observation_details": "el proveedor de programación confirmó el estado de producción mediante su evidencia de construcción/pruebas disponible"
+      },
+      "timestamp": "2026-10-16T11:35:07.1828855-05:00",
+      "session_id": "work_1792168505772093000_2",
+      "experience_id": "work:work_1792168505772093000_2:attempt:1"
+    },
+    {
+      "action": "create_file",
+      "target": "",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "confirmed",
+        "Category": "production_result",
+        "Reason": "resultado de producción evaluado por el proveedor de programación"
+      },
+      "metadata": {
+        "objective": "Quiero crear un programa Go llamado alfa",
+        "skill_id": "software.development",
+        "capability_id": "programming.create_file",
+        "instrument_id": "programming",
+        "target_environment": "C:\\Users\\User\\AppData\\Local\\Temp\\TestF9RepairRequiresVerifiedMaterializedResult2615350149\\002\\workspace",
+        "verification_profile": "build[go build ./...]=success;tests[go test ./...]=passed",
+        "work_id": "work_1792168513642172000_3",
+        "attempt_number": 1,
+        "verification_source": "programming",
+        "observation_details": "el proveedor de programación confirmó el estado de producción mediante su evidencia de construcción/pruebas disponible"
+      },
+      "timestamp": "2026-10-16T11:35:15.0538046-05:00",
+      "session_id": "work_1792168513642172000_3",
+      "experience_id": "work:work_1792168513642172000_3:attempt:1"
+    },
+    {
+      "action": "create_file",
+      "target": "",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "confirmed",
+        "Category": "test_production_verified",
+        "Reason": "test production verified"
+      },
+      "metadata": {
+        "objective": "Empieza creando un programa base para el juego de supervivencia.",
+        "skill_id": "software.development",
+        "capability_id": "programming.create_file",
+        "instrument_id": "programming",
+        "work_id": "work_1792168565383261600_5",
+        "attempt_number": 1
+      },
+      "timestamp": "2026-10-16T11:36:05.4046958-05:00",
+      "session_id": "work_1792168565383261600_5",
+      "experience_id": "work:work_1792168565383261600_5:attempt:1"
+    },
+    {
+      "action": "noop",
+      "target": "",
+      "outcome": {
+        "Success": false,
+        "evidence_status": "unknown",
+        "Category": "",
+        "Reason": "la acción no fue ejecutada por el motor"
+      },
+      "metadata": {},
+      "timestamp": "2026-10-16T12:02:38.8840919-05:00",
+      "session_id": "b93.4-test"
+    },
+    {
+      "action": "noop",
+      "target": "",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "unknown",
+        "Category": "",
+        "Reason": ""
+      },
+      "metadata": {},
+      "timestamp": "2026-10-16T12:02:39.7737628-05:00",
+      "session_id": "b93.4-test"
+    },
+    {
+      "action": "create_file",
+      "target": "",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "confirmed",
+        "Category": "test_production_verified",
+        "Reason": "test production verified"
+      },
+      "metadata": {
+        "objective": "Empieza creando un programa base para el juego de supervivencia.",
+        "skill_id": "software.development",
+        "capability_id": "programming.create_file",
+        "instrument_id": "programming",
+        "work_id": "work_1792170213205725000_5",
+        "attempt_number": 1
+      },
+      "timestamp": "2026-10-16T12:03:33.2255221-05:00",
+      "session_id": "work_1792170213205725000_5",
+      "experience_id": "work:work_1792170213205725000_5:attempt:1"
+    },
+    {
+      "action": "abrir_programa",
+      "target": "chrome",
+      "outcome": {
+        "Success": false,
+        "evidence_status": "insufficient",
+        "Category": "program_not_found",
+        "Reason": "programa no encontrado: chrome"
+      },
+      "metadata": {},
+      "timestamp": "2026-10-16T12:04:00.211747-05:00",
+      "session_id": "1792170239"
+    },
+    {
+      "action": "abrir_programa",
+      "target": "chrome",
+      "outcome": {
+        "Success": false,
+        "evidence_status": "insufficient",
+        "Category": "execution_failed",
+        "Reason": "programa no encontrado: chrome"
+      },
+      "metadata": {
+        "objective": "abre chrome",
+        "capability_id": "abrir_programa",
+        "instrument_id": "core.local_action"
+      },
+      "timestamp": "2026-10-16T12:04:00.2142893-05:00",
+      "session_id": "authority"
+    },
+    {
+      "action": "create_file",
+      "target": "",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "confirmed",
+        "Category": "production_result",
+        "Reason": "resultado de producción evaluado por el proveedor de programación"
+      },
+      "metadata": {
+        "objective": "Quiero crear un programa Go llamado f10_reasoning",
+        "skill_id": "software.development",
+        "capability_id": "programming.create_file",
+        "instrument_id": "programming",
+        "target_environment": "C:\\Users\\User\\Desktop\\Ahmelia-Knowledge\\.gotmp-validation\\TestF10AdversarialWhyDecisionUsesRecordedDecisionPath1039011595\\002\\workspace",
+        "verification_profile": "build[go build ./...]=success;tests[go test ./...]=passed",
+        "work_id": "work_1792170299693585500_13",
+        "attempt_number": 1,
+        "verification_source": "programming",
+        "observation_details": "el proveedor de programación confirmó el estado de producción mediante su evidencia de construcción/pruebas disponible"
+      },
+      "timestamp": "2026-10-16T12:05:01.4661289-05:00",
+      "session_id": "work_1792170299693585500_13",
+      "experience_id": "work:work_1792170299693585500_13:attempt:1"
+    },
+    {
+      "action": "create_file",
+      "target": "",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "confirmed",
+        "Category": "production_result",
+        "Reason": "resultado de producción evaluado por el proveedor de programación"
+      },
+      "metadata": {
+        "objective": "Quiero crear un programa Go llamado f10_compuesto",
+        "skill_id": "software.development",
+        "capability_id": "programming.create_file",
+        "instrument_id": "programming",
+        "target_environment": "C:\\Users\\User\\Desktop\\Ahmelia-Knowledge\\.gotmp-validation\\TestF10AdversarialCompoundContinuationDoesNotForkWork3000012342\\002\\workspace",
+        "verification_profile": "build[go build ./...]=success;tests[go test ./...]=passed",
+        "work_id": "work_1792170306111653100_15",
+        "attempt_number": 1,
+        "verification_source": "programming",
+        "observation_details": "el proveedor de programación confirmó el estado de producción mediante su evidencia de construcción/pruebas disponible"
+      },
+      "timestamp": "2026-10-16T12:05:06.9075585-05:00",
+      "session_id": "work_1792170306111653100_15",
+      "experience_id": "work:work_1792170306111653100_15:attempt:1"
+    },
+    {
+      "action": "create_file",
+      "target": "",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "confirmed",
+        "Category": "production_result",
+        "Reason": "resultado de producción evaluado por el proveedor de programación"
+      },
+      "metadata": {
+        "objective": "Quiero crear un programa Go llamado f10_project",
+        "skill_id": "software.development",
+        "capability_id": "programming.create_file",
+        "instrument_id": "programming",
+        "target_environment": "C:\\Users\\User\\Desktop\\Ahmelia-Knowledge\\.gotmp-validation\\TestF10AdversarialProjectQuestionSeparatesWorkEvidenceFromIntern2140033967\\002\\workspace",
+        "verification_profile": "build[go build ./...]=success;tests[go test ./...]=passed",
+        "work_id": "work_1792170311536752200_16",
+        "attempt_number": 1,
+        "verification_source": "programming",
+        "observation_details": "el proveedor de programación confirmó el estado de producción mediante su evidencia de construcción/pruebas disponible"
+      },
+      "timestamp": "2026-10-16T12:05:12.4191515-05:00",
+      "session_id": "work_1792170311536752200_16",
+      "experience_id": "work:work_1792170311536752200_16:attempt:1"
+    },
+    {
+      "action": "create_file",
+      "target": "",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "confirmed",
+        "Category": "production_result",
+        "Reason": "resultado de producción evaluado por el proveedor de programación"
+      },
+      "metadata": {
+        "objective": "Quiero crear un programa Go llamado f10_mix",
+        "skill_id": "software.development",
+        "capability_id": "programming.create_file",
+        "instrument_id": "programming",
+        "target_environment": "C:\\Users\\User\\Desktop\\Ahmelia-Knowledge\\.gotmp-validation\\TestF10AdversarialMixedSequenceIsStateSafe483908560\\002\\workspace",
+        "verification_profile": "build[go build ./...]=success;tests[go test ./...]=passed",
+        "work_id": "work_1792170322398570000_20",
+        "attempt_number": 1,
+        "verification_source": "programming",
+        "observation_details": "el proveedor de programación confirmó el estado de producción mediante su evidencia de construcción/pruebas disponible"
+      },
+      "timestamp": "2026-10-16T12:05:24.6874588-05:00",
+      "session_id": "work_1792170322398570000_20",
+      "experience_id": "work:work_1792170322398570000_20:attempt:1"
+    },
+    {
+      "action": "create_file",
+      "target": "",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "confirmed",
+        "Category": "production_result",
+        "Reason": "resultado de producción evaluado por el proveedor de programación"
+      },
+      "metadata": {
+        "objective": "Crea una función Go Par que devuelva si un entero es par, añade pruebas y explícame cómo verificaste el objetivo",
+        "skill_id": "software.development",
+        "capability_id": "programming.create_file",
+        "instrument_id": "programming",
+        "target_environment": "C:\\Users\\User\\Desktop\\Ahmelia-Knowledge\\.gotmp-validation\\TestProductionRequestWithAccentsReachesCanonicalAuthoritytext2130470438\\002\\workspace",
+        "verification_profile": "build[go build ./...]=success;tests[go test ./...]=passed",
+        "work_id": "work_1792170337971633900_21",
+        "attempt_number": 1,
+        "verification_source": "programming",
+        "observation_details": "el proveedor de programación confirmó el estado de producción mediante su evidencia de construcción/pruebas disponible"
+      },
+      "timestamp": "2026-10-16T12:05:38.7847126-05:00",
+      "session_id": "work_1792170337971633900_21",
+      "experience_id": "work:work_1792170337971633900_21:attempt:1"
+    },
+    {
+      "action": "create_file",
+      "target": "",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "confirmed",
+        "Category": "production_result",
+        "Reason": "resultado de producción evaluado por el proveedor de programación"
+      },
+      "metadata": {
+        "objective": "Crea una función Go Par que devuelva si un entero es par, añade pruebas y explícame cómo verificaste el objetivo",
+        "skill_id": "software.development",
+        "capability_id": "programming.create_file",
+        "instrument_id": "programming",
+        "target_environment": "C:\\Users\\User\\Desktop\\Ahmelia-Knowledge\\.gotmp-validation\\TestProductionRequestWithAccentsReachesCanonicalAuthorityvoice2254876608\\002\\workspace",
+        "verification_profile": "build[go build ./...]=success;tests[go test ./...]=passed",
+        "work_id": "work_1792170342018516800_22",
+        "attempt_number": 1,
+        "verification_source": "programming",
+        "observation_details": "el proveedor de programación confirmó el estado de producción mediante su evidencia de construcción/pruebas disponible"
+      },
+      "timestamp": "2026-10-16T12:05:42.8360419-05:00",
+      "session_id": "work_1792170342018516800_22",
+      "experience_id": "work:work_1792170342018516800_22:attempt:1"
+    },
+    {
+      "action": "create_file",
+      "target": "",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "confirmed",
+        "Category": "production_result",
+        "Reason": "resultado de producción evaluado por el proveedor de programación"
+      },
+      "metadata": {
+        "objective": "Quiero crear un programa Go llamado alfa",
+        "skill_id": "software.development",
+        "capability_id": "programming.create_file",
+        "instrument_id": "programming",
+        "target_environment": "C:\\Users\\User\\Desktop\\Ahmelia-Knowledge\\.gotmp-validation\\TestF9CorrectionChangesMeaningThroughFullEnginePipeline3350540508\\002\\workspace",
+        "verification_profile": "build[go build ./...]=success;tests[go test ./...]=passed",
+        "work_id": "work_1792170349037812700_23",
+        "attempt_number": 1,
+        "verification_source": "programming",
+        "observation_details": "el proveedor de programación confirmó el estado de producción mediante su evidencia de construcción/pruebas disponible"
+      },
+      "timestamp": "2026-10-16T12:05:49.8475396-05:00",
+      "session_id": "work_1792170349037812700_23",
+      "experience_id": "work:work_1792170349037812700_23:attempt:1"
+    },
+    {
+      "action": "create_file",
+      "target": "",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "confirmed",
+        "Category": "production_result",
+        "Reason": "resultado de producción evaluado por el proveedor de programación"
+      },
+      "metadata": {
+        "objective": "beta",
+        "skill_id": "software.development",
+        "capability_id": "programming.create_file",
+        "instrument_id": "programming",
+        "target_environment": "C:\\Users\\User\\Desktop\\Ahmelia-Knowledge\\.gotmp-validation\\TestF9CorrectionChangesMeaningThroughFullEnginePipeline3350540508\\002\\beta",
+        "verification_profile": "build[go build ./...]=success;tests[go test ./...]=passed",
+        "work_id": "work_1792170349037812700_23",
+        "attempt_number": 2,
+        "verification_source": "programming",
+        "observation_details": "el proveedor de programación confirmó el estado de producción mediante su evidencia de construcción/pruebas disponible"
+      },
+      "timestamp": "2026-10-16T12:05:51.3631053-05:00",
+      "session_id": "work_1792170349037812700_23",
+      "experience_id": "work:work_1792170349037812700_23:attempt:2"
+    },
+    {
+      "action": "create_file",
+      "target": "",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "confirmed",
+        "Category": "production_result",
+        "Reason": "resultado de producción evaluado por el proveedor de programación"
+      },
+      "metadata": {
+        "objective": "Quiero crear un programa Go llamado alfa",
+        "skill_id": "software.development",
+        "capability_id": "programming.create_file",
+        "instrument_id": "programming",
+        "target_environment": "C:\\Users\\User\\Desktop\\Ahmelia-Knowledge\\.gotmp-validation\\TestF9UnrelatedCorrectionWithMaterializedWorkDoesNotEnterRepairP2608926644\\002\\workspace",
+        "verification_profile": "build[go build ./...]=success;tests[go test ./...]=passed",
+        "work_id": "work_1792170356709628400_24",
+        "attempt_number": 1,
+        "verification_source": "programming",
+        "observation_details": "el proveedor de programación confirmó el estado de producción mediante su evidencia de construcción/pruebas disponible"
+      },
+      "timestamp": "2026-10-16T12:05:57.4935827-05:00",
+      "session_id": "work_1792170356709628400_24",
+      "experience_id": "work:work_1792170356709628400_24:attempt:1"
+    },
+    {
+      "action": "create_file",
+      "target": "",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "confirmed",
+        "Category": "production_result",
+        "Reason": "resultado de producción evaluado por el proveedor de programación"
+      },
+      "metadata": {
+        "objective": "Quiero crear un programa Go llamado alfa",
+        "skill_id": "software.development",
+        "capability_id": "programming.create_file",
+        "instrument_id": "programming",
+        "target_environment": "C:\\Users\\User\\Desktop\\Ahmelia-Knowledge\\.gotmp-validation\\TestF9RepairRequiresVerifiedMaterializedResult869977305\\002\\workspace",
+        "verification_profile": "build[go build ./...]=success;tests[go test ./...]=passed",
+        "work_id": "work_1792170361979223900_25",
+        "attempt_number": 1,
+        "verification_source": "programming",
+        "observation_details": "el proveedor de programación confirmó el estado de producción mediante su evidencia de construcción/pruebas disponible"
+      },
+      "timestamp": "2026-10-16T12:06:02.7633421-05:00",
+      "session_id": "work_1792170361979223900_25",
+      "experience_id": "work:work_1792170361979223900_25:attempt:1"
+    },
+    {
+      "action": "create_file",
+      "target": "",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "confirmed",
+        "Category": "production_result",
+        "Reason": "resultado de producción evaluado por el proveedor de programación"
+      },
+      "metadata": {
+        "objective": "Quiero crear un programa Go llamado alfa",
+        "skill_id": "software.development",
+        "capability_id": "programming.create_file",
+        "instrument_id": "programming",
+        "target_environment": "C:\\Users\\User\\Desktop\\Ahmelia-Knowledge\\.gotmp-validation\\TestB9630E2E_CorrectionPreservesConversationContinuity1671651157\\001\\workspace",
+        "verification_profile": "build[go build ./...]=success;tests[go test ./...]=passed",
+        "work_id": "work_1792170435853539400_37",
+        "attempt_number": 1,
+        "verification_source": "programming",
+        "observation_details": "el proveedor de programación confirmó el estado de producción mediante su evidencia de construcción/pruebas disponible"
+      },
+      "timestamp": "2026-10-16T12:07:16.6451891-05:00",
+      "session_id": "work_1792170435853539400_37",
+      "experience_id": "work:work_1792170435853539400_37:attempt:1"
+    },
+    {
+      "action": "create_file",
+      "target": "",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "confirmed",
+        "Category": "production_result",
+        "Reason": "resultado de producción evaluado por el proveedor de programación"
+      },
+      "metadata": {
+        "objective": "beta",
+        "skill_id": "software.development",
+        "capability_id": "programming.create_file",
+        "instrument_id": "programming",
+        "target_environment": "C:\\Users\\User\\Desktop\\Ahmelia-Knowledge\\.gotmp-validation\\TestB9630E2E_CorrectionPreservesConversationContinuity1671651157\\001\\beta",
+        "verification_profile": "build[go build ./...]=success;tests[go test ./...]=passed",
+        "work_id": "work_1792170435853539400_37",
+        "attempt_number": 2,
+        "verification_source": "programming",
+        "observation_details": "el proveedor de programación confirmó el estado de producción mediante su evidencia de construcción/pruebas disponible"
+      },
+      "timestamp": "2026-10-16T12:07:18.1068961-05:00",
+      "session_id": "work_1792170435853539400_37",
+      "experience_id": "work:work_1792170435853539400_37:attempt:2"
+    },
+    {
+      "action": "create_file",
+      "target": "",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "confirmed",
+        "Category": "production_result",
+        "Reason": "resultado de producción evaluado por el proveedor de programación"
+      },
+      "metadata": {
+        "objective": "Quiero trabajar en la escena principal",
+        "skill_id": "software.development",
+        "capability_id": "programming.create_file",
+        "instrument_id": "programming",
+        "target_environment": "C:\\Users\\User\\Desktop\\Ahmelia-Knowledge\\.gotmp-validation\\TestB963214E2E_InterruptionResumeAndPersistenceKeepTheSameIntera3825449728\\001\\workspace",
+        "verification_profile": "build[go build ./...]=success;tests[go test ./...]=passed",
+        "work_id": "work_1792170448209398400_38",
+        "attempt_number": 1,
+        "verification_source": "programming",
+        "observation_details": "el proveedor de programación confirmó el estado de producción mediante su evidencia de construcción/pruebas disponible"
+      },
+      "timestamp": "2026-10-16T12:07:29.0077951-05:00",
+      "session_id": "work_1792170448209398400_38",
+      "experience_id": "work:work_1792170448209398400_38:attempt:1"
+    },
+    {
+      "action": "abrir_programa",
+      "target": "chrome",
+      "outcome": {
+        "Success": false,
+        "evidence_status": "insufficient",
+        "Category": "program_not_found",
+        "Reason": "programa no encontrado: chrome"
+      },
+      "metadata": {},
+      "timestamp": "2026-10-16T12:14:53.2610028-05:00",
+      "session_id": "1792170892"
+    },
+    {
+      "action": "abrir_programa",
+      "target": "chrome",
+      "outcome": {
+        "Success": false,
+        "evidence_status": "insufficient",
+        "Category": "execution_failed",
+        "Reason": "programa no encontrado: chrome"
+      },
+      "metadata": {
+        "objective": "abre chrome",
+        "capability_id": "abrir_programa",
+        "instrument_id": "core.local_action"
+      },
+      "timestamp": "2026-10-16T12:14:53.2654072-05:00",
+      "session_id": "authority"
+    },
+    {
+      "action": "crear_carpeta",
+      "target": "C:\\Users\\User\\AppData\\Local\\Temp\\TestExpectationLedgerDeclaresBeforeExecutionAndConfirmsFolder1387423827\\002\\Prueba",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "insufficient",
+        "Category": "",
+        "Reason": ""
+      },
+      "metadata": {},
+      "timestamp": "2026-11-04T18:13:05.6554127-05:00",
+      "session_id": "1793833985"
+    },
+    {
+      "action": "crear_carpeta",
+      "target": "C:\\Users\\User\\AppData\\Local\\Temp\\TestExpectationLedgerDeclaresBeforeExecutionAndConfirmsFolder1683002475\\002\\Prueba",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "insufficient",
+        "Category": "",
+        "Reason": ""
+      },
+      "metadata": {},
+      "timestamp": "2026-11-04T18:13:27.242436-05:00",
+      "session_id": "1793834007"
+    },
+    {
+      "action": "crear_carpeta",
+      "target": "C:\\Users\\User\\AppData\\Local\\Temp\\TestExpectationLedgerForcesContradictionWhenEffectDoesNotMateria2211247623\\002\\ocupado",
+      "outcome": {
+        "Success": false,
+        "evidence_status": "insufficient",
+        "Category": "file_not_found",
+        "Reason": "error creando carpeta (validar permisos): la carpeta ya existe: C:\\Users\\User\\AppData\\Local\\Temp\\TestExpectationLedgerForcesContradictionWhenEffectDoesNotMateria2211247623\\002\\ocupado"
+      },
+      "metadata": {},
+      "timestamp": "2026-11-04T18:13:27.2758261-05:00",
+      "session_id": "1793834007"
+    },
+    {
+      "action": "crear_carpeta",
+      "target": "C:\\Users\\User\\AppData\\Local\\Temp\\TestExpectationLedgerWriteFailureNeverPublishesConfirmed2469441785\\003\\Prueba",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "insufficient",
+        "Category": "",
+        "Reason": ""
+      },
+      "metadata": {},
+      "timestamp": "2026-11-04T18:13:27.3060444-05:00",
+      "session_id": "1793834007"
+    },
+    {
+      "action": "crear_carpeta",
+      "target": "C:\\Users\\User\\AppData\\Local\\Temp\\TestExpectationVerdictSurvivesEngineRestart825454206\\002\\Persistente",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "insufficient",
+        "Category": "",
+        "Reason": ""
+      },
+      "metadata": {},
+      "timestamp": "2026-11-04T18:13:27.3371818-05:00",
+      "session_id": "1793834007"
+    },
+    {
+      "action": "crear_carpeta",
+      "target": "C:\\Users\\User\\AppData\\Local\\Temp\\TestModelHypothesisDoesNotChangeHarnessVerdict4064559708\\002\\Prueba",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "insufficient",
+        "Category": "",
+        "Reason": ""
+      },
+      "metadata": {},
+      "timestamp": "2026-11-04T18:13:27.3911187-05:00",
+      "session_id": "1793834007"
+    },
+    {
+      "action": "crear_carpeta",
+      "target": "C:\\Users\\User\\AppData\\Local\\Temp\\TestExpectationLedgerDeclaresBeforeExecutionAndConfirmsFolder748376785\\002\\Prueba",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "insufficient",
+        "Category": "",
+        "Reason": ""
+      },
+      "metadata": {},
+      "timestamp": "2026-11-04T18:13:40.0714496-05:00",
+      "session_id": "1793834020"
+    },
+    {
+      "action": "crear_carpeta",
+      "target": "C:\\Users\\User\\AppData\\Local\\Temp\\TestExpectationLedgerForcesContradictionWhenEffectDoesNotMateria3524245402\\002\\ocupado",
+      "outcome": {
+        "Success": false,
+        "evidence_status": "insufficient",
+        "Category": "file_not_found",
+        "Reason": "error creando carpeta (validar permisos): la carpeta ya existe: C:\\Users\\User\\AppData\\Local\\Temp\\TestExpectationLedgerForcesContradictionWhenEffectDoesNotMateria3524245402\\002\\ocupado"
+      },
+      "metadata": {},
+      "timestamp": "2026-11-04T18:13:40.111808-05:00",
+      "session_id": "1793834020"
+    },
+    {
+      "action": "crear_carpeta",
+      "target": "C:\\Users\\User\\AppData\\Local\\Temp\\TestExpectationLedgerWriteFailureNeverPublishesConfirmed154483503\\003\\Prueba",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "insufficient",
+        "Category": "",
+        "Reason": ""
+      },
+      "metadata": {},
+      "timestamp": "2026-11-04T18:13:40.1408088-05:00",
+      "session_id": "1793834020"
+    },
+    {
+      "action": "crear_carpeta",
+      "target": "C:\\Users\\User\\AppData\\Local\\Temp\\TestExpectationVerdictSurvivesEngineRestart331737805\\002\\Persistente",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "insufficient",
+        "Category": "",
+        "Reason": ""
+      },
+      "metadata": {},
+      "timestamp": "2026-11-04T18:13:40.2420022-05:00",
+      "session_id": "1793834020"
+    },
+    {
+      "action": "crear_carpeta",
+      "target": "C:\\Users\\User\\AppData\\Local\\Temp\\TestModelHypothesisDoesNotChangeHarnessVerdict189232973\\002\\Prueba",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "insufficient",
+        "Category": "",
+        "Reason": ""
+      },
+      "metadata": {},
+      "timestamp": "2026-11-04T18:13:40.366491-05:00",
+      "session_id": "1793834020"
+    },
+    {
+      "action": "crear_carpeta",
+      "target": "C:\\Users\\User\\AppData\\Local\\Temp\\TestExpectationVerdictSurvivesEngineRestart2235136032\\002\\Persistente",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "insufficient",
+        "Category": "",
+        "Reason": ""
+      },
+      "metadata": {},
+      "timestamp": "2026-11-04T18:15:18.7940597-05:00",
+      "session_id": "1793834118"
+    },
+    {
+      "action": "crear_carpeta",
+      "target": "C:\\Users\\User\\AppData\\Local\\Temp\\TestExpectationLedgerDeclaresBeforeExecutionAndConfirmsFolder2000477237\\002\\Prueba",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "insufficient",
+        "Category": "",
+        "Reason": ""
+      },
+      "metadata": {},
+      "timestamp": "2026-11-04T18:47:41.408358-05:00",
+      "session_id": "1793836061"
+    },
+    {
+      "action": "crear_carpeta",
+      "target": "C:\\Users\\User\\AppData\\Local\\Temp\\TestExpectationLedgerForcesContradictionWhenEffectDoesNotMateria2549803606\\002\\ocupado",
+      "outcome": {
+        "Success": false,
+        "evidence_status": "insufficient",
+        "Category": "file_not_found",
+        "Reason": "error creando carpeta (validar permisos): la carpeta ya existe: C:\\Users\\User\\AppData\\Local\\Temp\\TestExpectationLedgerForcesContradictionWhenEffectDoesNotMateria2549803606\\002\\ocupado"
+      },
+      "metadata": {},
+      "timestamp": "2026-11-04T18:47:41.4973809-05:00",
+      "session_id": "1793836061"
+    },
+    {
+      "action": "crear_carpeta",
+      "target": "C:\\Users\\User\\AppData\\Local\\Temp\\TestExpectationLedgerWriteFailureNeverPublishesConfirmed1471391960\\003\\Prueba",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "insufficient",
+        "Category": "",
+        "Reason": ""
+      },
+      "metadata": {},
+      "timestamp": "2026-11-04T18:47:41.5547468-05:00",
+      "session_id": "1793836061"
+    },
+    {
+      "action": "crear_carpeta",
+      "target": "C:\\Users\\User\\AppData\\Local\\Temp\\TestExpectationLedgerUnavailableAtStartupIsVisible430399805\\002\\PruebaSinActa",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "insufficient",
+        "Category": "",
+        "Reason": ""
+      },
+      "metadata": {},
+      "timestamp": "2026-11-04T18:47:41.599605-05:00",
+      "session_id": "1793836061"
+    },
+    {
+      "action": "crear_carpeta",
+      "target": "C:\\Users\\User\\AppData\\Local\\Temp\\TestExpectationVerdictSurvivesEngineRestart2373265917\\002\\Persistente",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "insufficient",
+        "Category": "",
+        "Reason": ""
+      },
+      "metadata": {},
+      "timestamp": "2026-11-04T18:47:41.9322205-05:00",
+      "session_id": "1793836061"
+    },
+    {
+      "action": "crear_carpeta",
+      "target": "C:\\Users\\User\\AppData\\Local\\Temp\\TestModelHypothesisDoesNotChangeHarnessVerdict2993900761\\002\\Prueba",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "insufficient",
+        "Category": "",
+        "Reason": ""
+      },
+      "metadata": {},
+      "timestamp": "2026-11-04T18:47:42.014681-05:00",
+      "session_id": "1793836061"
+    },
+    {
+      "action": "crear_carpeta",
+      "target": "C:\\Users\\User\\AppData\\Local\\Temp\\ahmelia-suite-temp\\TestExpectationLedgerDeclaresBeforeExecutionAndConfirmsFolder2576674616\\002\\Prueba",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "insufficient",
+        "Category": "",
+        "Reason": ""
+      },
+      "metadata": {},
+      "timestamp": "2026-11-04T18:51:21.6947665-05:00",
+      "session_id": "1793836281"
+    },
+    {
+      "action": "crear_carpeta",
+      "target": "C:\\Users\\User\\AppData\\Local\\Temp\\ahmelia-suite-temp\\TestExpectationLedgerForcesContradictionWhenEffectDoesNotMateria2158768009\\002\\ocupado",
+      "outcome": {
+        "Success": false,
+        "evidence_status": "insufficient",
+        "Category": "file_not_found",
+        "Reason": "error creando carpeta (validar permisos): la carpeta ya existe: C:\\Users\\User\\AppData\\Local\\Temp\\ahmelia-suite-temp\\TestExpectationLedgerForcesContradictionWhenEffectDoesNotMateria2158768009\\002\\ocupado"
+      },
+      "metadata": {},
+      "timestamp": "2026-11-04T18:51:21.7273209-05:00",
+      "session_id": "1793836281"
+    },
+    {
+      "action": "crear_carpeta",
+      "target": "C:\\Users\\User\\AppData\\Local\\Temp\\ahmelia-suite-temp\\TestExpectationLedgerWriteFailureNeverPublishesConfirmed2119878193\\003\\Prueba",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "insufficient",
+        "Category": "",
+        "Reason": ""
+      },
+      "metadata": {},
+      "timestamp": "2026-11-04T18:51:21.752704-05:00",
+      "session_id": "1793836281"
+    },
+    {
+      "action": "crear_carpeta",
+      "target": "C:\\Users\\User\\AppData\\Local\\Temp\\ahmelia-suite-temp\\TestExpectationLedgerUnavailableAtStartupIsVisible960858973\\002\\PruebaSinActa",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "insufficient",
+        "Category": "",
+        "Reason": ""
+      },
+      "metadata": {},
+      "timestamp": "2026-11-04T18:51:21.7737286-05:00",
+      "session_id": "1793836281"
+    },
+    {
+      "action": "crear_carpeta",
+      "target": "C:\\Users\\User\\AppData\\Local\\Temp\\ahmelia-suite-temp\\TestExpectationVerdictSurvivesEngineRestart1696775151\\002\\Persistente",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "insufficient",
+        "Category": "",
+        "Reason": ""
+      },
+      "metadata": {},
+      "timestamp": "2026-11-04T18:51:21.8075735-05:00",
+      "session_id": "1793836281"
+    },
+    {
+      "action": "crear_carpeta",
+      "target": "C:\\Users\\User\\AppData\\Local\\Temp\\ahmelia-suite-temp\\TestModelHypothesisDoesNotChangeHarnessVerdict1221594362\\002\\Prueba",
+      "outcome": {
+        "Success": true,
+        "evidence_status": "insufficient",
+        "Category": "",
+        "Reason": ""
+      },
+      "metadata": {},
+      "timestamp": "2026-11-04T18:51:21.8591285-05:00",
+      "session_id": "1793836281"
+    }
+  ]
+}

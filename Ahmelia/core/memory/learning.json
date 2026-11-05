@@ -1,0 +1,52 @@
+{
+  "strategies": {
+    "abrir_archivo": {
+      "Primary": "default_app",
+      "Secondary": "app_alternativa",
+      "Fallback": "cmd_directo",
+      "LastUsed": "",
+      "SuccessBy": ""
+    },
+    "abrir_programa": {
+      "Primary": "directo",
+      "Secondary": "con cmd",
+      "Fallback": "buscar en registro",
+      "LastUsed": "buscar en registro",
+      "SuccessBy": ""
+    },
+    "buscar_archivo": {
+      "Primary": "busqueda_rapida",
+      "Secondary": "busqueda_profunda",
+      "Fallback": "manual_browse",
+      "LastUsed": "",
+      "SuccessBy": ""
+    },
+    "cambiar_volumen": {
+      "Primary": "sistem_settings",
+      "Secondary": "via_programas",
+      "Fallback": "via_keyboard",
+      "LastUsed": "",
+      "SuccessBy": ""
+    },
+    "crear_carpeta": {
+      "Primary": "directo",
+      "Secondary": "con powershell",
+      "Fallback": "validar permisos",
+      "LastUsed": "validar permisos",
+      "SuccessBy": ""
+    },
+    "reproducir_musica": {
+      "Primary": "player_default",
+      "Secondary": "player_alternativo",
+      "Fallback": "browser",
+      "LastUsed": "",
+      "SuccessBy": ""
+    }
+  },
+  "action_confidence": {
+    "create_file": 100
+  },
+  "failure_patterns_by_action": {},
+  "successful_adaptations": 0,
+  "last_update": "2026-11-04T18:51:21-05:00"
+}

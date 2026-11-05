@@ -1,0 +1,16 @@
+{
+  "events": [
+    {
+      "action": "a",
+      "target": "",
+      "outcome": {
+        "Success": true,
+        "Category": "",
+        "Reason": ""
+      },
+      "metadata": {},
+      "timestamp": "2026-11-04T18:48:51.4689335-05:00",
+      "session_id": "p"
+    }
+  ]
+}

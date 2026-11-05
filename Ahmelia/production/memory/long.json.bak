@@ -1,0 +1,30 @@
+{
+  "data": {
+    "production_prod-2_task_task-2": {
+      "id": "production_prod-2_task_task-2",
+      "type": "error",
+      "input": "compilación falló",
+      "response": "compilación falló",
+      "action": "compile",
+      "target": "",
+      "parameters": {
+        "goal_id": "goal-2",
+        "production_id": "prod-2",
+        "task_id": "task-2"
+      },
+      "importance": 0.6,
+      "confidence": 0.2,
+      "source": "aprendido",
+      "uses": 1,
+      "last_used": "1969-12-31T19:00:20-05:00",
+      "created_at": "1969-12-31T19:00:20-05:00",
+      "tags": [
+        "production",
+        "task:task-2",
+        "goal:goal-2"
+      ],
+      "relations": []
+    }
+  },
+  "version": 3
+}

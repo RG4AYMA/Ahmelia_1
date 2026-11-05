@@ -1,0 +1,79 @@
+{
+  "schema_version": 1,
+  "episodes": [
+    {
+      "id": "episode_process_1792350343660620400_1792350343660620400",
+      "session_id": "process_1792350343660620400",
+      "start": "2026-10-18T14:05:43.6606204-05:00",
+      "end": "0001-01-01T00:00:00Z",
+      "status": "active",
+      "turns": [
+        {
+          "id": 1,
+          "at": "2026-10-18T14:06:08.0320092-05:00",
+          "user_text": "hola Ahmelia, \ufffdc\ufffdmo est\ufffds?",
+          "assistant": "Entiendo la solicitud, pero no tengo una fuente de conocimiento suficiente para resolverla de forma fiable.",
+          "kind": "question",
+          "speech_act": "question",
+          "objective": "hola Ahmelia, \ufffdc\ufffdmo est\ufffds?"
+        },
+        {
+          "id": 2,
+          "at": "2026-10-18T14:06:42.7335863-05:00",
+          "user_text": "\ufffdt\ufffd tienes color favorito?",
+          "assistant": "Entiendo la solicitud, pero no tengo una fuente de conocimiento suficiente para resolverla de forma fiable.",
+          "kind": "question",
+          "speech_act": "question",
+          "objective": "\ufffdt\ufffd tienes color favorito?",
+          "relation": "new_topic",
+          "parent_turn_id": 1
+        },
+        {
+          "id": 3,
+          "at": "2026-10-18T14:07:19.9952018-05:00",
+          "user_text": "\ufffdsabes cu\ufffdl es mi bebida favorita?",
+          "assistant": "Entiendo la solicitud, pero no tengo una fuente de conocimiento suficiente para resolverla de forma fiable.",
+          "kind": "question",
+          "speech_act": "question",
+          "objective": "\ufffdsabes cu\ufffdl es mi bebida favorita?",
+          "relation": "new_topic",
+          "parent_turn_id": 2
+        },
+        {
+          "id": 4,
+          "at": "2026-10-18T14:07:56.9561532-05:00",
+          "user_text": "la gaseosa de pi\ufffda",
+          "assistant": "No entendí del todo. ¿Puedes repetírmelo de otra forma?",
+          "kind": "continuation",
+          "speech_act": "continue",
+          "objective": "\ufffdsabes cu\ufffdl es mi bebida favorita?",
+          "relation": "answer",
+          "parent_turn_id": 3
+        },
+        {
+          "id": 5,
+          "at": "2026-10-18T14:08:11.4718382-05:00",
+          "user_text": "\ufffdcu\ufffdl es mi bebida favorita?",
+          "assistant": "Entiendo la solicitud, pero no tengo una fuente de conocimiento suficiente para resolverla de forma fiable.",
+          "kind": "question",
+          "speech_act": "question",
+          "objective": "\ufffdcu\ufffdl es mi bebida favorita?",
+          "relation": "new_topic",
+          "parent_turn_id": 4
+        }
+      ],
+      "objectives": [
+        "hola Ahmelia, \ufffdc\ufffdmo est\ufffds?",
+        "\ufffdt\ufffd tienes color favorito?",
+        "\ufffdsabes cu\ufffdl es mi bebida favorita?",
+        "\ufffdcu\ufffdl es mi bebida favorita?"
+      ]
+    }
+  ],
+  "retention": {
+    "max_episodes": 500,
+    "max_age": 15552000000000000,
+    "max_turns_per_episode": 0
+  },
+  "legacy_b62_migrated": true
+}

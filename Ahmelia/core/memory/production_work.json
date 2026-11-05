@@ -1,0 +1,887 @@
+{
+  "work_1792170435853539400_37": {
+    "id": "work_1792170435853539400_37",
+    "objective": {
+      "Text": "beta",
+      "Constraints": null,
+      "OpenEnded": true
+    },
+    "status": "completed",
+    "goal_id": "20261016120713-91-goal",
+    "plan_id": "plan-1792170435852433300-49",
+    "provider": "programming",
+    "artifacts": [
+      {
+        "ID": "main.go",
+        "Name": "main.go",
+        "Path": "C:\\Users\\User\\Desktop\\Ahmelia-Knowledge\\.gotmp-validation\\TestB9630E2E_CorrectionPreservesConversationContinuity1671651157\\001\\workspace\\main.go",
+        "Type": "source",
+        "Producer": "programming",
+        "ProjectID": "alfa",
+        "CreatedAt": "0001-01-01T00:00:00Z",
+        "Metadata": null,
+        "version": 1,
+        "checksum_sha256": "99ea96d6fe53e0c3856753e34f08db2027799023f924c928712eb96e04f62a72",
+        "size_bytes": 84,
+        "integrity_verified": true,
+        "integrity_reason": "file exists and SHA-256 was computed from current bytes"
+      },
+      {
+        "ID": "go.mod",
+        "Name": "go.mod",
+        "Path": "C:\\Users\\User\\Desktop\\Ahmelia-Knowledge\\.gotmp-validation\\TestB9630E2E_CorrectionPreservesConversationContinuity1671651157\\001\\workspace\\go.mod",
+        "Type": "config",
+        "Producer": "programming",
+        "ProjectID": "alfa",
+        "CreatedAt": "0001-01-01T00:00:00Z",
+        "Metadata": null,
+        "version": 1,
+        "checksum_sha256": "909d2964d0a8bfea452fb7adfe429a4362e88cd5284fca5b3778c6b93e61f9ff",
+        "size_bytes": 21,
+        "integrity_verified": true,
+        "integrity_reason": "file exists and SHA-256 was computed from current bytes"
+      },
+      {
+        "ID": "build",
+        "Name": "build",
+        "Path": "C:\\Users\\User\\Desktop\\Ahmelia-Knowledge\\.gotmp-validation\\TestB9630E2E_CorrectionPreservesConversationContinuity1671651157\\001\\workspace",
+        "Type": "build",
+        "Producer": "programming",
+        "ProjectID": "alfa",
+        "CreatedAt": "0001-01-01T00:00:00Z",
+        "Metadata": null
+      }
+    ],
+    "events": [
+      {
+        "time": "2026-10-16T17:07:15.8556299Z",
+        "type": "planned",
+        "detail": "goal and plan attached"
+      },
+      {
+        "time": "2026-10-16T17:07:15.8666635Z",
+        "type": "started",
+        "detail": "production started"
+      },
+      {
+        "time": "2026-10-16T17:07:15.8676827Z",
+        "type": "attempt_started",
+        "detail": "attempt=1 operation=create_file provider=programming"
+      },
+      {
+        "time": "2026-10-16T17:07:15.8694143Z",
+        "type": "attempt_execution_identity",
+        "detail": "attempt=1 job=work_1792170435853539400_37-attempt-1 execution=work_1792170435853539400_37-attempt-1-execution"
+      },
+      {
+        "time": "2026-10-16T17:07:15.871479Z",
+        "type": "attempt_effect_specification_persisted",
+        "detail": "attempt=1"
+      },
+      {
+        "time": "2026-10-16T17:07:15.8754404Z",
+        "type": "attempt_effect_evaluation_recorded",
+        "detail": "attempt=1"
+      },
+      {
+        "time": "2026-10-16T17:07:15.8768304Z",
+        "type": "attempt_effect_evaluation_recorded",
+        "detail": "attempt=1"
+      },
+      {
+        "time": "2026-10-16T17:07:16.6434292Z",
+        "type": "attempt_completed",
+        "detail": "attempt=1 status=succeeded detail=Producción completada: proyecto alfa creado y verificado en C:\\Users\\User\\Desktop\\Ahmelia-Knowledge\\.gotmp-validation\\TestB9630E2E_CorrectionPreservesConversationContinuity1671651157\\001\\workspace."
+      },
+      {
+        "time": "2026-10-16T17:07:16.6434292Z",
+        "type": "completed",
+        "detail": "Producción completada: proyecto alfa creado y verificado en C:\\Users\\User\\Desktop\\Ahmelia-Knowledge\\.gotmp-validation\\TestB9630E2E_CorrectionPreservesConversationContinuity1671651157\\001\\workspace."
+      },
+      {
+        "time": "2026-10-16T17:07:17.3267465Z",
+        "type": "attempt_started",
+        "detail": "attempt=2 operation=create_file provider=programming"
+      },
+      {
+        "time": "2026-10-16T17:07:18.1052444Z",
+        "type": "attempt_completed",
+        "detail": "attempt=2 status=succeeded recovery=repair_verified"
+      },
+      {
+        "time": "2026-10-16T17:07:18.1052444Z",
+        "type": "objective_repaired",
+        "detail": "correction materialized and verified"
+      },
+      {
+        "time": "2026-10-16T17:07:18.1052444Z",
+        "type": "completed",
+        "detail": "Corrección materializada: proyecto beta actualizado y verificado en C:\\Users\\User\\Desktop\\Ahmelia-Knowledge\\.gotmp-validation\\TestB9630E2E_CorrectionPreservesConversationContinuity1671651157\\001\\beta."
+      }
+    ],
+    "last_action_result": {
+      "executed": true,
+      "verification_profile": "build[go build ./...]=success;tests[go test ./...]=passed",
+      "objective_status": "unassessed",
+      "objective_contract_json": "{\"PrimaryGoal\":\"\",\"PrimaryOperation\":\"\",\"Subject\":\"\",\"Workspace\":\"\",\"Constraints\":null,\"RequiredActions\":null,\"Verification\":null,\"Recovery\":null,\"Confidence\":0,\"Provenance\":\"\"}",
+      "success": true,
+      "outcome_status": "succeeded",
+      "verified": true,
+      "observed": true,
+      "summary": "Corrección materializada: proyecto beta actualizado y verificado en C:\\Users\\User\\Desktop\\Ahmelia-Knowledge\\.gotmp-validation\\TestB9630E2E_CorrectionPreservesConversationContinuity1671651157\\001\\beta.",
+      "observation_details": "el proveedor de programación confirmó el estado de producción mediante su evidencia de construcción/pruebas disponible",
+      "observation_captured_at": "0001-01-01T00:00:00Z",
+      "verification_reason": "resultado de producción evaluado por el proveedor de programación",
+      "verification_source": "programming",
+      "outcome_code": "production_result",
+      "work_id": "work_1792170435853539400_37",
+      "attempt_number": 2,
+      "production_id": "beta",
+      "producer": "programming",
+      "project": {
+        "ID": "beta",
+        "Name": "beta",
+        "Path": "C:\\Users\\User\\Desktop\\Ahmelia-Knowledge\\.gotmp-validation\\TestB9630E2E_CorrectionPreservesConversationContinuity1671651157\\001\\beta"
+      },
+      "artifacts": [
+        {
+          "ID": "main.go",
+          "Name": "main.go",
+          "Path": "C:\\Users\\User\\Desktop\\Ahmelia-Knowledge\\.gotmp-validation\\TestB9630E2E_CorrectionPreservesConversationContinuity1671651157\\001\\beta\\main.go",
+          "Type": "source",
+          "Producer": "programming",
+          "ProjectID": "beta",
+          "CreatedAt": "0001-01-01T00:00:00Z",
+          "Metadata": null
+        },
+        {
+          "ID": "go.mod",
+          "Name": "go.mod",
+          "Path": "C:\\Users\\User\\Desktop\\Ahmelia-Knowledge\\.gotmp-validation\\TestB9630E2E_CorrectionPreservesConversationContinuity1671651157\\001\\beta\\go.mod",
+          "Type": "config",
+          "Producer": "programming",
+          "ProjectID": "beta",
+          "CreatedAt": "0001-01-01T00:00:00Z",
+          "Metadata": null
+        },
+        {
+          "ID": "build",
+          "Name": "build",
+          "Path": "C:\\Users\\User\\Desktop\\Ahmelia-Knowledge\\.gotmp-validation\\TestB9630E2E_CorrectionPreservesConversationContinuity1671651157\\001\\beta",
+          "Type": "build",
+          "Producer": "programming",
+          "ProjectID": "beta",
+          "CreatedAt": "0001-01-01T00:00:00Z",
+          "Metadata": null
+        }
+      ]
+    },
+    "attempts": [
+      {
+        "number": 1,
+        "skill_id": "software.development",
+        "capability_id": "programming.create_file",
+        "operation": "create_file",
+        "provider": "programming",
+        "job_id": "work_1792170435853539400_37-attempt-1",
+        "execution_attempt_id": "work_1792170435853539400_37-attempt-1-execution",
+        "effect_specification": {
+          "ID": "core-test-alfa",
+          "Project": {
+            "ID": "alfa",
+            "Name": "alfa",
+            "Root": "C:\\Users\\User\\Desktop\\Ahmelia-Knowledge\\.gotmp-validation\\TestB9630E2E_CorrectionPreservesConversationContinuity1671651157\\001\\workspace",
+            "Language": "Go",
+            "SourceRoots": [
+              "."
+            ],
+            "TestRoots": [
+              "."
+            ],
+            "BuildCommand": "go build ./...",
+            "TestCommand": "go test ./...",
+            "RuntimeCommand": "go run ."
+          },
+          "Changes": [
+            {
+              "ID": "main",
+              "Operation": "create",
+              "File": {
+                "Path": "main.go",
+                "Language": "Go",
+                "Role": "entrypoint",
+                "ProjectID": "alfa"
+              },
+              "NewPath": "",
+              "Content": "package main\n\n// objective: Quiero crear un programa Go llamado alfa\nfunc main() {}\n",
+              "OldText": "",
+              "NewText": ""
+            },
+            {
+              "ID": "module",
+              "Operation": "create",
+              "File": {
+                "Path": "go.mod",
+                "Language": "Go",
+                "Role": "config",
+                "ProjectID": "alfa"
+              },
+              "NewPath": "",
+              "Content": "module alfa\n\ngo 1.20\n",
+              "OldText": "",
+              "NewText": ""
+            }
+          ],
+          "CreatedAt": "0001-01-01T00:00:00Z"
+        },
+        "effect_evaluations": [
+          {
+            "id": "effect-eval-work_1792170435853539400_37-1-main",
+            "work_id": "work_1792170435853539400_37",
+            "attempt_number": 1,
+            "expected_change_id": "main",
+            "observed": {
+              "Source": "filesystem",
+              "Path": "main.go",
+              "Exists": true,
+              "SHA256": "99ea96d6fe53e0c3856753e34f08db2027799023f924c928712eb96e04f62a72",
+              "ObservedAt": "2026-10-16T17:07:15.8748926Z"
+            },
+            "judgment": {
+              "compatible": true
+            },
+            "evaluated_at": "2026-10-16T17:07:15.8754404Z"
+          },
+          {
+            "id": "effect-eval-work_1792170435853539400_37-1-module",
+            "work_id": "work_1792170435853539400_37",
+            "attempt_number": 1,
+            "expected_change_id": "module",
+            "observed": {
+              "Source": "filesystem",
+              "Path": "go.mod",
+              "Exists": true,
+              "SHA256": "909d2964d0a8bfea452fb7adfe429a4362e88cd5284fca5b3778c6b93e61f9ff",
+              "ObservedAt": "2026-10-16T17:07:15.8768304Z"
+            },
+            "judgment": {
+              "compatible": true
+            },
+            "evaluated_at": "2026-10-16T17:07:15.8768304Z"
+          }
+        ],
+        "status": "succeeded",
+        "started_at": "2026-10-16T17:07:15.8676827Z",
+        "finished_at": "2026-10-16T17:07:16.6434292Z",
+        "result": {
+          "executed": true,
+          "verification_profile": "build[go build ./...]=success;tests[go test ./...]=passed",
+          "objective_status": "unassessed",
+          "objective_contract_json": "{\"PrimaryGoal\":\"Quiero crear un programa Go llamado alfa\",\"PrimaryOperation\":\"create\",\"Subject\":\"\",\"Workspace\":\"\",\"Constraints\":null,\"RequiredActions\":null,\"Verification\":null,\"Recovery\":null,\"Confidence\":0.9,\"Provenance\":\"interaction.semantic_objective_frame\"}",
+          "success": true,
+          "outcome_status": "succeeded",
+          "verified": true,
+          "observed": true,
+          "summary": "Producción completada: proyecto alfa creado y verificado en C:\\Users\\User\\Desktop\\Ahmelia-Knowledge\\.gotmp-validation\\TestB9630E2E_CorrectionPreservesConversationContinuity1671651157\\001\\workspace.",
+          "observation_details": "el proveedor de programación confirmó el estado de producción mediante su evidencia de construcción/pruebas disponible",
+          "observation_captured_at": "0001-01-01T00:00:00Z",
+          "verification_reason": "resultado de producción evaluado por el proveedor de programación",
+          "verification_source": "programming",
+          "outcome_code": "production_result",
+          "work_id": "work_1792170435853539400_37",
+          "attempt_number": 1,
+          "production_id": "alfa",
+          "producer": "programming",
+          "project": {
+            "ID": "alfa",
+            "Name": "alfa",
+            "Path": "C:\\Users\\User\\Desktop\\Ahmelia-Knowledge\\.gotmp-validation\\TestB9630E2E_CorrectionPreservesConversationContinuity1671651157\\001\\workspace"
+          },
+          "artifacts": [
+            {
+              "ID": "main.go",
+              "Name": "main.go",
+              "Path": "C:\\Users\\User\\Desktop\\Ahmelia-Knowledge\\.gotmp-validation\\TestB9630E2E_CorrectionPreservesConversationContinuity1671651157\\001\\workspace\\main.go",
+              "Type": "source",
+              "Producer": "programming",
+              "ProjectID": "alfa",
+              "CreatedAt": "0001-01-01T00:00:00Z",
+              "Metadata": null
+            },
+            {
+              "ID": "go.mod",
+              "Name": "go.mod",
+              "Path": "C:\\Users\\User\\Desktop\\Ahmelia-Knowledge\\.gotmp-validation\\TestB9630E2E_CorrectionPreservesConversationContinuity1671651157\\001\\workspace\\go.mod",
+              "Type": "config",
+              "Producer": "programming",
+              "ProjectID": "alfa",
+              "CreatedAt": "0001-01-01T00:00:00Z",
+              "Metadata": null
+            },
+            {
+              "ID": "build",
+              "Name": "build",
+              "Path": "C:\\Users\\User\\Desktop\\Ahmelia-Knowledge\\.gotmp-validation\\TestB9630E2E_CorrectionPreservesConversationContinuity1671651157\\001\\workspace",
+              "Type": "build",
+              "Producer": "programming",
+              "ProjectID": "alfa",
+              "CreatedAt": "0001-01-01T00:00:00Z",
+              "Metadata": null
+            }
+          ]
+        }
+      },
+      {
+        "number": 2,
+        "skill_id": "software.development",
+        "capability_id": "programming.create_file",
+        "operation": "create_file",
+        "provider": "programming",
+        "status": "succeeded",
+        "started_at": "2026-10-16T17:07:17.3267465Z",
+        "finished_at": "2026-10-16T17:07:18.1052444Z",
+        "result": {
+          "executed": true,
+          "verification_profile": "build[go build ./...]=success;tests[go test ./...]=passed",
+          "objective_status": "unassessed",
+          "objective_contract_json": "{\"PrimaryGoal\":\"\",\"PrimaryOperation\":\"\",\"Subject\":\"\",\"Workspace\":\"\",\"Constraints\":null,\"RequiredActions\":null,\"Verification\":null,\"Recovery\":null,\"Confidence\":0,\"Provenance\":\"\"}",
+          "success": true,
+          "outcome_status": "succeeded",
+          "verified": true,
+          "observed": true,
+          "summary": "Corrección materializada: proyecto beta actualizado y verificado en C:\\Users\\User\\Desktop\\Ahmelia-Knowledge\\.gotmp-validation\\TestB9630E2E_CorrectionPreservesConversationContinuity1671651157\\001\\beta.",
+          "observation_details": "el proveedor de programación confirmó el estado de producción mediante su evidencia de construcción/pruebas disponible",
+          "observation_captured_at": "0001-01-01T00:00:00Z",
+          "verification_reason": "resultado de producción evaluado por el proveedor de programación",
+          "verification_source": "programming",
+          "outcome_code": "production_result",
+          "work_id": "work_1792170435853539400_37",
+          "attempt_number": 2,
+          "production_id": "beta",
+          "producer": "programming",
+          "project": {
+            "ID": "beta",
+            "Name": "beta",
+            "Path": "C:\\Users\\User\\Desktop\\Ahmelia-Knowledge\\.gotmp-validation\\TestB9630E2E_CorrectionPreservesConversationContinuity1671651157\\001\\beta"
+          },
+          "artifacts": [
+            {
+              "ID": "main.go",
+              "Name": "main.go",
+              "Path": "C:\\Users\\User\\Desktop\\Ahmelia-Knowledge\\.gotmp-validation\\TestB9630E2E_CorrectionPreservesConversationContinuity1671651157\\001\\beta\\main.go",
+              "Type": "source",
+              "Producer": "programming",
+              "ProjectID": "beta",
+              "CreatedAt": "0001-01-01T00:00:00Z",
+              "Metadata": null
+            },
+            {
+              "ID": "go.mod",
+              "Name": "go.mod",
+              "Path": "C:\\Users\\User\\Desktop\\Ahmelia-Knowledge\\.gotmp-validation\\TestB9630E2E_CorrectionPreservesConversationContinuity1671651157\\001\\beta\\go.mod",
+              "Type": "config",
+              "Producer": "programming",
+              "ProjectID": "beta",
+              "CreatedAt": "0001-01-01T00:00:00Z",
+              "Metadata": null
+            },
+            {
+              "ID": "build",
+              "Name": "build",
+              "Path": "C:\\Users\\User\\Desktop\\Ahmelia-Knowledge\\.gotmp-validation\\TestB9630E2E_CorrectionPreservesConversationContinuity1671651157\\001\\beta",
+              "Type": "build",
+              "Producer": "programming",
+              "ProjectID": "beta",
+              "CreatedAt": "0001-01-01T00:00:00Z",
+              "Metadata": null
+            }
+          ]
+        },
+        "recovery_action": "repair_verified",
+        "recovery_reason": "correction materialized and verified"
+      }
+    ],
+    "created_at": "2026-10-16T17:07:15.8535394Z",
+    "updated_at": "2026-10-16T17:07:18.1052444Z"
+  },
+  "work_1792170448209398400_38": {
+    "id": "work_1792170448209398400_38",
+    "objective": {
+      "Text": "Quiero trabajar en la escena principal",
+      "Constraints": null,
+      "OpenEnded": true
+    },
+    "status": "completed",
+    "goal_id": "20261016120725-92-goal",
+    "plan_id": "plan-1792170448209398400-50",
+    "provider": "programming",
+    "artifacts": [
+      {
+        "ID": "main.go",
+        "Name": "main.go",
+        "Path": "C:\\Users\\User\\Desktop\\Ahmelia-Knowledge\\.gotmp-validation\\TestB963214E2E_InterruptionResumeAndPersistenceKeepTheSameIntera3825449728\\001\\workspace\\main.go",
+        "Type": "source",
+        "Producer": "programming",
+        "ProjectID": "workspace",
+        "CreatedAt": "0001-01-01T00:00:00Z",
+        "Metadata": null,
+        "version": 1,
+        "checksum_sha256": "9f6c3bb9760b92db6cf72e86ee9d295621bf1ebf37b894dcfadfa4d8842f2e40",
+        "size_bytes": 82,
+        "integrity_verified": true,
+        "integrity_reason": "file exists and SHA-256 was computed from current bytes"
+      },
+      {
+        "ID": "go.mod",
+        "Name": "go.mod",
+        "Path": "C:\\Users\\User\\Desktop\\Ahmelia-Knowledge\\.gotmp-validation\\TestB963214E2E_InterruptionResumeAndPersistenceKeepTheSameIntera3825449728\\001\\workspace\\go.mod",
+        "Type": "config",
+        "Producer": "programming",
+        "ProjectID": "workspace",
+        "CreatedAt": "0001-01-01T00:00:00Z",
+        "Metadata": null,
+        "version": 1,
+        "checksum_sha256": "c3a44a7b8e2e7db2cfba6127551971845d215f1401f67dc84ef30675aa7dd556",
+        "size_bytes": 26,
+        "integrity_verified": true,
+        "integrity_reason": "file exists and SHA-256 was computed from current bytes"
+      },
+      {
+        "ID": "build",
+        "Name": "build",
+        "Path": "C:\\Users\\User\\Desktop\\Ahmelia-Knowledge\\.gotmp-validation\\TestB963214E2E_InterruptionResumeAndPersistenceKeepTheSameIntera3825449728\\001\\workspace",
+        "Type": "build",
+        "Producer": "programming",
+        "ProjectID": "workspace",
+        "CreatedAt": "0001-01-01T00:00:00Z",
+        "Metadata": null
+      }
+    ],
+    "events": [
+      {
+        "time": "2026-10-16T17:07:28.2122292Z",
+        "type": "planned",
+        "detail": "goal and plan attached"
+      },
+      {
+        "time": "2026-10-16T17:07:28.2242231Z",
+        "type": "started",
+        "detail": "production started"
+      },
+      {
+        "time": "2026-10-16T17:07:28.2263054Z",
+        "type": "attempt_started",
+        "detail": "attempt=1 operation=create_file provider=programming"
+      },
+      {
+        "time": "2026-10-16T17:07:28.2278445Z",
+        "type": "attempt_execution_identity",
+        "detail": "attempt=1 job=work_1792170448209398400_38-attempt-1 execution=work_1792170448209398400_38-attempt-1-execution"
+      },
+      {
+        "time": "2026-10-16T17:07:28.2299166Z",
+        "type": "attempt_effect_specification_persisted",
+        "detail": "attempt=1"
+      },
+      {
+        "time": "2026-10-16T17:07:28.233586Z",
+        "type": "attempt_effect_evaluation_recorded",
+        "detail": "attempt=1"
+      },
+      {
+        "time": "2026-10-16T17:07:28.2354126Z",
+        "type": "attempt_effect_evaluation_recorded",
+        "detail": "attempt=1"
+      },
+      {
+        "time": "2026-10-16T17:07:29.0057147Z",
+        "type": "attempt_completed",
+        "detail": "attempt=1 status=succeeded detail=Producción completada: proyecto workspace creado y verificado en C:\\Users\\User\\Desktop\\Ahmelia-Knowledge\\.gotmp-validation\\TestB963214E2E_InterruptionResumeAndPersistenceKeepTheSameIntera3825449728\\001\\workspace."
+      },
+      {
+        "time": "2026-10-16T17:07:29.0057147Z",
+        "type": "completed",
+        "detail": "Producción completada: proyecto workspace creado y verificado en C:\\Users\\User\\Desktop\\Ahmelia-Knowledge\\.gotmp-validation\\TestB963214E2E_InterruptionResumeAndPersistenceKeepTheSameIntera3825449728\\001\\workspace."
+      }
+    ],
+    "last_action_result": {
+      "executed": true,
+      "verification_profile": "build[go build ./...]=success;tests[go test ./...]=passed",
+      "objective_status": "unassessed",
+      "objective_contract_json": "{\"PrimaryGoal\":\"Quiero trabajar en la escena principal\",\"PrimaryOperation\":\"create\",\"Subject\":\"\",\"Workspace\":\"\",\"Constraints\":null,\"RequiredActions\":null,\"Verification\":null,\"Recovery\":null,\"Confidence\":0.9,\"Provenance\":\"interaction.semantic_objective_frame\"}",
+      "success": true,
+      "outcome_status": "succeeded",
+      "verified": true,
+      "observed": true,
+      "summary": "Producción completada: proyecto workspace creado y verificado en C:\\Users\\User\\Desktop\\Ahmelia-Knowledge\\.gotmp-validation\\TestB963214E2E_InterruptionResumeAndPersistenceKeepTheSameIntera3825449728\\001\\workspace.",
+      "observation_details": "el proveedor de programación confirmó el estado de producción mediante su evidencia de construcción/pruebas disponible",
+      "observation_captured_at": "0001-01-01T00:00:00Z",
+      "verification_reason": "resultado de producción evaluado por el proveedor de programación",
+      "verification_source": "programming",
+      "outcome_code": "production_result",
+      "work_id": "work_1792170448209398400_38",
+      "attempt_number": 1,
+      "production_id": "workspace",
+      "producer": "programming",
+      "project": {
+        "ID": "workspace",
+        "Name": "workspace",
+        "Path": "C:\\Users\\User\\Desktop\\Ahmelia-Knowledge\\.gotmp-validation\\TestB963214E2E_InterruptionResumeAndPersistenceKeepTheSameIntera3825449728\\001\\workspace"
+      },
+      "artifacts": [
+        {
+          "ID": "main.go",
+          "Name": "main.go",
+          "Path": "C:\\Users\\User\\Desktop\\Ahmelia-Knowledge\\.gotmp-validation\\TestB963214E2E_InterruptionResumeAndPersistenceKeepTheSameIntera3825449728\\001\\workspace\\main.go",
+          "Type": "source",
+          "Producer": "programming",
+          "ProjectID": "workspace",
+          "CreatedAt": "0001-01-01T00:00:00Z",
+          "Metadata": null
+        },
+        {
+          "ID": "go.mod",
+          "Name": "go.mod",
+          "Path": "C:\\Users\\User\\Desktop\\Ahmelia-Knowledge\\.gotmp-validation\\TestB963214E2E_InterruptionResumeAndPersistenceKeepTheSameIntera3825449728\\001\\workspace\\go.mod",
+          "Type": "config",
+          "Producer": "programming",
+          "ProjectID": "workspace",
+          "CreatedAt": "0001-01-01T00:00:00Z",
+          "Metadata": null
+        },
+        {
+          "ID": "build",
+          "Name": "build",
+          "Path": "C:\\Users\\User\\Desktop\\Ahmelia-Knowledge\\.gotmp-validation\\TestB963214E2E_InterruptionResumeAndPersistenceKeepTheSameIntera3825449728\\001\\workspace",
+          "Type": "build",
+          "Producer": "programming",
+          "ProjectID": "workspace",
+          "CreatedAt": "0001-01-01T00:00:00Z",
+          "Metadata": null
+        }
+      ]
+    },
+    "attempts": [
+      {
+        "number": 1,
+        "skill_id": "software.development",
+        "capability_id": "programming.create_file",
+        "operation": "create_file",
+        "provider": "programming",
+        "job_id": "work_1792170448209398400_38-attempt-1",
+        "execution_attempt_id": "work_1792170448209398400_38-attempt-1-execution",
+        "effect_specification": {
+          "ID": "core-test-workspace",
+          "Project": {
+            "ID": "workspace",
+            "Name": "workspace",
+            "Root": "C:\\Users\\User\\Desktop\\Ahmelia-Knowledge\\.gotmp-validation\\TestB963214E2E_InterruptionResumeAndPersistenceKeepTheSameIntera3825449728\\001\\workspace",
+            "Language": "Go",
+            "SourceRoots": [
+              "."
+            ],
+            "TestRoots": [
+              "."
+            ],
+            "BuildCommand": "go build ./...",
+            "TestCommand": "go test ./...",
+            "RuntimeCommand": "go run ."
+          },
+          "Changes": [
+            {
+              "ID": "main",
+              "Operation": "create",
+              "File": {
+                "Path": "main.go",
+                "Language": "Go",
+                "Role": "entrypoint",
+                "ProjectID": "workspace"
+              },
+              "NewPath": "",
+              "Content": "package main\n\n// objective: Quiero trabajar en la escena principal\nfunc main() {}\n",
+              "OldText": "",
+              "NewText": ""
+            },
+            {
+              "ID": "module",
+              "Operation": "create",
+              "File": {
+                "Path": "go.mod",
+                "Language": "Go",
+                "Role": "config",
+                "ProjectID": "workspace"
+              },
+              "NewPath": "",
+              "Content": "module workspace\n\ngo 1.20\n",
+              "OldText": "",
+              "NewText": ""
+            }
+          ],
+          "CreatedAt": "0001-01-01T00:00:00Z"
+        },
+        "effect_evaluations": [
+          {
+            "id": "effect-eval-work_1792170448209398400_38-1-main",
+            "work_id": "work_1792170448209398400_38",
+            "attempt_number": 1,
+            "expected_change_id": "main",
+            "observed": {
+              "Source": "filesystem",
+              "Path": "main.go",
+              "Exists": true,
+              "SHA256": "9f6c3bb9760b92db6cf72e86ee9d295621bf1ebf37b894dcfadfa4d8842f2e40",
+              "ObservedAt": "2026-10-16T17:07:28.233586Z"
+            },
+            "judgment": {
+              "compatible": true
+            },
+            "evaluated_at": "2026-10-16T17:07:28.233586Z"
+          },
+          {
+            "id": "effect-eval-work_1792170448209398400_38-1-module",
+            "work_id": "work_1792170448209398400_38",
+            "attempt_number": 1,
+            "expected_change_id": "module",
+            "observed": {
+              "Source": "filesystem",
+              "Path": "go.mod",
+              "Exists": true,
+              "SHA256": "c3a44a7b8e2e7db2cfba6127551971845d215f1401f67dc84ef30675aa7dd556",
+              "ObservedAt": "2026-10-16T17:07:28.2354126Z"
+            },
+            "judgment": {
+              "compatible": true
+            },
+            "evaluated_at": "2026-10-16T17:07:28.2354126Z"
+          }
+        ],
+        "status": "succeeded",
+        "started_at": "2026-10-16T17:07:28.2263054Z",
+        "finished_at": "2026-10-16T17:07:29.0057147Z",
+        "result": {
+          "executed": true,
+          "verification_profile": "build[go build ./...]=success;tests[go test ./...]=passed",
+          "objective_status": "unassessed",
+          "objective_contract_json": "{\"PrimaryGoal\":\"Quiero trabajar en la escena principal\",\"PrimaryOperation\":\"create\",\"Subject\":\"\",\"Workspace\":\"\",\"Constraints\":null,\"RequiredActions\":null,\"Verification\":null,\"Recovery\":null,\"Confidence\":0.9,\"Provenance\":\"interaction.semantic_objective_frame\"}",
+          "success": true,
+          "outcome_status": "succeeded",
+          "verified": true,
+          "observed": true,
+          "summary": "Producción completada: proyecto workspace creado y verificado en C:\\Users\\User\\Desktop\\Ahmelia-Knowledge\\.gotmp-validation\\TestB963214E2E_InterruptionResumeAndPersistenceKeepTheSameIntera3825449728\\001\\workspace.",
+          "observation_details": "el proveedor de programación confirmó el estado de producción mediante su evidencia de construcción/pruebas disponible",
+          "observation_captured_at": "0001-01-01T00:00:00Z",
+          "verification_reason": "resultado de producción evaluado por el proveedor de programación",
+          "verification_source": "programming",
+          "outcome_code": "production_result",
+          "work_id": "work_1792170448209398400_38",
+          "attempt_number": 1,
+          "production_id": "workspace",
+          "producer": "programming",
+          "project": {
+            "ID": "workspace",
+            "Name": "workspace",
+            "Path": "C:\\Users\\User\\Desktop\\Ahmelia-Knowledge\\.gotmp-validation\\TestB963214E2E_InterruptionResumeAndPersistenceKeepTheSameIntera3825449728\\001\\workspace"
+          },
+          "artifacts": [
+            {
+              "ID": "main.go",
+              "Name": "main.go",
+              "Path": "C:\\Users\\User\\Desktop\\Ahmelia-Knowledge\\.gotmp-validation\\TestB963214E2E_InterruptionResumeAndPersistenceKeepTheSameIntera3825449728\\001\\workspace\\main.go",
+              "Type": "source",
+              "Producer": "programming",
+              "ProjectID": "workspace",
+              "CreatedAt": "0001-01-01T00:00:00Z",
+              "Metadata": null
+            },
+            {
+              "ID": "go.mod",
+              "Name": "go.mod",
+              "Path": "C:\\Users\\User\\Desktop\\Ahmelia-Knowledge\\.gotmp-validation\\TestB963214E2E_InterruptionResumeAndPersistenceKeepTheSameIntera3825449728\\001\\workspace\\go.mod",
+              "Type": "config",
+              "Producer": "programming",
+              "ProjectID": "workspace",
+              "CreatedAt": "0001-01-01T00:00:00Z",
+              "Metadata": null
+            },
+            {
+              "ID": "build",
+              "Name": "build",
+              "Path": "C:\\Users\\User\\Desktop\\Ahmelia-Knowledge\\.gotmp-validation\\TestB963214E2E_InterruptionResumeAndPersistenceKeepTheSameIntera3825449728\\001\\workspace",
+              "Type": "build",
+              "Producer": "programming",
+              "ProjectID": "workspace",
+              "CreatedAt": "0001-01-01T00:00:00Z",
+              "Metadata": null
+            }
+          ]
+        }
+      }
+    ],
+    "created_at": "2026-10-16T17:07:28.2093984Z",
+    "updated_at": "2026-10-16T17:07:29.0057147Z"
+  },
+  "work_1792170941625517500_1": {
+    "id": "work_1792170941625517500_1",
+    "objective": {
+      "Text": "avanzar escena la interacción",
+      "Constraints": null,
+      "OpenEnded": true
+    },
+    "status": "blocked",
+    "goal_id": "20261016121453-1-goal",
+    "plan_id": "plan-1792170896624467600-1",
+    "provider": "programming",
+    "events": [
+      {
+        "time": "2026-10-16T17:15:41.640434Z",
+        "type": "planned",
+        "detail": "goal and plan attached"
+      },
+      {
+        "time": "2026-10-16T17:15:41.671612Z",
+        "type": "started",
+        "detail": "production started"
+      },
+      {
+        "time": "2026-10-16T17:15:41.6764782Z",
+        "type": "attempt_started",
+        "detail": "attempt=1 operation=create_file provider=programming"
+      },
+      {
+        "time": "2026-10-16T17:15:41.7071459Z",
+        "type": "execution_awaiting_authorization",
+        "detail": "attempt=1 capability=programming.create_file provider=programming"
+      },
+      {
+        "time": "2026-10-16T17:15:42.5835717Z",
+        "type": "execution_awaiting_authorization",
+        "detail": "attempt=1 capability=programming.create_file provider=programming"
+      }
+    ],
+    "attempts": [
+      {
+        "number": 1,
+        "skill_id": "software.development",
+        "capability_id": "programming.create_file",
+        "operation": "create_file",
+        "provider": "programming",
+        "status": "awaiting_authorization",
+        "started_at": "2026-10-16T17:15:41.6764782Z",
+        "finished_at": "0001-01-01T00:00:00Z"
+      }
+    ],
+    "pending_execution": {
+      "request": {
+        "Raw": "avanzar escena la interacción\n¿cuál es mi bebida favorita?",
+        "Normalized": "avanzar escena la interaccion\ncual es mi bebida favorita",
+        "Channel": "unknown",
+        "Kind": "production",
+        "Objective": {
+          "Text": "avanzar escena la interacción\n¿cuál es mi bebida favorita?",
+          "Constraints": null,
+          "OpenEnded": true
+        },
+        "Frame": {
+          "PrimaryGoal": "avanzar escena la interacción",
+          "PrimaryOperation": "create",
+          "Subject": "",
+          "Workspace": "",
+          "Constraints": null,
+          "RequiredActions": null,
+          "Verification": null,
+          "Recovery": null,
+          "Confidence": 0.9,
+          "Provenance": "interaction.semantic_objective_frame"
+        },
+        "FollowUp": false,
+        "Continues": false,
+        "Language": "es",
+        "Confidence": 0.9,
+        "Subject": "",
+        "SubjectConfidence": 0,
+        "SubjectEvidence": null,
+        "References": null,
+        "NeedsClarification": false,
+        "AddressesCurrent": false,
+        "BreaksContinuity": false,
+        "ExplicitDomain": "",
+        "Action": {
+          "Name": "",
+          "Target": "",
+          "Parameters": null,
+          "Confidence": 0
+        },
+        "Entities": [
+          "escena"
+        ],
+        "Relations": null,
+        "Urgency": "",
+        "RequestedAction": "create",
+        "ExpectedResponse": "result",
+        "SpeechAct": "command",
+        "Topic": "escena",
+        "QuestionType": "",
+        "Directness": "direct_command",
+        "UserSignals": {
+          "frustration": 0,
+          "positive": 0,
+          "fatigue": 0,
+          "urgency": 0,
+          "confidence": 0.5
+        },
+        "CorrectionTarget": "",
+        "Correction": {
+          "IsCorrection": false,
+          "IsNegation": false,
+          "Target": "",
+          "Replacement": "",
+          "Reason": "",
+          "Confidence": 0
+        },
+        "Meaning": {
+          "Concepts": [
+            "command"
+          ],
+          "Primary": "command",
+          "Language": "es",
+          "Confidence": 0.9,
+          "Ambiguous": false,
+          "Evidence": [
+            "communicative_act"
+          ],
+          "SourceText": "avanzar escena la interacción",
+          "NormalizedText": "avanzar escena la interacción",
+          "Query": "",
+          "Attribute": ""
+        },
+        "Temporal": {
+          "From": "0001-01-01T00:00:00Z",
+          "To": "0001-01-01T00:00:00Z",
+          "Label": "",
+          "Known": false
+        },
+        "CommunicativeActs": {
+          "Primary": "command",
+          "Secondary": null,
+          "Confidence": 0.94,
+          "Ambiguous": false,
+          "Evidence": [
+            {
+              "Act": "command",
+              "Confidence": 0.94,
+              "Source": "semantic:production"
+            }
+          ]
+        }
+      },
+      "capability_id": "programming.create_file",
+      "operation": "create_file",
+      "route_kind": "production",
+      "provider_id": "programming",
+      "attempt_number": 1,
+      "reason": "explicit confirmation required before execution"
+    },
+    "created_at": "2026-10-16T17:15:41.6255175Z",
+    "updated_at": "2026-10-16T17:15:42.5835717Z"
+  }
+}

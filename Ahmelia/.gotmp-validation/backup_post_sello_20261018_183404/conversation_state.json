@@ -1,0 +1,636 @@
+{
+  "SessionID": "20261018T230309.824887500-b4db6eb7eedef4338cd28325",
+  "Turns": [
+    {
+      "ID": 1,
+      "At": "2026-10-18T18:03:44.2603321-05:00",
+      "UserText": "hola cómo estás",
+      "Assistant": "Estoy bien y sigo aquí contigo, escuchándote.",
+      "Kind": "question",
+      "SpeechAct": "question",
+      "communicative_acts": {
+        "Primary": "question",
+        "Secondary": [
+          "social"
+        ],
+        "Confidence": 0.98,
+        "Ambiguous": true,
+        "Evidence": [
+          {
+            "Act": "question",
+            "Confidence": 0.98,
+            "Source": "semantic:question"
+          },
+          {
+            "Act": "social",
+            "Confidence": 0.9,
+            "Source": "semantic:social"
+          }
+        ]
+      },
+      "subject": "self",
+      "Language": "es",
+      "Topic": "",
+      "References": null,
+      "Confidence": 0.82,
+      "Interrupted": false,
+      "objective": "hola cómo estás"
+    },
+    {
+      "ID": 2,
+      "At": "2026-10-18T18:04:52.6578535-05:00",
+      "UserText": "tú tienes color favorito",
+      "Assistant": "No entendí del todo. ¿Puedes repetírmelo de otra forma?",
+      "Kind": "continuation",
+      "SpeechAct": "continue",
+      "communicative_acts": {
+        "Primary": "continuation",
+        "Secondary": null,
+        "Confidence": 0.78,
+        "Ambiguous": false,
+        "Evidence": [
+          {
+            "Act": "continuation",
+            "Confidence": 0.78,
+            "Source": "semantic:continuity"
+          }
+        ]
+      },
+      "subject": "self",
+      "Language": "es",
+      "Topic": "",
+      "References": null,
+      "Confidence": 0.92,
+      "Interrupted": false,
+      "relation": "answer",
+      "parent_turn_id": 1,
+      "objective": "hola cómo estás"
+    },
+    {
+      "ID": 3,
+      "At": "2026-10-18T18:06:02.4395764-05:00",
+      "UserText": "mi color favorito es el negro",
+      "Assistant": "Entendido. Lo he registrado.",
+      "Kind": "conversation",
+      "SpeechAct": "inform",
+      "communicative_acts": {
+        "Primary": "declaration",
+        "Secondary": [
+          "inform"
+        ],
+        "Confidence": 0.86,
+        "Ambiguous": false,
+        "Evidence": [
+          {
+            "Act": "declaration",
+            "Confidence": 0.86,
+            "Source": "semantic:declaration"
+          },
+          {
+            "Act": "inform",
+            "Confidence": 0.7,
+            "Source": "semantic:declaration_as_information"
+          }
+        ]
+      },
+      "subject": "user",
+      "Language": "es",
+      "Topic": "",
+      "References": null,
+      "Confidence": 0.92,
+      "Interrupted": false,
+      "relation": "continuation",
+      "parent_turn_id": 2,
+      "objective": "mi color favorito es el negro"
+    },
+    {
+      "ID": 4,
+      "At": "2026-10-18T18:07:27.4274963-05:00",
+      "UserText": "sabes cuál es mi bebida favorita",
+      "Assistant": "Necesito un poco más de contexto para responderte bien.",
+      "Kind": "conversation",
+      "SpeechAct": "inform",
+      "communicative_acts": {
+        "Primary": "unknown",
+        "Secondary": null,
+        "Confidence": 0.2,
+        "Ambiguous": false,
+        "Evidence": [
+          {
+            "Act": "unknown",
+            "Confidence": 0.2,
+            "Source": "semantic:insufficient_evidence"
+          }
+        ]
+      },
+      "subject": "user",
+      "Language": "es",
+      "Topic": "",
+      "References": null,
+      "Confidence": 0.67,
+      "Interrupted": false,
+      "relation": "continuation",
+      "parent_turn_id": 3,
+      "objective": "sabes cuál es mi bebida favorita"
+    },
+    {
+      "ID": 5,
+      "At": "2026-10-18T18:08:58.2676056-05:00",
+      "UserText": "la gaseosa de piña",
+      "Assistant": "Perfecto, lo tengo en cuenta.",
+      "Kind": "conversation",
+      "SpeechAct": "inform",
+      "communicative_acts": {
+        "Primary": "unknown",
+        "Secondary": null,
+        "Confidence": 0.2,
+        "Ambiguous": false,
+        "Evidence": [
+          {
+            "Act": "unknown",
+            "Confidence": 0.2,
+            "Source": "semantic:insufficient_evidence"
+          }
+        ]
+      },
+      "Language": "es",
+      "Topic": "",
+      "References": null,
+      "Confidence": 0.67,
+      "Interrupted": false,
+      "relation": "continuation",
+      "parent_turn_id": 4,
+      "objective": "la gaseosa de piña"
+    },
+    {
+      "ID": 6,
+      "At": "2026-10-18T18:10:01.4554979-05:00",
+      "UserText": "es mi bebida favorita",
+      "Assistant": "Necesito un poco más de contexto para responderte bien.",
+      "Kind": "question",
+      "SpeechAct": "inform",
+      "communicative_acts": {
+        "Primary": "unknown",
+        "Secondary": null,
+        "Confidence": 0.2,
+        "Ambiguous": false,
+        "Evidence": [
+          {
+            "Act": "unknown",
+            "Confidence": 0.2,
+            "Source": "semantic:insufficient_evidence"
+          }
+        ]
+      },
+      "subject": "user",
+      "Language": "es",
+      "Topic": "mi bebida favorita",
+      "References": null,
+      "Confidence": 0.74,
+      "Interrupted": false,
+      "relation": "continuation",
+      "parent_turn_id": 5,
+      "objective": "es mi bebida favorita"
+    },
+    {
+      "ID": 7,
+      "At": "2026-10-18T18:11:16.3636045-05:00",
+      "UserText": "mi bebida favori",
+      "Assistant": "Entendido.",
+      "Kind": "conversation",
+      "SpeechAct": "inform",
+      "communicative_acts": {
+        "Primary": "declaration",
+        "Secondary": [
+          "inform"
+        ],
+        "Confidence": 0.86,
+        "Ambiguous": false,
+        "Evidence": [
+          {
+            "Act": "declaration",
+            "Confidence": 0.86,
+            "Source": "semantic:declaration"
+          },
+          {
+            "Act": "inform",
+            "Confidence": 0.7,
+            "Source": "semantic:declaration_as_information"
+          }
+        ]
+      },
+      "subject": "user",
+      "Language": "es",
+      "Topic": "mi bebida favorita",
+      "References": null,
+      "Confidence": 0.92,
+      "Interrupted": false,
+      "relation": "continuation",
+      "parent_turn_id": 6,
+      "objective": "mi bebida favori"
+    },
+    {
+      "ID": 8,
+      "At": "2026-10-18T18:14:18.3044274-05:00",
+      "UserText": "cuál es mi bebida favorita",
+      "Assistant": "Necesito un poco más de contexto para responderte bien.",
+      "Kind": "question",
+      "SpeechAct": "inform",
+      "communicative_acts": {
+        "Primary": "unknown",
+        "Secondary": null,
+        "Confidence": 0.2,
+        "Ambiguous": false,
+        "Evidence": [
+          {
+            "Act": "unknown",
+            "Confidence": 0.2,
+            "Source": "semantic:insufficient_evidence"
+          }
+        ]
+      },
+      "subject": "user",
+      "Language": "es",
+      "Topic": "mi bebida favorita",
+      "References": null,
+      "Confidence": 0.74,
+      "Interrupted": false,
+      "relation": "continuation",
+      "parent_turn_id": 7,
+      "objective": "cuál es mi bebida favorita"
+    },
+    {
+      "ID": 9,
+      "At": "2026-10-18T18:15:52.7263391-05:00",
+      "UserText": "cuál es tu vida",
+      "Assistant": "Entendido.",
+      "Kind": "conversation",
+      "SpeechAct": "inform",
+      "communicative_acts": {
+        "Primary": "unknown",
+        "Secondary": null,
+        "Confidence": 0.2,
+        "Ambiguous": false,
+        "Evidence": [
+          {
+            "Act": "unknown",
+            "Confidence": 0.2,
+            "Source": "semantic:insufficient_evidence"
+          }
+        ]
+      },
+      "subject": "self",
+      "Language": "es",
+      "Topic": "mi bebida favorita",
+      "References": null,
+      "Confidence": 0.67,
+      "Interrupted": false,
+      "relation": "continuation",
+      "parent_turn_id": 8,
+      "objective": "cuál es tu vida"
+    },
+    {
+      "ID": 10,
+      "At": "2026-10-18T18:17:28.3408052-05:00",
+      "UserText": "cuál es tu bebida favorita",
+      "Assistant": "Entendido.",
+      "Kind": "conversation",
+      "SpeechAct": "inform",
+      "communicative_acts": {
+        "Primary": "unknown",
+        "Secondary": null,
+        "Confidence": 0.2,
+        "Ambiguous": false,
+        "Evidence": [
+          {
+            "Act": "unknown",
+            "Confidence": 0.2,
+            "Source": "semantic:insufficient_evidence"
+          }
+        ]
+      },
+      "subject": "self",
+      "Language": "es",
+      "Topic": "mi bebida favorita",
+      "References": null,
+      "Confidence": 0.67,
+      "Interrupted": false,
+      "relation": "continuation",
+      "parent_turn_id": 9,
+      "objective": "cuál es tu bebida favorita"
+    },
+    {
+      "ID": 11,
+      "At": "2026-10-18T18:18:45.3631993-05:00",
+      "UserText": "tú tienes bebida favorita",
+      "Assistant": "Entendido.",
+      "Kind": "question",
+      "SpeechAct": "inform",
+      "communicative_acts": {
+        "Primary": "unknown",
+        "Secondary": null,
+        "Confidence": 0.2,
+        "Ambiguous": false,
+        "Evidence": [
+          {
+            "Act": "unknown",
+            "Confidence": 0.2,
+            "Source": "semantic:insufficient_evidence"
+          }
+        ]
+      },
+      "subject": "self",
+      "Language": "es",
+      "Topic": "bebida favorita",
+      "References": null,
+      "Confidence": 0.74,
+      "Interrupted": false,
+      "relation": "continuation",
+      "parent_turn_id": 10,
+      "objective": "tú tienes bebida favorita"
+    },
+    {
+      "ID": 12,
+      "At": "2026-10-18T18:20:42.1335186-05:00",
+      "UserText": "te gustaría ver mi proyecto",
+      "Assistant": "Entendido.",
+      "Kind": "conversation",
+      "SpeechAct": "inform",
+      "communicative_acts": {
+        "Primary": "unknown",
+        "Secondary": null,
+        "Confidence": 0.2,
+        "Ambiguous": false,
+        "Evidence": [
+          {
+            "Act": "unknown",
+            "Confidence": 0.2,
+            "Source": "semantic:insufficient_evidence"
+          }
+        ]
+      },
+      "subject": "self",
+      "Language": "es",
+      "Topic": "proyecto",
+      "References": null,
+      "Confidence": 0.67,
+      "Interrupted": false,
+      "relation": "continuation",
+      "parent_turn_id": 11,
+      "objective": "te gustaría ver mi proyecto"
+    },
+    {
+      "ID": 13,
+      "At": "2026-10-18T18:25:00.6002697-05:00",
+      "UserText": "él la verdad hiciste un trabajo enorme hoy se nota todo el esfuerzo",
+      "Assistant": "Necesito un poco más de contexto para responderte bien.",
+      "Kind": "conversation",
+      "SpeechAct": "inform",
+      "communicative_acts": {
+        "Primary": "unknown",
+        "Secondary": null,
+        "Confidence": 0.2,
+        "Ambiguous": false,
+        "Evidence": [
+          {
+            "Act": "unknown",
+            "Confidence": 0.2,
+            "Source": "semantic:insufficient_evidence"
+          }
+        ]
+      },
+      "Language": "es",
+      "Topic": "proyecto",
+      "References": null,
+      "Confidence": 0.67,
+      "Interrupted": false,
+      "relation": "continuation",
+      "parent_turn_id": 12,
+      "objective": "él la verdad hiciste un trabajo enorme hoy se nota todo el esfuerzo"
+    },
+    {
+      "ID": 14,
+      "At": "2026-10-18T18:26:37.4733154-05:00",
+      "UserText": "la verdad aquí hiciste un trabajo enorme hoy se nota todo el esfuerzo",
+      "Assistant": "Necesito un poco más de contexto para responderte bien.",
+      "Kind": "conversation",
+      "SpeechAct": "inform",
+      "communicative_acts": {
+        "Primary": "reference",
+        "Secondary": [
+          "continuation"
+        ],
+        "Confidence": 0.84,
+        "Ambiguous": true,
+        "Evidence": [
+          {
+            "Act": "reference",
+            "Confidence": 0.84,
+            "Source": "semantic:reference"
+          },
+          {
+            "Act": "continuation",
+            "Confidence": 0.78,
+            "Source": "semantic:continuity"
+          }
+        ]
+      },
+      "Language": "es",
+      "Topic": "proyecto",
+      "References": [
+        {
+          "Kind": "location",
+          "Expression": "location",
+          "Resolved": false,
+          "Value": "",
+          "Role": "target",
+          "Confidence": 0.9,
+          "Provenance": "semantic_surface"
+        }
+      ],
+      "Confidence": 0.7200000000000001,
+      "Interrupted": false,
+      "relation": "continuation",
+      "parent_turn_id": 13,
+      "objective": "la verdad aquí hiciste un trabajo enorme hoy se nota todo el esfuerzo"
+    },
+    {
+      "ID": 15,
+      "At": "2026-10-18T18:27:53.6622007-05:00",
+      "UserText": "perfecto eso quedó bien",
+      "Assistant": "Entendido. Gracias por decírmelo; lo tengo en cuenta.",
+      "Kind": "feedback",
+      "SpeechAct": "unknown",
+      "communicative_acts": {
+        "Primary": "feedback",
+        "Secondary": [
+          "anaphora",
+          "reference",
+          "continuation"
+        ],
+        "Confidence": 0.91,
+        "Ambiguous": true,
+        "Evidence": [
+          {
+            "Act": "feedback",
+            "Confidence": 0.91,
+            "Source": "semantic:feedback+meaning:feedback"
+          },
+          {
+            "Act": "anaphora",
+            "Confidence": 0.88,
+            "Source": "semantic:anaphora"
+          },
+          {
+            "Act": "reference",
+            "Confidence": 0.84,
+            "Source": "semantic:reference"
+          },
+          {
+            "Act": "continuation",
+            "Confidence": 0.78,
+            "Source": "semantic:continuity"
+          }
+        ]
+      },
+      "Language": "es",
+      "Topic": "proyecto",
+      "References": [
+        {
+          "Kind": "current_input",
+          "Expression": "current referent",
+          "Resolved": true,
+          "Value": "la verdad aquí hiciste un trabajo enorme hoy se nota todo el esfuerzo",
+          "Role": "target",
+          "Confidence": 0.9,
+          "Provenance": "semantic_surface"
+        }
+      ],
+      "Confidence": 0.3,
+      "Interrupted": false,
+      "relation": "continuation",
+      "parent_turn_id": 14,
+      "objective": "perfecto eso quedó bien"
+    },
+    {
+      "ID": 16,
+      "At": "2026-10-18T18:28:25.0497569-05:00",
+      "UserText": "cuál es mi bebida favorita",
+      "Assistant": "Necesito un poco más de contexto para responderte bien.",
+      "Kind": "question",
+      "SpeechAct": "inform",
+      "communicative_acts": {
+        "Primary": "unknown",
+        "Secondary": null,
+        "Confidence": 0.2,
+        "Ambiguous": false,
+        "Evidence": [
+          {
+            "Act": "unknown",
+            "Confidence": 0.2,
+            "Source": "semantic:insufficient_evidence"
+          }
+        ]
+      },
+      "subject": "user",
+      "Language": "es",
+      "Topic": "mi bebida favorita",
+      "References": null,
+      "Confidence": 0.74,
+      "Interrupted": false,
+      "relation": "continuation",
+      "parent_turn_id": 15,
+      "objective": "cuál es mi bebida favorita"
+    },
+    {
+      "ID": 17,
+      "At": "2026-10-18T18:30:38.0541742-05:00",
+      "UserText": "salir",
+      "Assistant": "Hasta luego.",
+      "Kind": "stop",
+      "SpeechAct": "stop",
+      "communicative_acts": {
+        "Primary": "control",
+        "Secondary": [
+          "command"
+        ],
+        "Confidence": 0.99,
+        "Ambiguous": true,
+        "Evidence": [
+          {
+            "Act": "control",
+            "Confidence": 0.99,
+            "Source": "semantic:control"
+          },
+          {
+            "Act": "command",
+            "Confidence": 0.96,
+            "Source": "semantic:action_intent"
+          }
+        ]
+      },
+      "Language": "es",
+      "Topic": "mi bebida favorita",
+      "References": null,
+      "Confidence": 0.3,
+      "Interrupted": false,
+      "relation": "continuation",
+      "parent_turn_id": 16,
+      "objective": "salir"
+    }
+  ],
+  "ActiveTopic": "mi bebida favorita",
+  "ActiveObjective": "salir",
+  "ActiveThreadID": "20261018T231001.455497900-faf44f6a6f196a21d9629516",
+  "Language": "es",
+  "OpenThreads": [
+    {
+      "ID": "20261018T231001.455497900-faf44f6a6f196a21d9629516",
+      "Topic": "mi bebida favorita",
+      "Objective": "es mi bebida favorita",
+      "Status": "active",
+      "CreatedAt": "2026-10-18T18:10:01.4554979-05:00",
+      "UpdatedAt": "2026-10-18T18:30:38.0541742-05:00"
+    },
+    {
+      "ID": "20261018T232042.133518600-96e5d5f1cb3eb5bf2a2221b6",
+      "Topic": "proyecto",
+      "Objective": "te gustaría ver mi proyecto",
+      "Status": "open",
+      "CreatedAt": "2026-10-18T18:20:42.1335186-05:00",
+      "UpdatedAt": "2026-10-18T18:27:53.6622007-05:00"
+    }
+  ],
+  "Decisions": [],
+  "Commitments": [],
+  "open_questions": [
+    {
+      "id": 1,
+      "session_id": "20261018T230309.824887500-b4db6eb7eedef4338cd28325",
+      "kind": "personal_value",
+      "category": "preference",
+      "key": "bebida favorita",
+      "question": "Todavía no tengo ese dato guardado. ¿Me lo dices?",
+      "asked_turn": 4,
+      "asked_at": "2026-10-18T18:07:44.9889336-05:00",
+      "status": "answered",
+      "answered_turn": 5,
+      "closed_at": "2026-10-18T18:08:59.0418856-05:00"
+    }
+  ],
+  "next_open_question_id": 1,
+  "LastUserInput": "salir",
+  "LastAssistant": "Hasta luego.",
+  "LastTurnAt": "2026-10-18T18:30:38.0541742-05:00",
+  "UserState": {
+    "frustration": 0,
+    "enthusiasm": 0,
+    "confusion": 0,
+    "urgency": 0,
+    "engagement": 0.7,
+    "confidence": 0.3,
+    "humor": 0,
+    "interaction_need": "",
+    "updated_at": "2026-10-18T18:30:38.0541742-05:00"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "entries": [
+    {
+      "id": 0,
+      "at": "2026-10-18T17:02:36.632467-05:00",
+      "category": "preference",
+      "key": "bebida favorita",
+      "value": "la gaseosa de piña",
+      "source": "answer_to_personal_question",
+      "confidence": 0.82,
+      "session_id": "20261018T215912.437138800-89129d97910a65afb5efb248",
+      "turn_id": 5
+    }
+  ]
+}

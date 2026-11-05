@@ -1,0 +1,214 @@
+{
+  "SessionID": "20261018T164036.917014500-9aa4c7d8afe1cd4bf7a68e94",
+  "Turns": [
+    {
+      "ID": 1,
+      "At": "2026-10-18T11:41:10.6521578-05:00",
+      "UserText": "sabes mi bebida favorita",
+      "Assistant": "Necesito un poco más de contexto para responderte bien.",
+      "Kind": "conversation",
+      "SpeechAct": "inform",
+      "communicative_acts": {
+        "Primary": "unknown",
+        "Secondary": null,
+        "Confidence": 0.2,
+        "Ambiguous": false,
+        "Evidence": [
+          {
+            "Act": "unknown",
+            "Confidence": 0.2,
+            "Source": "semantic:insufficient_evidence"
+          }
+        ]
+      },
+      "subject": "user",
+      "Language": "",
+      "Topic": "",
+      "References": null,
+      "Confidence": 0.67,
+      "Interrupted": false,
+      "objective": "sabes mi bebida favorita"
+    },
+    {
+      "ID": 2,
+      "At": "2026-10-18T11:42:11.179839-05:00",
+      "UserText": "la gaseosa de piña",
+      "Assistant": "Perfecto, lo tengo en cuenta.",
+      "Kind": "conversation",
+      "SpeechAct": "inform",
+      "communicative_acts": {
+        "Primary": "unknown",
+        "Secondary": null,
+        "Confidence": 0.2,
+        "Ambiguous": false,
+        "Evidence": [
+          {
+            "Act": "unknown",
+            "Confidence": 0.2,
+            "Source": "semantic:insufficient_evidence"
+          }
+        ]
+      },
+      "Language": "",
+      "Topic": "",
+      "References": null,
+      "Confidence": 0.67,
+      "Interrupted": false,
+      "relation": "independent",
+      "objective": "la gaseosa de piña"
+    },
+    {
+      "ID": 3,
+      "At": "2026-10-18T11:42:49.2371215-05:00",
+      "UserText": "",
+      "Assistant": "Encontré algo útil relacionado con lo que estamos haciendo.",
+      "Kind": "conversation",
+      "SpeechAct": "inform",
+      "communicative_acts": {
+        "Primary": "",
+        "Secondary": null,
+        "Confidence": 0,
+        "Ambiguous": false,
+        "Evidence": null
+      },
+      "Language": "",
+      "Topic": "conversation",
+      "References": null,
+      "Confidence": 0,
+      "Interrupted": false
+    },
+    {
+      "ID": 4,
+      "At": "2026-10-18T11:43:06.7624304-05:00",
+      "UserText": "sabes mi bebida favorita",
+      "Assistant": "Necesito un poco más de contexto para responderte bien.",
+      "Kind": "conversation",
+      "SpeechAct": "inform",
+      "communicative_acts": {
+        "Primary": "unknown",
+        "Secondary": null,
+        "Confidence": 0.2,
+        "Ambiguous": false,
+        "Evidence": [
+          {
+            "Act": "unknown",
+            "Confidence": 0.2,
+            "Source": "semantic:insufficient_evidence"
+          }
+        ]
+      },
+      "subject": "user",
+      "Language": "",
+      "Topic": "mi bebida favorita",
+      "References": null,
+      "Confidence": 0.74,
+      "Interrupted": false,
+      "relation": "continuation",
+      "parent_turn_id": 3,
+      "objective": "sabes mi bebida favorita"
+    },
+    {
+      "ID": 5,
+      "At": "2026-10-18T11:43:47.5480725-05:00",
+      "UserText": "",
+      "Assistant": "Encontré algo útil relacionado con lo que estamos haciendo.",
+      "Kind": "conversation",
+      "SpeechAct": "inform",
+      "communicative_acts": {
+        "Primary": "",
+        "Secondary": null,
+        "Confidence": 0,
+        "Ambiguous": false,
+        "Evidence": null
+      },
+      "Language": "",
+      "Topic": "mi bebida favorita",
+      "References": null,
+      "Confidence": 0,
+      "Interrupted": false,
+      "objective": "sabes mi bebida favorita"
+    },
+    {
+      "ID": 6,
+      "At": "2026-10-18T11:44:27.938307-05:00",
+      "UserText": "salir",
+      "Assistant": "Hasta luego.",
+      "Kind": "stop",
+      "SpeechAct": "stop",
+      "communicative_acts": {
+        "Primary": "control",
+        "Secondary": [
+          "command"
+        ],
+        "Confidence": 0.99,
+        "Ambiguous": true,
+        "Evidence": [
+          {
+            "Act": "control",
+            "Confidence": 0.99,
+            "Source": "semantic:control"
+          },
+          {
+            "Act": "command",
+            "Confidence": 0.96,
+            "Source": "semantic:action_intent"
+          }
+        ]
+      },
+      "Language": "",
+      "Topic": "mi bebida favorita",
+      "References": null,
+      "Confidence": 0.3,
+      "Interrupted": false,
+      "relation": "continuation",
+      "parent_turn_id": 5,
+      "objective": "salir"
+    }
+  ],
+  "ActiveTopic": "mi bebida favorita",
+  "ActiveObjective": "salir",
+  "ActiveThreadID": "20261018T164306.762430400-939b8d51d6158595c33708cf",
+  "Language": "",
+  "OpenThreads": [
+    {
+      "ID": "20261018T164306.762430400-939b8d51d6158595c33708cf",
+      "Topic": "mi bebida favorita",
+      "Objective": "sabes mi bebida favorita",
+      "Status": "active",
+      "CreatedAt": "2026-10-18T11:43:06.7624304-05:00",
+      "UpdatedAt": "2026-10-18T11:44:27.938307-05:00"
+    }
+  ],
+  "Decisions": [],
+  "Commitments": [],
+  "open_questions": [
+    {
+      "id": 1,
+      "session_id": "20261018T164036.917014500-9aa4c7d8afe1cd4bf7a68e94",
+      "kind": "personal_value",
+      "category": "preference",
+      "key": "bebida favorita",
+      "question": "Todavía no tengo ese dato guardado. ¿Me lo dices?",
+      "asked_turn": 1,
+      "asked_at": "2026-10-18T11:41:35.7679455-05:00",
+      "status": "answered",
+      "answered_turn": 2,
+      "closed_at": "2026-10-18T11:42:11.8727836-05:00"
+    }
+  ],
+  "next_open_question_id": 1,
+  "LastUserInput": "salir",
+  "LastAssistant": "Hasta luego.",
+  "LastTurnAt": "2026-10-18T11:44:27.938307-05:00",
+  "UserState": {
+    "frustration": 0,
+    "enthusiasm": 0,
+    "confusion": 0,
+    "urgency": 0,
+    "engagement": 0.7,
+    "confidence": 0.3,
+    "humor": 0,
+    "interaction_need": "",
+    "updated_at": "2026-10-18T11:44:27.938307-05:00"
+  }
+}

@@ -1,0 +1,179 @@
+{
+  "SessionID": "20261018T190543.713135600-a5b3342d4dbdd42f581b9145",
+  "Turns": [
+    {
+      "ID": 1,
+      "At": "2026-10-18T14:06:08.0320092-05:00",
+      "UserText": "hola Ahmelia, \ufffdc\ufffdmo est\ufffds?",
+      "Assistant": "Entiendo la solicitud, pero no tengo una fuente de conocimiento suficiente para resolverla de forma fiable.",
+      "Kind": "question",
+      "SpeechAct": "question",
+      "communicative_acts": {
+        "Primary": "question",
+        "Secondary": [
+          "social"
+        ],
+        "Confidence": 0.98,
+        "Ambiguous": true,
+        "Evidence": [
+          {
+            "Act": "question",
+            "Confidence": 0.98,
+            "Source": "semantic:question"
+          },
+          {
+            "Act": "social",
+            "Confidence": 0.9,
+            "Source": "semantic:social"
+          }
+        ]
+      },
+      "Language": "",
+      "Topic": "",
+      "References": null,
+      "Confidence": 0.82,
+      "Interrupted": false,
+      "objective": "hola Ahmelia, \ufffdc\ufffdmo est\ufffds?"
+    },
+    {
+      "ID": 2,
+      "At": "2026-10-18T14:06:42.7335863-05:00",
+      "UserText": "\ufffdt\ufffd tienes color favorito?",
+      "Assistant": "Entiendo la solicitud, pero no tengo una fuente de conocimiento suficiente para resolverla de forma fiable.",
+      "Kind": "question",
+      "SpeechAct": "question",
+      "communicative_acts": {
+        "Primary": "question",
+        "Secondary": null,
+        "Confidence": 0.98,
+        "Ambiguous": false,
+        "Evidence": [
+          {
+            "Act": "question",
+            "Confidence": 0.98,
+            "Source": "semantic:question"
+          }
+        ]
+      },
+      "subject": "self",
+      "Language": "",
+      "Topic": "",
+      "References": null,
+      "Confidence": 0.82,
+      "Interrupted": false,
+      "relation": "new_topic",
+      "parent_turn_id": 1,
+      "objective": "\ufffdt\ufffd tienes color favorito?"
+    },
+    {
+      "ID": 3,
+      "At": "2026-10-18T14:07:19.9952018-05:00",
+      "UserText": "\ufffdsabes cu\ufffdl es mi bebida favorita?",
+      "Assistant": "Entiendo la solicitud, pero no tengo una fuente de conocimiento suficiente para resolverla de forma fiable.",
+      "Kind": "question",
+      "SpeechAct": "question",
+      "communicative_acts": {
+        "Primary": "question",
+        "Secondary": null,
+        "Confidence": 0.98,
+        "Ambiguous": false,
+        "Evidence": [
+          {
+            "Act": "question",
+            "Confidence": 0.98,
+            "Source": "semantic:question"
+          }
+        ]
+      },
+      "subject": "user",
+      "Language": "",
+      "Topic": "",
+      "References": null,
+      "Confidence": 0.82,
+      "Interrupted": false,
+      "relation": "new_topic",
+      "parent_turn_id": 2,
+      "objective": "\ufffdsabes cu\ufffdl es mi bebida favorita?"
+    },
+    {
+      "ID": 4,
+      "At": "2026-10-18T14:07:56.9561532-05:00",
+      "UserText": "la gaseosa de pi\ufffda",
+      "Assistant": "No entendí del todo. ¿Puedes repetírmelo de otra forma?",
+      "Kind": "continuation",
+      "SpeechAct": "continue",
+      "communicative_acts": {
+        "Primary": "continuation",
+        "Secondary": null,
+        "Confidence": 0.78,
+        "Ambiguous": false,
+        "Evidence": [
+          {
+            "Act": "continuation",
+            "Confidence": 0.78,
+            "Source": "semantic:continuity"
+          }
+        ]
+      },
+      "Language": "",
+      "Topic": "",
+      "References": null,
+      "Confidence": 0.92,
+      "Interrupted": false,
+      "relation": "answer",
+      "parent_turn_id": 3,
+      "objective": "\ufffdsabes cu\ufffdl es mi bebida favorita?"
+    },
+    {
+      "ID": 5,
+      "At": "2026-10-18T14:08:11.4718382-05:00",
+      "UserText": "\ufffdcu\ufffdl es mi bebida favorita?",
+      "Assistant": "Entiendo la solicitud, pero no tengo una fuente de conocimiento suficiente para resolverla de forma fiable.",
+      "Kind": "question",
+      "SpeechAct": "question",
+      "communicative_acts": {
+        "Primary": "question",
+        "Secondary": null,
+        "Confidence": 0.98,
+        "Ambiguous": false,
+        "Evidence": [
+          {
+            "Act": "question",
+            "Confidence": 0.98,
+            "Source": "semantic:question"
+          }
+        ]
+      },
+      "subject": "user",
+      "Language": "",
+      "Topic": "",
+      "References": null,
+      "Confidence": 0.82,
+      "Interrupted": false,
+      "relation": "new_topic",
+      "parent_turn_id": 4,
+      "objective": "\ufffdcu\ufffdl es mi bebida favorita?"
+    }
+  ],
+  "ActiveTopic": "",
+  "ActiveObjective": "\ufffdsabes cu\ufffdl es mi bebida favorita?",
+  "ActiveThreadID": "",
+  "Language": "",
+  "OpenThreads": [],
+  "Decisions": [],
+  "Commitments": [],
+  "LastUserInput": "\ufffdcu\ufffdl es mi bebida favorita?",
+  "LastAssistant": "Entiendo la solicitud, pero no tengo una fuente de conocimiento suficiente para resolverla de forma fiable.",
+  "LastTurnAt": "2026-10-18T14:08:11.4718382-05:00",
+  "UserState": {
+    "frustration": 0,
+    "enthusiasm": 0,
+    "confusion": 0,
+    "urgency": 0,
+    "engagement": 0.7,
+    "confidence": 0.82,
+    "humor": 0,
+    "interaction_need": "answer",
+    "updated_at": "2026-10-18T14:08:11.4718382-05:00"
+  }
+}

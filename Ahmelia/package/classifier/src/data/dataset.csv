@@ -1,0 +1,4 @@
+text,intent
+abre chrome,OPEN_APP
+escribe hola,TYPE_TEXT
+borra archivo.png,DELETE_FILE

@@ -1,0 +1,158 @@
+╔══════════════════════════════════════╗
+║        AHMELIA v3.1                  ║
+╚══════════════════════════════════════╝
+
+🧠 Índice: 1376 programas
+💓 LATIDO | arrancado N0=1s N1=1/10 → foco + gobernador; digestión del mundo cada 10s
+📚 [LoadContext] Entradas tipo 'contexto' encontradas en memory/long.json: 0
+🔎 OLLAMA READY | model=qwen3:4b-instruct-2507-q4_K_M result=ok
+=== AHMELIA VOICE ACTIVADO (Google Speech Recognition) ===
+💡 Puedes decir: Amelia, Ahmelia, A melia
+📌 Ejemplo: 'Amelia abre VLC' o 'Amelia salir'
+
+⌨️  También podés escribir un comando acá y presionar Enter (sin necesidad de decir "amelia")
+
+🎙️  hola Ahmelia, �c�mo est�s?
+💬 Entiendo la solicitud, pero no tengo una fuente de conocimiento suficiente para resolverla de forma fiable.
+🔎 [01] INPUT | hola Ahmelia, �c�mo est�s?
+🔎 [02] LINGUISTIC | mode=sync budget=900ms result=timeout deferred=true job=ling-deferred-1792350368032009200-1
+🔎 [03] SEMANTIC | subject= topic="" references=0 addresses_current=false primary=question secondary=social confidence=0.98 ambiguous=true
+🔎 [04] STATE | context_valid=true continuity=none
+🔎 [05] MEMORY | historical_required=false references=0
+🔎 [06] RESPONSE GATE | deferred until after Situation/Cognition
+🔎 [07] SPECIALIST EVIDENCE | knowledge=false reasoning=true
+🔎 [08] SITUATION | id=sit-43df1b568ec2700c-1792350374426102500 version=1 evidence=2 relations=1 uncertainty=0 conflicts=0
+🔎 [09] CONTRIBUTIONS | perspectives=3
+🔎 [10] FINAL BEHAVIOR | action=respond speak_current=true additional_initiative=not_evaluated strategy=answer uncertainty=false
+🔎 [11] SITUATION→COGNITION | no situational override; structured cognition retained
+🔎 [12] RESPONSE GATE | intent selected=answer confidence=0.82
+🔎 [13] COGNITION | intent=question goal=get_information action=respond confidence=0.82 clarification=false
+🔎 [14] DIALOGUE | move=answer requires_direct=true allow_follow_up=false
+🔎 [15] FOCUS_ARBITER | selected=respond kind=interactive score=0.132 reasoning=single candidate: respond
+🔎 [16] USER MODEL | observations attempted=0 handled=0 applied=0 rejected=0 errors=0
+🔎 [17] USER MODEL | query gate intent=question goal=get_information subject=
+🔎 [18] USER MODEL | query gate rejected: no explicit user ownership/domain match
+🔎 [19] RUNTIME | action=
+🔎 [20] CAPABILITY | kind=question act=question action= operation= executable=false reason=turn is not an executable interaction request
+🔎 [21] RESPONSE | intent=answer move=answer source=specialist_evidence subject=
+🔎 [22] RESPONSE EVIDENCE | sources=reasoning_uncertainty
+🔎 [23] LANGUAGE ORIGIN | renderer=code_fallback reason=model_generation_failed category=client_unavailable
+🔎 [24] LANGUAGE DEGRADATION | renderer=code_fallback category=client_unavailable
+🔎 [25] LANGUAGE | Entiendo la solicitud, pero no tengo una fuente de conocimiento suficiente para resolverla de forma fiable.
+🔎 [26] FINAL STATE | internal=Esperando respuesta autonomous=Idle turn=AHMELIA_IDLE
+
+🎙️  �t� tienes color favorito?
+🔎 LINGUISTIC_DEFERRED | job=ling-deferred-1792350368032009200-1 elapsed=47.3s result=ok comprehension=open purpose=social topic="saludo a Ahmelia" confidence=1.00
+💬 Entiendo la solicitud, pero no tengo una fuente de conocimiento suficiente para resolverla de forma fiable.
+🔎 [01] INPUT | �t� tienes color favorito?
+🔎 [02] LINGUISTIC | mode=sync budget=900ms result=timeout deferred=true job=ling-deferred-1792350402733070300-2
+🔎 [03] SEMANTIC | subject=self topic="" references=0 addresses_current=false primary=question secondary= confidence=0.98 ambiguous=false
+🔎 [04] STATE | context_valid=true continuity=continue
+🔎 [05] MEMORY | historical_required=false references=0
+🔎 [06] RESPONSE GATE | deferred until after Situation/Cognition
+🔎 [07] SITUATION | id=sit-262078510bee187f-1792350403428216700 version=1 evidence=4 relations=4 uncertainty=0 conflicts=0
+🔎 [08] CONTRIBUTIONS | perspectives=2
+🔎 [09] FINAL BEHAVIOR | action=respond speak_current=true additional_initiative=not_evaluated strategy=answer uncertainty=false
+🔎 [10] SITUATION→COGNITION | no situational override; structured cognition retained
+🔎 [11] RESPONSE GATE | intent selected=answer confidence=0.82
+🔎 [12] COGNITION | intent=question goal=get_information action=respond confidence=0.82 clarification=false
+🔎 [13] DIALOGUE | move=answer requires_direct=true allow_follow_up=false
+🔎 [14] FOCUS_ARBITER | selected=respond kind=interactive score=0.173 reasoning=single candidate: respond
+🔎 [15] USER MODEL | observations attempted=0 handled=0 applied=0 rejected=0 errors=0
+🔎 [16] USER MODEL | query gate intent=question goal=get_information subject=self
+🔎 [17] USER MODEL | query gate rejected: no explicit user ownership/domain match
+🔎 [18] RUNTIME | action=
+🔎 [19] CAPABILITY | kind=question act=question action= operation= executable=false reason=turn is not an executable interaction request
+🔎 [20] RESPONSE | intent=answer move=answer source=specialist_evidence subject=self
+🔎 [21] RESPONSE EVIDENCE | sources=reasoning_uncertainty
+🔎 [22] LANGUAGE ORIGIN | renderer=code_fallback reason=model_generation_failed category=generation_timeout
+🔎 [23] LANGUAGE DEGRADATION | renderer=code_fallback category=generation_timeout
+🔎 [24] LANGUAGE | Entiendo la solicitud, pero no tengo una fuente de conocimiento suficiente para resolverla de forma fiable.
+🔎 [25] FINAL STATE | internal=Esperando respuesta autonomous=Idle turn=AHMELIA_IDLE
+
+🎙️  �sabes cu�l es mi bebida favorita?
+🔎 LINGUISTIC_DEFERRED | job=ling-deferred-1792350402733070300-2 elapsed=48.2s result=ok comprehension=open purpose=pregunta topic="color favorito" confidence=1.00
+💬 Entiendo la solicitud, pero no tengo una fuente de conocimiento suficiente para resolverla de forma fiable.
+🔎 [01] INPUT | �sabes cu�l es mi bebida favorita?
+🔎 [02] LINGUISTIC | mode=sync budget=900ms result=timeout deferred=true job=ling-deferred-1792350439995201800-3
+🔎 [03] SEMANTIC | subject=user topic="" references=0 addresses_current=false primary=question secondary= confidence=0.98 ambiguous=false
+🔎 [04] STATE | context_valid=true continuity=continue
+🔎 [05] MEMORY | historical_required=false references=0
+🔎 [06] RESPONSE GATE | deferred until after Situation/Cognition
+🔎 [07] SPECIALIST EVIDENCE | knowledge=false reasoning=true
+🔎 [08] SITUATION | id=sit-1020c4f16808388b-1792350442590634400 version=1 evidence=3 relations=3 uncertainty=0 conflicts=0
+🔎 [09] CONTRIBUTIONS | perspectives=3
+🔎 [10] FINAL BEHAVIOR | action=respond speak_current=true additional_initiative=not_evaluated strategy=answer uncertainty=false
+🔎 [11] SITUATION→COGNITION | no situational override; structured cognition retained
+🔎 [12] RESPONSE GATE | intent selected=answer confidence=0.82
+🔎 [13] COGNITION | intent=question goal=get_information action=respond confidence=0.82 clarification=false
+🔎 [14] DIALOGUE | move=answer requires_direct=true allow_follow_up=false
+🔎 [15] FOCUS_ARBITER | selected=respond kind=interactive score=0.153 reasoning=single candidate: respond
+🔎 [16] USER MODEL | observations attempted=0 handled=0 applied=0 rejected=0 errors=0
+🔎 [17] USER MODEL | query gate intent=question goal=get_information subject=user
+🔎 [18] USER MODEL | query gate rejected: no explicit user ownership/domain match
+🔎 [19] RUNTIME | action=
+🔎 [20] CAPABILITY | kind=question act=question action= operation= executable=false reason=turn is not an executable interaction request
+🔎 [21] RESPONSE | intent=answer move=answer source=specialist_evidence subject=user
+🔎 [22] RESPONSE EVIDENCE | sources=reasoning_uncertainty
+🔎 [23] LANGUAGE ORIGIN | renderer=code_fallback reason=model_generation_failed category=generation_timeout
+🔎 [24] LANGUAGE DEGRADATION | renderer=code_fallback category=generation_timeout
+🔎 [25] LANGUAGE | Entiendo la solicitud, pero no tengo una fuente de conocimiento suficiente para resolverla de forma fiable.
+🔎 [26] FINAL STATE | internal=Esperando respuesta autonomous=Idle turn=AHMELIA_IDLE
+
+🎙️  la gaseosa de pi�a
+💬 No entendí del todo. ¿Puedes repetírmelo de otra forma?
+🔎 [01] INPUT | la gaseosa de pi�a
+🔎 [02] LINGUISTIC | mode=sync budget=900ms result=timeout deferred=true job=ling-deferred-1792350476954114400-4
+🔎 [03] SEMANTIC | subject= topic="" references=0 addresses_current=false primary=unknown secondary= confidence=0.20 ambiguous=false
+🔎 [04] STATE | context_valid=true continuity=continue
+🔎 [05] MEMORY | historical_required=false references=0
+🔎 [06] RESPONSE GATE | deferred until after Situation/Cognition
+🔎 [07] SITUATION | id=sit-6be2538f3ff01ca3-1792350481661001600 version=1 evidence=2 relations=1 uncertainty=0 conflicts=0
+🔎 [08] CONTRIBUTIONS | perspectives=2
+🔎 [09] FINAL BEHAVIOR | action=clarify speak_current=true additional_initiative=not_evaluated strategy=clarify uncertainty=true
+🔎 [10] SITUATION→COGNITION | no situational override; structured cognition retained
+🔎 [11] RESPONSE GATE | intent selected=answer confidence=0.92
+🔎 [12] COGNITION | intent=continue goal=understand action=clarify confidence=0.92 clarification=true
+🔎 [13] DIALOGUE | move=answer requires_direct=false allow_follow_up=true
+🔎 [14] FOCUS_ARBITER | selected=clarify kind=interactive score=0.244 reasoning=single candidate: clarify
+🔎 [15] USER MODEL | observations attempted=0 handled=0 applied=0 rejected=0 errors=0
+🔎 [16] RUNTIME | action=
+🔎 [17] CAPABILITY | kind=continuation act=continuation action= operation= executable=false reason=turn is not an executable interaction request
+🔎 [18] EXECUTION | no terminal capability handled; entering semantic action compatibility boundary
+🔎 [19] RESPONSE | intent=clarify move=clarify source=deterministic_system_response subject=
+🔎 [20] RESPONSE EVIDENCE | sources=deterministic_system_response
+🔎 [21] LANGUAGE ORIGIN | renderer=code:fase2 scene=no_entendido subject=
+🔎 [22] LANGUAGE | No entendí del todo. ¿Puedes repetírmelo de otra forma?
+🔎 [23] FINAL STATE | internal=Esperando respuesta autonomous=Idle turn=AHMELIA_IDLE
+
+🎙️  �cu�l es mi bebida favorita?
+🔎 LINGUISTIC_DEFERRED | job=ling-deferred-1792350439995201800-3 elapsed=52.8s result=ok comprehension=open purpose=pregunta topic="bebida favorita" confidence=0.99
+💬 Entiendo la solicitud, pero no tengo una fuente de conocimiento suficiente para resolverla de forma fiable.
+🔎 [01] INPUT | �cu�l es mi bebida favorita?
+🔎 [02] LINGUISTIC | mode=sync budget=900ms result=timeout deferred=true job=ling-deferred-1792350439995201800-3
+🔎 [03] SEMANTIC | subject=user topic="" references=0 addresses_current=false primary=question secondary= confidence=0.98 ambiguous=false
+🔎 [04] STATE | context_valid=true continuity=continue
+🔎 [05] MEMORY | historical_required=false references=0
+🔎 [06] RESPONSE GATE | deferred until after Situation/Cognition
+🔎 [07] SPECIALIST EVIDENCE | knowledge=false reasoning=true
+🔎 [08] SITUATION | id=sit-3170c12f6b1a8519-1792350492105046700 version=1 evidence=4 relations=4 uncertainty=0 conflicts=0
+🔎 [09] CONTRIBUTIONS | perspectives=3
+🔎 [10] FINAL BEHAVIOR | action=respond speak_current=true additional_initiative=not_evaluated strategy=answer uncertainty=false
+🔎 [11] SITUATION→COGNITION | no situational override; structured cognition retained
+🔎 [12] RESPONSE GATE | intent selected=answer confidence=0.82
+🔎 [13] COGNITION | intent=question goal=get_information action=respond confidence=0.82 clarification=false
+🔎 [14] DIALOGUE | move=answer requires_direct=true allow_follow_up=false
+🔎 [15] FOCUS_ARBITER | selected=respond kind=interactive score=0.157 reasoning=single candidate: respond
+🔎 [16] USER MODEL | observations attempted=0 handled=0 applied=0 rejected=0 errors=0
+🔎 [17] USER MODEL | query gate intent=question goal=get_information subject=user
+🔎 [18] USER MODEL | query gate rejected: no explicit user ownership/domain match
+🔎 [19] RUNTIME | action=
+🔎 [20] CAPABILITY | kind=question act=question action= operation= executable=false reason=turn is not an executable interaction request
+🔎 [21] RESPONSE | intent=answer move=answer source=specialist_evidence subject=user
+🔎 [22] RESPONSE EVIDENCE | sources=reasoning_uncertainty
+🔎 [23] LANGUAGE ORIGIN | renderer=code_fallback reason=model_generation_failed category=generation_timeout
+🔎 [24] LANGUAGE DEGRADATION | renderer=code_fallback category=generation_timeout
+🔎 [25] LANGUAGE | Entiendo la solicitud, pero no tengo una fuente de conocimiento suficiente para resolverla de forma fiable.
+🔎 [26] FINAL STATE | internal=Esperando respuesta autonomous=Idle turn=AHMELIA_IDLE
+Proceso de voz terminado

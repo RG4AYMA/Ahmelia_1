@@ -1,0 +1,42 @@
+# Literales de escena prohibidos en código de decisión (T3.9)
+# Cada línea es un patrón que la auditoría estática buscará en paquetes de decisión.
+# Solo frases COMPLETAS de ejemplo de la visión (comportamientos específicos),
+# no palabras sueltas que aparecen en código legítimo.
+
+# Saludos/despedidas de ejemplo (frases completas de la visión)
+"buenos días ahmelia"
+"hasta luego ahmelia"
+"adiós ahmelia"
+
+# Desayuno/Comida de ejemplo (frases completas)
+"prepara el desayuno"
+"qué hay para desayunar hoy"
+
+# Reuniones de ejemplo (frases completas)
+"tenemos una reunión en 10 minutos"
+"empieza la daily"
+"iniciamos la standup"
+
+# Ocio de ejemplo (frases completas)
+"pon música para trabajar"
+"reproduce mi playlist de concentración"
+
+# Interrupciones/incidentes de ejemplo (frases completas)
+"tenemos un incidente crítico"
+"el sistema no responde"
+"alerta de fallo en producción"
+
+# Dispositivos de ejemplo (frases completas)
+"enciende la luz del salón"
+"apaga la televisión"
+"sube la temperatura a 22 grados"
+
+# Acciones específicas de ejemplo (frases completas de la visión)
+"reproduce música en el fire tv"
+"pausa la reproducción"
+"siguiente canción por favor"
+
+# Marcadores de tiempo de ejemplo (frases completas)
+"recuérdame en una hora"
+"avísame mañana temprano"
+"programa para las 9 de la mañana"

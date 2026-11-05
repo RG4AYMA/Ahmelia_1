@@ -1,0 +1,20 @@
+{
+  "topics": {
+    "que piensas": {
+      "Name": "que piensas",
+      "Status": "pendiente",
+      "FirstTouched": "2026-10-13T16:19:37-05:00",
+      "LastTouched": "2026-10-13T16:19:37-05:00",
+      "TurnCount": 1,
+      "LastNote": ""
+    },
+    "ti misma": {
+      "Name": "ti misma",
+      "Status": "activo",
+      "FirstTouched": "2026-10-16T13:52:45-05:00",
+      "LastTouched": "2026-10-16T14:05:34-05:00",
+      "TurnCount": 2,
+      "LastNote": ""
+    }
+  }
+}

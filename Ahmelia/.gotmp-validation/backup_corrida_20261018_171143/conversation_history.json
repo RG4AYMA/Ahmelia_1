@@ -1,0 +1,193 @@
+{
+  "schema_version": 1,
+  "episodes": [
+    {
+      "id": "episode_process_1792360752356882600_1792360752356882600",
+      "session_id": "process_1792360752356882600",
+      "start": "2026-10-18T16:59:12.3568826-05:00",
+      "end": "2026-10-18T17:08:58.5993608-05:00",
+      "status": "completed",
+      "turns": [
+        {
+          "id": 1,
+          "at": "2026-10-18T16:59:36.7083368-05:00",
+          "user_text": "hola Ahmelia, ¿cómo estás?",
+          "assistant": "Estoy bien y sigo aquí contigo, escuchándote.",
+          "kind": "question",
+          "speech_act": "question",
+          "language": "es",
+          "objective": "hola Ahmelia, ¿cómo estás?"
+        },
+        {
+          "id": 2,
+          "at": "2026-10-18T17:00:19.5497939-05:00",
+          "user_text": "¿tú tienes color favorito?",
+          "assistant": "No tengo un color favorito propio registrado todavía.",
+          "kind": "question",
+          "speech_act": "question",
+          "language": "es",
+          "objective": "¿tú tienes color favorito?",
+          "relation": "new_topic",
+          "parent_turn_id": 1
+        },
+        {
+          "id": 3,
+          "at": "2026-10-18T17:01:04.8516699-05:00",
+          "user_text": "mi color favorito es el negro",
+          "assistant": "Entendido. Lo he registrado.",
+          "kind": "conversation",
+          "speech_act": "inform",
+          "language": "es",
+          "objective": "mi color favorito es el negro",
+          "relation": "independent"
+        },
+        {
+          "id": 4,
+          "at": "2026-10-18T17:01:50.7415211-05:00",
+          "user_text": "¿sabes cuál es mi bebida favorita?",
+          "assistant": "Todavía no tengo ese dato guardado. ¿Me lo dices?",
+          "kind": "question",
+          "speech_act": "question",
+          "language": "es",
+          "objective": "¿sabes cuál es mi bebida favorita?",
+          "relation": "independent"
+        },
+        {
+          "id": 5,
+          "at": "2026-10-18T17:02:36.1179465-05:00",
+          "user_text": "la gaseosa de piña",
+          "assistant": "Perfecto, lo tengo en cuenta.",
+          "kind": "continuation",
+          "speech_act": "continue",
+          "language": "es",
+          "objective": "¿sabes cuál es mi bebida favorita?",
+          "relation": "answer",
+          "parent_turn_id": 4
+        },
+        {
+          "id": 6,
+          "at": "2026-10-18T17:03:20.0630961-05:00",
+          "user_text": "¿cuál es mi bebida favorita?",
+          "assistant": "Tu bebida favorita es la gaseosa de piña.",
+          "kind": "question",
+          "speech_act": "question",
+          "language": "es",
+          "objective": "¿cuál es mi bebida favorita?",
+          "relation": "continuation",
+          "parent_turn_id": 5
+        },
+        {
+          "id": 7,
+          "at": "2026-10-18T17:04:12.8491671-05:00",
+          "user_text": "¿cuál es tu bebida favorita?",
+          "assistant": "No tengo una bebida favorita propia registrada todavía.",
+          "kind": "question",
+          "speech_act": "question",
+          "language": "es",
+          "objective": "¿cuál es tu bebida favorita?",
+          "relation": "new_topic",
+          "parent_turn_id": 6
+        },
+        {
+          "id": 8,
+          "at": "2026-10-18T17:04:57.5255343-05:00",
+          "user_text": "¿tú tienes bebida favorita?",
+          "assistant": "No tengo una bebida favorita propia registrada todavía.",
+          "kind": "question",
+          "speech_act": "question",
+          "language": "es",
+          "objective": "¿tú tienes bebida favorita?",
+          "relation": "new_topic",
+          "parent_turn_id": 7
+        },
+        {
+          "id": 9,
+          "at": "2026-10-18T17:05:53.4096022-05:00",
+          "user_text": "te gustaría ver mi proyecto",
+          "assistant": "No entendí del todo. ¿Puedes repetírmelo de otra forma?",
+          "kind": "continuation",
+          "speech_act": "continue",
+          "language": "es",
+          "topic": "proyecto",
+          "objective": "¿tú tienes bebida favorita?",
+          "relation": "answer",
+          "parent_turn_id": 8
+        },
+        {
+          "id": 10,
+          "at": "2026-10-18T17:06:50.4711931-05:00",
+          "user_text": "la verdad es que hiciste un trabajo enorme hoy, se nota todo el esfuerzo",
+          "assistant": "Entendido. Gracias por decírmelo; lo tengo en cuenta.",
+          "kind": "conversation",
+          "speech_act": "inform",
+          "language": "es",
+          "topic": "el esfuerzo de Ahmelia",
+          "objective": "la verdad es que hiciste un trabajo enorme hoy, se nota todo el esfuerzo",
+          "relation": "new_topic",
+          "parent_turn_id": 9
+        },
+        {
+          "id": 11,
+          "at": "2026-10-18T17:07:13.8888891-05:00",
+          "user_text": "perfecto, eso quedó bien",
+          "assistant": "Entendido. Gracias por decírmelo; lo tengo en cuenta.",
+          "kind": "feedback",
+          "speech_act": "unknown",
+          "language": "es",
+          "topic": "el esfuerzo de Ahmelia",
+          "objective": "perfecto, eso quedó bien",
+          "relation": "continuation",
+          "parent_turn_id": 10
+        },
+        {
+          "id": 12,
+          "at": "2026-10-18T17:07:57.7862298-05:00",
+          "user_text": "¿cuál es mi bebida favorita?",
+          "assistant": "Tu bebida favorita es la gaseosa de piña.",
+          "kind": "question",
+          "speech_act": "question",
+          "language": "es",
+          "topic": "el esfuerzo de Ahmelia",
+          "objective": "¿cuál es mi bebida favorita?",
+          "relation": "continuation",
+          "parent_turn_id": 11
+        },
+        {
+          "id": 13,
+          "at": "2026-10-18T17:08:42.7803146-05:00",
+          "user_text": "Ahmelia, salir",
+          "assistant": "Hasta luego.",
+          "kind": "continuation",
+          "speech_act": "continue",
+          "language": "es",
+          "topic": "el esfuerzo de Ahmelia",
+          "objective": "¿cuál es mi bebida favorita?",
+          "relation": "answer",
+          "parent_turn_id": 12
+        }
+      ],
+      "topics": [
+        "proyecto",
+        "el esfuerzo de Ahmelia"
+      ],
+      "objectives": [
+        "hola Ahmelia, ¿cómo estás?",
+        "¿tú tienes color favorito?",
+        "mi color favorito es el negro",
+        "¿sabes cuál es mi bebida favorita?",
+        "¿cuál es mi bebida favorita?",
+        "¿cuál es tu bebida favorita?",
+        "¿tú tienes bebida favorita?",
+        "la verdad es que hiciste un trabajo enorme hoy, se nota todo el esfuerzo",
+        "perfecto, eso quedó bien"
+      ],
+      "summary": "Sesión con 13 turnos; último tema: el esfuerzo de Ahmelia"
+    }
+  ],
+  "retention": {
+    "max_episodes": 500,
+    "max_age": 15552000000000000,
+    "max_turns_per_episode": 0
+  },
+  "legacy_b62_migrated": true
+}

@@ -1,0 +1,12 @@
+{
+  "topics": {
+    "modo descanso": {
+      "Name": "modo descanso",
+      "Status": "activo",
+      "FirstTouched": "2026-11-04T18:19:23-05:00",
+      "LastTouched": "2026-11-04T18:19:23-05:00",
+      "TurnCount": 1,
+      "LastNote": ""
+    }
+  }
+}

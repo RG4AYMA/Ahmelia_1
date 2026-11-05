@@ -1,0 +1,642 @@
+{
+  "schema_version": 1,
+  "episodes": [
+    {
+      "id": "legacy_b62_lo_que_funciono_1792165782000000000",
+      "session_id": "legacy-b62",
+      "start": "2026-10-16T10:49:42-05:00",
+      "end": "2026-10-16T10:49:42-05:00",
+      "status": "completed",
+      "turns": [
+        {
+          "id": 1,
+          "at": "2026-10-16T10:49:42-05:00",
+          "user_text": "lo que funciono",
+          "topic": "lo que funciono"
+        }
+      ],
+      "topics": [
+        "lo que funciono"
+      ],
+      "migrated_b62": true
+    },
+    {
+      "id": "episode_process_1792170430389581100_1792170430389581100",
+      "session_id": "process_1792170430389581100",
+      "start": "2026-10-16T12:07:10.3895811-05:00",
+      "end": "0001-01-01T00:00:00Z",
+      "status": "active",
+      "turns": [
+        {
+          "id": 1,
+          "at": "2026-10-16T12:07:10.4149282-05:00",
+          "user_text": "¿cuánto es 2 + 2?",
+          "assistant": "4",
+          "kind": "reasoning",
+          "speech_act": "question",
+          "objective": "¿cuánto es 2 + 2?"
+        }
+      ],
+      "objectives": [
+        "¿cuánto es 2 + 2?"
+      ]
+    },
+    {
+      "id": "episode_process_1792170431288610500_1792170431288610500",
+      "session_id": "process_1792170431288610500",
+      "start": "2026-10-16T12:07:11.2886105-05:00",
+      "end": "0001-01-01T00:00:00Z",
+      "status": "active",
+      "turns": [
+        {
+          "id": 1,
+          "at": "2026-10-16T12:07:11.3011577-05:00",
+          "user_text": "¿cuál es mi bebida favorita?",
+          "assistant": "Todavía no tengo ese dato guardado.",
+          "kind": "question",
+          "speech_act": "question",
+          "objective": "¿cuál es mi bebida favorita?"
+        },
+        {
+          "id": 2,
+          "at": "2026-10-16T12:07:11.9926212-05:00",
+          "user_text": "café",
+          "assistant": "No supe qué hacer con eso.",
+          "kind": "continuation",
+          "speech_act": "continue",
+          "objective": "¿cuál es mi bebida favorita?",
+          "relation": "answer",
+          "parent_turn_id": 1
+        }
+      ],
+      "objectives": [
+        "¿cuál es mi bebida favorita?"
+      ]
+    },
+    {
+      "id": "episode_process_1792170432680183400_1792170432680183400",
+      "session_id": "process_1792170432680183400",
+      "start": "2026-10-16T12:07:12.6801834-05:00",
+      "end": "0001-01-01T00:00:00Z",
+      "status": "active",
+      "turns": [
+        {
+          "id": 1,
+          "at": "2026-10-16T12:07:12.693029-05:00",
+          "user_text": "Quiero crear un programa Go llamado alfa",
+          "assistant": "Entendido.",
+          "kind": "production",
+          "speech_act": "command",
+          "language": "es",
+          "topic": "programa",
+          "objective": "Quiero crear un programa Go llamado alfa"
+        },
+        {
+          "id": 2,
+          "at": "2026-10-16T12:07:16.6581136-05:00",
+          "user_text": "No, me refería a beta",
+          "assistant": "Entendido.",
+          "kind": "correction",
+          "speech_act": "correct",
+          "language": "es",
+          "topic": "programa",
+          "objective": "beta",
+          "relation": "correction",
+          "parent_turn_id": 1
+        }
+      ],
+      "topics": [
+        "programa"
+      ],
+      "objectives": [
+        "Quiero crear un programa Go llamado alfa",
+        "beta"
+      ]
+    },
+    {
+      "id": "episode_process_1792170438119709600_1792170438119709600",
+      "session_id": "process_1792170438119709600",
+      "start": "2026-10-16T12:07:18.1197096-05:00",
+      "end": "0001-01-01T00:00:00Z",
+      "status": "active",
+      "turns": [
+        {
+          "id": 1,
+          "at": "2026-10-16T12:07:18.1422049-05:00",
+          "user_text": "tranquila pronto podrás empezar a ver el mundo, hare todo lo posible para que puedas empezar a ver por ti misma, asi podras saber cual es tu color favorito",
+          "assistant": "Entendido.",
+          "kind": "conversation",
+          "speech_act": "inform",
+          "language": "es",
+          "objective": "tranquila pronto podrás empezar a ver el mundo, hare todo lo posible para que puedas empezar a ver por ti misma, asi podras saber cual es tu color favorito"
+        },
+        {
+          "id": 2,
+          "at": "2026-10-16T12:07:18.8273708-05:00",
+          "user_text": "pero no es para mí es para ti para que puedas saber que te gusta",
+          "assistant": "Entendido.",
+          "kind": "correction",
+          "speech_act": "correct",
+          "language": "es",
+          "objective": "para mí es para ti para que puedas saber que te gusta",
+          "relation": "correction",
+          "parent_turn_id": 1
+        }
+      ],
+      "objectives": [
+        "tranquila pronto podrás empezar a ver el mundo, hare todo lo posible para que puedas empezar a ver por ti misma, asi podras saber cual es tu color favorito",
+        "para mí es para ti para que puedas saber que te gusta"
+      ]
+    },
+    {
+      "id": "episode_process_1792170439516236500_1792170439516236500",
+      "session_id": "process_1792170439516236500",
+      "start": "2026-10-16T12:07:19.5162365-05:00",
+      "end": "0001-01-01T00:00:00Z",
+      "status": "active",
+      "turns": [
+        {
+          "id": 1,
+          "at": "2026-10-16T12:07:19.5299247-05:00",
+          "user_text": "¿qué descubrió ayer una civilización desconocida en Marte?",
+          "assistant": "No tengo evidencia suficiente para afirmar qué ocurrió.",
+          "kind": "question",
+          "speech_act": "question",
+          "language": "es",
+          "topic": "marte",
+          "objective": "¿qué descubrió ayer una civilización desconocida en Marte?"
+        }
+      ],
+      "topics": [
+        "marte"
+      ],
+      "objectives": [
+        "¿qué descubrió ayer una civilización desconocida en Marte?"
+      ]
+    },
+    {
+      "id": "episode_process_1792170440215214400_1792170440215214400",
+      "session_id": "process_1792170440215214400",
+      "start": "2026-10-16T12:07:20.2152144-05:00",
+      "end": "0001-01-01T00:00:00Z",
+      "status": "active",
+      "turns": [
+        {
+          "id": 1,
+          "at": "2026-10-16T12:07:20.2298502-05:00",
+          "user_text": "¿qué hacemos ahora?",
+          "assistant": "Entendido.",
+          "kind": "question",
+          "speech_act": "question",
+          "language": "es",
+          "objective": "¿qué hacemos ahora?"
+        },
+        {
+          "id": 2,
+          "at": "2026-10-16T12:07:20.9433625-05:00",
+          "user_text": "gracias",
+          "assistant": "Gracias, lo tendré en cuenta",
+          "kind": "continuation",
+          "speech_act": "continue",
+          "language": "es",
+          "objective": "¿qué hacemos ahora?",
+          "relation": "answer",
+          "parent_turn_id": 1
+        }
+      ],
+      "objectives": [
+        "¿qué hacemos ahora?"
+      ]
+    },
+    {
+      "id": "episode_process_1792170441624130400_1792170441624130400",
+      "session_id": "process_1792170441624130400",
+      "start": "2026-10-16T12:07:21.6241304-05:00",
+      "end": "0001-01-01T00:00:00Z",
+      "status": "active",
+      "turns": [
+        {
+          "id": 1,
+          "at": "2026-10-16T12:07:21.6394239-05:00",
+          "user_text": "cambiemos de tema",
+          "assistant": "Entendido.",
+          "kind": "conversation",
+          "speech_act": "inform",
+          "objective": "cambiemos de tema"
+        }
+      ],
+      "objectives": [
+        "cambiemos de tema"
+      ]
+    },
+    {
+      "id": "episode_process_1792170442320641600_1792170442320641600",
+      "session_id": "process_1792170442320641600",
+      "start": "2026-10-16T12:07:22.3206416-05:00",
+      "end": "0001-01-01T00:00:00Z",
+      "status": "active",
+      "turns": [
+        {
+          "id": 1,
+          "at": "2026-10-16T12:07:22.3534314-05:00",
+          "user_text": "Quiero mejorar la escena del menú",
+          "assistant": "Entendido.",
+          "kind": "conversation",
+          "speech_act": "inform",
+          "language": "es",
+          "topic": "escena",
+          "objective": "Quiero mejorar la escena del menú"
+        },
+        {
+          "id": 2,
+          "at": "2026-10-16T12:07:23.0357819-05:00",
+          "user_text": "cambiemos de tema, hablemos de audio",
+          "assistant": "Entendido.",
+          "kind": "conversation",
+          "speech_act": "inform",
+          "language": "es",
+          "topic": "audio",
+          "objective": "cambiemos de tema, hablemos de audio",
+          "relation": "continuation",
+          "parent_turn_id": 1
+        },
+        {
+          "id": 3,
+          "at": "2026-10-16T12:07:23.7238846-05:00",
+          "user_text": "volvamos a la escena",
+          "assistant": "Entendido.",
+          "kind": "conversation",
+          "speech_act": "inform",
+          "language": "es",
+          "topic": "escena",
+          "objective": "volvamos a la escena",
+          "relation": "continuation",
+          "parent_turn_id": 2
+        },
+        {
+          "id": 4,
+          "at": "2026-10-16T12:07:24.4086986-05:00",
+          "user_text": "No, me refería a la escena principal",
+          "assistant": "Entendido.",
+          "kind": "correction",
+          "speech_act": "correct",
+          "language": "es",
+          "topic": "escena",
+          "objective": "la escena principal",
+          "relation": "correction",
+          "parent_turn_id": 3
+        }
+      ],
+      "topics": [
+        "escena",
+        "audio"
+      ],
+      "objectives": [
+        "Quiero mejorar la escena del menú",
+        "cambiemos de tema, hablemos de audio",
+        "volvamos a la escena",
+        "la escena principal"
+      ]
+    },
+    {
+      "id": "episode_process_1792170445102854500_1792170445102854500",
+      "session_id": "process_1792170445102854500",
+      "start": "2026-10-16T12:07:25.1028545-05:00",
+      "end": "0001-01-01T00:00:00Z",
+      "status": "active",
+      "turns": [
+        {
+          "id": 1,
+          "at": "2026-10-16T12:07:25.1169072-05:00",
+          "user_text": "Quiero trabajar en la escena principal",
+          "assistant": "Entendido.",
+          "kind": "production",
+          "speech_act": "command",
+          "language": "es",
+          "topic": "la escena principal",
+          "objective": "Quiero trabajar en la escena principal"
+        },
+        {
+          "id": 2,
+          "at": "2026-10-16T12:07:29.0176352-05:00",
+          "user_text": "¿qué hacemos ahora?",
+          "assistant": "Entendido.",
+          "kind": "question",
+          "speech_act": "question",
+          "language": "es",
+          "topic": "la escena principal",
+          "objective": "¿qué hacemos ahora?",
+          "relation": "continuation",
+          "parent_turn_id": 1
+        }
+      ],
+      "topics": [
+        "la escena principal"
+      ],
+      "objectives": [
+        "Quiero trabajar en la escena principal",
+        "¿qué hacemos ahora?"
+      ]
+    },
+    {
+      "id": "episode_process_1792170458989115900_1792170458989115900",
+      "session_id": "process_1792170458989115900",
+      "start": "2026-10-16T12:07:38.9891159-05:00",
+      "end": "0001-01-01T00:00:00Z",
+      "status": "active",
+      "turns": [
+        {
+          "id": 1,
+          "at": "2026-10-16T12:07:39.0605802-05:00",
+          "user_text": "2",
+          "assistant": "Entendido.",
+          "kind": "conversation",
+          "speech_act": "inform",
+          "objective": "2"
+        }
+      ],
+      "objectives": [
+        "2"
+      ]
+    },
+    {
+      "id": "episode_process_1792170464334461800_1792170464334461800",
+      "session_id": "process_1792170464334461800",
+      "start": "2026-10-16T12:07:44.3344618-05:00",
+      "end": "0001-01-01T00:00:00Z",
+      "status": "active",
+      "turns": [
+        {
+          "id": 1,
+          "at": "2026-10-16T12:07:44.3470009-05:00",
+          "user_text": "¿cuál es mi color favorito?",
+          "assistant": "Todavía no tengo ese dato guardado.",
+          "kind": "question",
+          "speech_act": "question",
+          "objective": "¿cuál es mi color favorito?"
+        },
+        {
+          "id": 2,
+          "at": "2026-10-16T12:07:45.2221639-05:00",
+          "user_text": "hola como estas",
+          "assistant": "Entendido.",
+          "kind": "question",
+          "speech_act": "question",
+          "language": "es",
+          "objective": "hola como estas",
+          "relation": "new_topic",
+          "parent_turn_id": 1
+        }
+      ],
+      "objectives": [
+        "¿cuál es mi color favorito?",
+        "hola como estas"
+      ]
+    },
+    {
+      "id": "episode_process_1792170607321713100_1792170607321713100",
+      "session_id": "process_1792170607321713100",
+      "start": "2026-10-16T12:10:07.3217131-05:00",
+      "end": "0001-01-01T00:00:00Z",
+      "status": "active",
+      "turns": [
+        {
+          "id": 3,
+          "at": "2026-10-16T12:10:07.3389016-05:00",
+          "user_text": "¿Qué aprendiste?",
+          "assistant": "He acumulado experiencia. Soy más confiable en create_file (100%), pero sigo teniendo dificultad con create_file (100%).",
+          "kind": "question",
+          "speech_act": "question",
+          "language": "es",
+          "objective": "¿Qué aprendiste?",
+          "relation": "new_topic",
+          "parent_turn_id": 2
+        }
+      ],
+      "objectives": [
+        "¿Qué aprendiste?"
+      ]
+    },
+    {
+      "id": "episode_process_1792170608029023700_1792170608029023700",
+      "session_id": "process_1792170608029023700",
+      "start": "2026-10-16T12:10:08.0290237-05:00",
+      "end": "0001-01-01T00:00:00Z",
+      "status": "active",
+      "turns": [
+        {
+          "id": 4,
+          "at": "2026-10-16T12:10:08.0445234-05:00",
+          "user_text": "¿Cómo evolucionaste?",
+          "assistant": "He acumulado experiencia. Soy más confiable en create_file (100%), pero sigo teniendo dificultad con create_file (100%).",
+          "kind": "question",
+          "speech_act": "question",
+          "language": "es",
+          "objective": "¿Cómo evolucionaste?",
+          "relation": "new_topic",
+          "parent_turn_id": 3
+        }
+      ],
+      "objectives": [
+        "¿Cómo evolucionaste?"
+      ]
+    },
+    {
+      "id": "episode_process_1792170608732150000_1792170608732150000",
+      "session_id": "process_1792170608732150000",
+      "start": "2026-10-16T12:10:08.73215-05:00",
+      "end": "0001-01-01T00:00:00Z",
+      "status": "active",
+      "turns": [
+        {
+          "id": 5,
+          "at": "2026-10-16T12:10:08.7519583-05:00",
+          "user_text": "¿Qué cambio basado en lo que funcionó?",
+          "assistant": "He acumulado experiencia. Soy más confiable en create_file (100%), pero sigo teniendo dificultad con create_file (100%).",
+          "kind": "question",
+          "speech_act": "question",
+          "language": "es",
+          "topic": "lo que funciono",
+          "objective": "¿Qué cambio basado en lo que funcionó?",
+          "relation": "new_topic",
+          "parent_turn_id": 4
+        }
+      ],
+      "topics": [
+        "lo que funciono"
+      ],
+      "objectives": [
+        "¿Qué cambio basado en lo que funcionó?"
+      ]
+    },
+    {
+      "id": "episode_process_1792170609602906800_1792170609602906800",
+      "session_id": "process_1792170609602906800",
+      "start": "2026-10-16T12:10:09.6029068-05:00",
+      "end": "0001-01-01T00:00:00Z",
+      "status": "active",
+      "turns": [
+        {
+          "id": 6,
+          "at": "2026-10-16T12:10:09.6214168-05:00",
+          "user_text": "¿Qué analizas?",
+          "assistant": "Entendido.",
+          "kind": "question",
+          "speech_act": "question",
+          "language": "es",
+          "topic": "lo que funciono",
+          "objective": "¿Qué analizas?",
+          "relation": "new_topic",
+          "parent_turn_id": 5
+        }
+      ],
+      "topics": [
+        "lo que funciono"
+      ],
+      "objectives": [
+        "¿Qué analizas?"
+      ]
+    },
+    {
+      "id": "episode_process_1792170790344708100_1792170790344708100",
+      "session_id": "process_1792170790344708100",
+      "start": "2026-10-16T12:13:10.3447081-05:00",
+      "end": "0001-01-01T00:00:00Z",
+      "status": "active",
+      "turns": [
+        {
+          "id": 1,
+          "at": "2026-10-16T12:13:10.3587564-05:00",
+          "user_text": "¿cuál es mi bebida favorita?",
+          "assistant": "Tu bebida favorita es café.",
+          "kind": "question",
+          "speech_act": "question",
+          "objective": "¿cuál es mi bebida favorita?"
+        },
+        {
+          "id": 2,
+          "at": "2026-10-16T12:13:11.0776902-05:00",
+          "user_text": "café",
+          "assistant": "No supe qué hacer con eso.",
+          "kind": "continuation",
+          "speech_act": "continue",
+          "objective": "¿cuál es mi bebida favorita?",
+          "relation": "answer",
+          "parent_turn_id": 1
+        }
+      ],
+      "objectives": [
+        "¿cuál es mi bebida favorita?"
+      ]
+    },
+    {
+      "id": "episode_process_1792170799370683000_1792170799370683000",
+      "session_id": "process_1792170799370683000",
+      "start": "2026-10-16T12:13:19.370683-05:00",
+      "end": "0001-01-01T00:00:00Z",
+      "status": "active",
+      "turns": [
+        {
+          "id": 1,
+          "at": "2026-10-16T12:13:19.3827589-05:00",
+          "user_text": "¿cuál es mi bebida favorita?",
+          "assistant": "Tu bebida favorita es café.",
+          "kind": "question",
+          "speech_act": "question",
+          "objective": "¿cuál es mi bebida favorita?"
+        },
+        {
+          "id": 2,
+          "at": "2026-10-16T12:13:20.1716109-05:00",
+          "user_text": "café",
+          "assistant": "No supe qué hacer con eso.",
+          "kind": "continuation",
+          "speech_act": "continue",
+          "objective": "¿cuál es mi bebida favorita?",
+          "relation": "answer",
+          "parent_turn_id": 1
+        }
+      ],
+      "objectives": [
+        "¿cuál es mi bebida favorita?"
+      ]
+    },
+    {
+      "id": "episode_process_1792170892553588600_1792170892553588600",
+      "session_id": "process_1792170892553588600",
+      "start": "2026-10-16T12:14:52.5535886-05:00",
+      "end": "0001-01-01T00:00:00Z",
+      "status": "active",
+      "turns": [
+        {
+          "id": 1,
+          "at": "2026-10-16T12:14:52.5692663-05:00",
+          "user_text": "abre chrome",
+          "assistant": "Entendido.",
+          "kind": "action",
+          "speech_act": "command",
+          "language": "es",
+          "objective": "abre chrome"
+        },
+        {
+          "id": 2,
+          "at": "2026-10-16T12:14:53.2840672-05:00",
+          "user_text": "avanzar escena la interacción",
+          "assistant": "La tarea quedó preparada, pero necesito tu autorización explícita para ejecutar programming.create_file. Motivo: explicit confirmation required before execution. Puedes autorizarla explícitamente cuando quieras.",
+          "kind": "production",
+          "speech_act": "command",
+          "language": "es",
+          "topic": "escena",
+          "objective": "avanzar escena la interacción",
+          "relation": "continuation",
+          "parent_turn_id": 1
+        }
+      ],
+      "topics": [
+        "escena"
+      ],
+      "objectives": [
+        "abre chrome",
+        "avanzar escena la interacción"
+      ]
+    },
+    {
+      "id": "episode_process_1792170941751209000_1792170941751209000",
+      "session_id": "process_1792170941751209000",
+      "start": "2026-10-16T12:15:41.751209-05:00",
+      "end": "0001-01-01T00:00:00Z",
+      "status": "active",
+      "turns": [
+        {
+          "id": 1,
+          "at": "2026-10-16T12:15:41.7809806-05:00",
+          "user_text": "¿cuál es mi bebida favorita?",
+          "assistant": "Tu bebida favorita es café.",
+          "kind": "question",
+          "speech_act": "question",
+          "objective": "¿cuál es mi bebida favorita?"
+        },
+        {
+          "id": 2,
+          "at": "2026-10-16T12:15:42.5820342-05:00",
+          "user_text": "café",
+          "assistant": "La tarea sigue pendiente de autorización para programming.create_file. La mantengo en el mismo trabajo y no la ejecutaré hasta recibir una autorización explícita.",
+          "kind": "continuation",
+          "speech_act": "continue",
+          "objective": "¿cuál es mi bebida favorita?",
+          "relation": "answer",
+          "parent_turn_id": 1
+        }
+      ],
+      "objectives": [
+        "¿cuál es mi bebida favorita?"
+      ]
+    }
+  ],
+  "retention": {
+    "max_episodes": 500,
+    "max_age": 15552000000000000,
+    "max_turns_per_episode": 0
+  },
+  "legacy_b62_migrated": true
+}

@@ -1,0 +1,78 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-10-16T15:31:39Z",
+  "host_info": {
+    "go_version": "go1.26.4",
+    "num_cpu": 4
+  },
+  "vram_budget_mb": 1800,
+  "results": [
+    {
+      "config": {
+        "model": "qwen3:4b-instruct-2507-q4_K_M",
+        "gpu_layers": 0,
+        "num_thread": 4,
+        "temperature": 0
+      },
+      "measurements": [
+        {
+          "tokens_per_second": 3.0653143527706246,
+          "first_response_ms": 53828,
+          "ram_mb": 3708.529998779297,
+          "vram_mb": 0,
+          "repetition": 1,
+          "over_budget": false,
+          "timestamp": "2026-10-16T15:29:07Z"
+        },
+        {
+          "tokens_per_second": 2.8946955476009024,
+          "first_response_ms": 30054,
+          "ram_mb": 3708.529998779297,
+          "vram_mb": 0,
+          "repetition": 2,
+          "over_budget": false,
+          "timestamp": "2026-10-16T15:29:38Z"
+        },
+        {
+          "tokens_per_second": 4.155580749558112,
+          "first_response_ms": 52459,
+          "ram_mb": 3708.529998779297,
+          "vram_mb": 0,
+          "repetition": 3,
+          "over_budget": false,
+          "timestamp": "2026-10-16T15:30:31Z"
+        },
+        {
+          "tokens_per_second": 4.91220003825902,
+          "first_response_ms": 14250,
+          "ram_mb": 3708.529998779297,
+          "vram_mb": 0,
+          "repetition": 4,
+          "over_budget": false,
+          "timestamp": "2026-10-16T15:30:45Z"
+        },
+        {
+          "tokens_per_second": 4.0965356903672205,
+          "first_response_ms": 53215,
+          "ram_mb": 3708.529998779297,
+          "vram_mb": 0,
+          "repetition": 5,
+          "over_budget": false,
+          "timestamp": "2026-10-16T15:31:39Z"
+        }
+      ],
+      "stats": {
+        "tokens_per_second_p50": 4.126058219962666,
+        "tokens_per_second_p95": 4.798707144953884,
+        "first_response_ms_p50": 41256.5,
+        "first_response_ms_p95": 53101.6,
+        "ram_mb_p50": 3708.529998779297,
+        "ram_mb_p95": 3708.529998779297,
+        "vram_mb_p50": 0,
+        "vram_mb_p95": 0,
+        "valid_repetitions": 4
+      },
+      "over_budget": false
+    }
+  ]
+}

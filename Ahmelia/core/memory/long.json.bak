@@ -1,0 +1,25 @@
+{
+  "data": {
+    "error_abre chrome": {
+      "id": "error_abre chrome",
+      "type": "error",
+      "input": "abre chrome",
+      "response": "programa no encontrado: chrome",
+      "action": "abrir_programa",
+      "target": "",
+      "parameters": null,
+      "importance": 0.9,
+      "confidence": 0,
+      "source": "aprendido",
+      "uses": 1,
+      "last_used": "2026-10-16T12:04:00.2017202-05:00",
+      "created_at": "2026-10-16T12:04:00.2017202-05:00",
+      "tags": [
+        "programa",
+        "chrome"
+      ],
+      "relations": []
+    }
+  },
+  "version": 3
+}

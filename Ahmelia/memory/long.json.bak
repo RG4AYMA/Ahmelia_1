@@ -1,0 +1,27 @@
+{
+  "data": {
+    "crea la carpeta c\\users\\user\\appdata\\local\\temp\\ahmelia-paso4-live-1\nsalir": {
+      "id": "crea la carpeta c\\users\\user\\appdata\\local\\temp\\ahmelia-paso4-live-1\nsalir",
+      "type": "comando",
+      "input": "crea la carpeta C:\\Users\\User\\AppData\\Local\\Temp\\ahmelia-paso4-live-1\nsalir",
+      "response": "",
+      "action": "crear_carpeta",
+      "target": "C:\\Users\\User\\AppData\\Local\\Temp\\ahmelia-paso4-live-1",
+      "parameters": {
+        "raw": "crea la carpeta C:\\Users\\User\\AppData\\Local\\Temp\\ahmelia-paso4-live-1\nsalir",
+        "ruta": "C:\\Users\\User\\AppData\\Local\\Temp\\ahmelia-paso4-live-1"
+      },
+      "importance": 0.4,
+      "confidence": 0.65,
+      "source": "aprendido",
+      "uses": 1,
+      "last_used": "2026-11-04T18:17:23.0233028-05:00",
+      "created_at": "2026-11-04T18:17:23.0233028-05:00",
+      "tags": [
+        "archivo"
+      ],
+      "relations": []
+    }
+  },
+  "version": 3
+}

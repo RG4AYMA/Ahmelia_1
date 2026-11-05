@@ -1,0 +1,1716 @@
+diff -ruN base/source/B96.39-D3-IMPL-REPORT.md work/source/B96.39-D3-IMPL-REPORT.md
+--- base/source/B96.39-D3-IMPL-REPORT.md	1970-01-01 00:00:00.000000000 +0000
++++ work/source/B96.39-D3-IMPL-REPORT.md	2026-09-23 14:33:27.209213416 +0000
+@@ -0,0 +1,370 @@
++# B96.39-D3-IMPL — Migración de invariantes de ejecución y conexión de autorización efectiva
++
++## 0. Base y alcance
++
++**Base:** `Ahmelia-G2-G4-D1-D3-Execution-Routes-Consolidation-Decision-verified.zip`
++
++**SHA-256 base:** `770bb5c14e660e8b4b155e8c0ec53212c91a502e2cbb9aebcd2d450820c585d7`
++
++La decisión D3 no se reabre. Esta entrega implementa únicamente las dos migraciones aprobadas:
++
++1. invariantes provider-neutral de pre-ejecución;
++2. autorización efectiva y fail-closed;
++3. transición operacional de Recovery sin activar `ProductionLoop`, `ExecutionGateway` ni `CapabilityE2E`.
++
++La única puerta física de ejecución sigue siendo:
++
++```text
++CapabilityDecision
++      ↓
++Engine.authorityExecute*
++      ↓
++capability.Resolver
++      ↓
++ProductionRuntime
++      ↓
++ExecutionGuard
++      ↓
++SafetyGate + AuthorizationGate
++      ↓
++ProviderRegistry
++      ↓
++Provider.Execute
++```
++
++No se creó una segunda autoridad de ejecución.
++
++---
++
++## 1. Autorización efectiva — cierre del hallazgo crítico
++
++Antes de esta entrega, `production.SafetyGate.Assess(...)` no tenía caller de runtime y las capabilities productivas marcadas `PermissionAskFirst` podían llegar a `Provider.Execute()` sin pasar por una autorización efectiva.
++
++Ahora `ProductionRuntime.ExecuteFromAuthority(...)` siempre cruza `production.ExecutionGuard.Check(...)` antes de:
++
++- crear/abrir `WorkStore` para la ejecución (`Begin`);
++- resolver nuevamente el provider para la llamada final;
++- invocar `Provider.Execute()`.
++
++`ExecutionGuard` reutiliza únicamente los contratos existentes:
++
++- `capability.Registry` para identidad declarativa;
++- `production.SafetyGate` para seguridad/confirmación/autorización;
++- `production.AuthorizationGate` → `autonomy.AuthorizeCapabilityID(...)` para permiso efectivo.
++
++### `PermissionAskFirst`
++
++La ruta por defecto utiliza `ApprovalNone`.
++
++La evidencia de aprobación puede llegar por:
++
++```go
++ExecutionOptions.Approval
++```
++
++o por el resolver proporcionado por el dueño de identidad/permiso:
++
++```go
++ExecutionOptions.ApprovalResolver func(capability.ID) autonomy.Approval
++```
++
++El resolver, cuando existe, tiene precedencia: Production no puede convertir un `ApprovalGranted` local del caller en autorización si el dueño de permiso devuelve `ApprovalNone`/`Denied`.
++
++Cuando no existe aprobación efectiva:
++
++```text
++Provider.Execute() → NO
++WorkStore.Begin() → NO
++ActionResult.AuthorizationRequired → YES
++```
++
++El resultado devuelve de forma estructurada:
++
++- `AuthorizationRequired`
++- `AuthorizationCapabilityID`
++- `AuthorizationReason`
++
++Production no solicita una respuesta ni genera lenguaje de usuario.
++
++`core/engine.go` recibe ese resultado y lo entrega al dueño conversacional mediante `renderProductionAuthorizationRequired(...)`, conservando la separación:
++
++```text
++Production → hecho estructurado
++Core/Conversation/Initiative → necesidad de autorización
++Language → realización lingüística
++```
++
++---
++
++## 2. Invariantes fail-closed provider-neutral
++
++`ExecutionGuard` no introduce `Tool`, `Environment` ni `CapabilityBinding` en la ruta viva.
++
++Antes de ejecutar se comprueba, en este orden:
++
++1. `capabilityID` no está vacío.
++2. `candidate.ID == capabilityID`.
++3. `candidate.Validate()` pasa.
++4. Existe una capability con ese ID en el `capability.Registry` esperado.
++5. La capability registrada también es válida.
++6. `Domain`, `Action` y `Permission` del candidato coinciden con la definición registrada.
++7. Existe un provider ejecutable para esa capability según el contrato actual de `ProviderRegistry`.
++8. La `operation` recibida coincide con `registered.Action`; una discrepancia falla cerrado.
++9. `SafetyGate.Assess(...)` pasa.
++10. `AuthorizationGate.Authorize(...)` pasa.
++11. Toda exigencia de confirmación o autorización de safety requiere `ApprovalGranted` antes de ejecutar.
++12. La autorización de capability es efectivamente ejecutable.
++
++Solo después de completar esas invariantes se construye:
++
++```go
++production.ProviderRequest{
++    Capability:   preflight.Capability,
++    CapabilityID: preflight.Capability.ID,
++    Operation:    preflight.Capability.Action,
++    Input:        req.Raw,
++}
++```
++
++Así, la coherencia que en `ExecutionGateway` se expresaba como `Action.CapabilityID == Capability.ID` queda expresada en términos del contrato provider-neutral real:
++
++```text
++ProviderRequest.CapabilityID == ProviderRequest.Capability.ID
++ProviderRequest.Operation   == ProviderRequest.Capability.Action
++```
++
++No existe un objeto alternativo que pueda reinterpretar esa identidad antes del provider.
++
++También se cubre explícitamente el caso de una action no clasificada por `shared` safety: permanece fail-closed y requiere autorización explícita.
++
++---
++
++## 3. Recovery operacional
++
++La ruta viva no instancia `CapabilityE2E` y no reutiliza su pipeline.
++
++La transición implementada es:
++
++```text
++Provider failure
++      ↓
++WorkStore.Complete(..., false, ...)
++      ↓
++production.TechnicalRecoveryService
++      ↓
++tools.RecoveryCoordinator
++      ↓
++ActionResult.Recovery
++      ↓
++Core: dispatchProductionRecovery
++      ↓
++┌──────────────┬──────────────┬──────────────┬──────────────┐
++│ Retry        │ Replan       │ Block        │ AskUser      │
++│ authority    │ capability/  │ WorkStore    │ Conversation │
++│ del ciclo    │ authority    │              │ / Initiative │
++└──────────────┴──────────────┴──────────────┴──────────────┘
++```
++
++### Propiedad de cada rama
++
++**Retry**
++
++La acción se vuelve a ejecutar atravesando otra vez `Engine.authorityExecute*`. No existe llamada directa a Provider desde Recovery.
++
++**Replan**
++
++La rama vuelve a pasar por la autoridad de capabilities y después por la autoridad central; no crea un planner nuevo ni activa `CapabilityE2E`. La transición está acotada por `maxAutomaticProductionRecoveryTransitions` para evitar ciclos automáticos ilimitados.
++
++**Block**
++
++La mutación de estado se realiza mediante el `WorkStore` existente (`WorkStore.Block(...)`). Production solo devuelve la decisión.
++
++**AskUser**
++
++Production solo devuelve `RecoveryAskUser`. La respuesta estructurada se genera desde Core mediante el contrato conversacional existente. `ProductionRuntime` no llama a `say`/`sayAsync` ni genera una respuesta de usuario.
++
++### Regla importante
++
++`ProductionRuntime` **no aplica** `Retry`, `Replan`, `Block` o `AskUser` por sí mismo. Su salida es un `tools.RecoveryDecision` estructurado.
++
++---
++
++## 4. Cambios principales
++
++### `production/execution_guard.go`
++
++Nuevo contrato provider-neutral de preflight. Reutiliza Registry + SafetyGate + AuthorizationGate.
++
++### `production/provider_registry.go`
++
++`ProviderRequest` incorpora identidad explícita de capability y operación resuelta. `ActionResult` incorpora handoff estructurado de autorización y `RecoveryDecision`.
++
++### `production/work_session.go`
++
++Se añade `WorkStore.Block(...)` para hacer que la rama `RecoveryBlock` tenga un dueño de estado único. También se preserva `Recovery` al clonar resultados.
++
++### `production/recovery.go`
++
++`TechnicalRecoveryService` puede recibir un `RecoveryDecider` inyectable, pero continúa usando el único `tools.RecoveryCoordinator` existente. No se creó otra semántica de recovery.
++
++### `integration/production_runtime.go`
++
++Integra `ExecutionGuard` antes del provider y devuelve decisiones de autorización/recovery como datos estructurados.
++
++### `core/engine.go`
++
++Mantiene `authorityExecute` como frontera física y entrega opciones de autorización al runtime. Si el runtime devuelve `AuthorizationRequired`, la ejecución termina sin provider y la necesidad de autorización se delega a la capa conversacional. Si devuelve `Recovery`, Core lo entrega al dueño correspondiente.
++
++### `core/production_recovery.go`
++
++Nuevo dispatcher de ownership. Es un adaptador mecánico, no una segunda política ni una segunda autoridad cognitiva.
++
++---
++
++## 5. Pruebas nuevas y migradas
++
++### Authorization / preflight
++
++En `production/execution_guard_test.go`:
++
++- `PermissionAskFirst` sin aprobación → fail-closed.
++- `PermissionAskFirst` con aprobación explícita → permitido.
++- mismatch de identidad capability → rechazado.
++- inconsistencia con Registry → rechazada.
++- capability inválida → rechazada.
++- action no clasificada sin autorización → rechazada.
++- `Operation` incoherente → rechazada.
++
++En `integration/d3_execution_runtime_test.go`:
++
++- `PermissionAskFirst` sin autorización → `Provider.Execute()` no se invoca (`calls=0`).
++- el `ApprovalResolver` del dueño puede bloquear aunque el caller entregue `ApprovalGranted` local.
++- las cuatro decisiones de recovery salen del runtime como datos y no provocan ejecución adicional dentro de `ProductionRuntime`.
++- la identidad provider-neutral llega coherente al provider.
++
++### Recovery ownership
++
++En `core/production_recovery_test.go`:
++
++- `Retry` → owner Retry.
++- `Replan` → owner Replan.
++- `Block` → owner Block.
++- `AskUser` → owner AskUser.
++- decisión desconocida → fail-closed.
++
++### Tests arquitectónicos existentes
++
++Los guards estáticos que antes exigían que toda lógica estuviera literalmente dentro del nombre exacto `authorityExecute` fueron actualizados para reconocer `authorityExecute*` como una **misma implementación de la autoridad central**, sin abrir una segunda puerta física.
++
++También se actualizó el guard de `ProductionRuntime.ExecuteFromAuthority` para reconocer su nuevo contrato de `ExecutionOptions`, manteniendo la prohibición de reinterpretar lenguaje, generar conversación o resolver desde raw text.
++
++No se promocionó ningún test de `ExecutionGateway` o `CapabilityE2E` como runtime. Los nuevos tests prueban el contrato provider-neutral y el dispatcher de ownership.
++
++---
++
++## 6. Sweep de rutas dormidas después de la implementación
++
++La búsqueda de producción sigue mostrando:
++
++```text
++NewProductionLoop(...)      → solo definición / tests
++NewExecutionGateway(...)   → solo definición / tests
++NewCapabilityE2E(...)       → solo definición / tests
++```
++
++No se conectó ninguna de esas superficies al runtime real.
++
++La única invocación productiva de:
++
++```text
++provider.Execute(...)
++```
++
++permanece en:
++
++```text
++integration/production_runtime.go
++```
++
++---
++
++## 7. Validación
++
++### PASS
++
++```text
++gofmt -l <archivos modificados>       PASS
++
++go build ./...                        PASS
++
++go vet ./...                          PASS
++
++go test ./production ./integration ./core -count=1
++                                       PASS
++```
++
++### Race
++
++Ejecutado por paquete modificado:
++
++```text
++go test ./production/... -race -count=1   PASS   1.025s
++go test ./integration/... -race -count=1  PASS   1.082s
++go test ./core/... -race -count=1         PASS  29.716s
++```
++
++### Suite completa solicitada
++
++Se intentó literalmente:
++
++```text
++go test -p 1 ./... -count=1 -timeout 30m
++```
++
++El sandbox terminó la corrida externa antes de completar todos los paquetes. En el intento completo se llegó hasta `ahmelia/production`; en una segunda matriz por paquete, los paquetes restantes fueron ejecutados individualmente y devolvieron `PASS` (incluyendo `programming`, `reasoning`, `selfknowledge`, `solving`, `tools`, `tts`, etc.).
++
++**Importante:** no se declara `go test -p 1 ./...` como PASS global porque el comando solicitado no logró completar dentro de la ventana disponible del entorno.
++
++### Formato global
++
++`gofmt -l .` todavía muestra archivos antiguos no modificados en distintos paquetes. Ningún archivo modificado por D3-IMPL aparece en esa salida.
++
++---
++
++## 8. Criterio de cierre arquitectónico
++
++### ¿Quién decide autorización?
++
++`autonomy.AuthorizeCapabilityID` a través de `production.AuthorizationGate`. La evidencia de aprobación la entrega el dueño de identidad/permiso (`Approval` o `ApprovalResolver`). Production no la infiere.
++
++### ¿Quién ejecuta?
++
++Sigue siendo exclusivamente `Engine.authorityExecute*` → `ProductionRuntime` → `Provider`.
++
++### ¿Quién decide recovery?
++
++`tools.RecoveryCoordinator` produce `RecoveryDecision`; no existe un segundo policy engine.
++
++### ¿Quién aplica recovery?
++
++Cada owner correspondiente: autoridad del ciclo para Retry, capability/planning authority para Replan, `WorkStore` para Block y Conversation/Initiative para AskUser.
++
++### ¿Existe otra puerta física?
++
++No. `ProductionLoop`, `ExecutionGateway` y `CapabilityE2E` permanecen dormidos.
++
++### ¿Es un parche puntual?
++
++No. Se creó un contrato provider-neutral general (`ExecutionGuard`) que protege cualquier capability/proveedor registrado, no solo las cinco capabilities productivas marcadas `PermissionAskFirst`.
++
++### ¿Esto resolvería un caso similar aún no presentado?
++
++**Sí.** El guard falla cerrado por identidad, Registry, operación, safety y autorización antes de cualquier provider, por lo que una capability futura con otro dominio/proveedor queda sometida al mismo contrato sin añadir una rama específica por caso.
++
++---
++
++## 9. Estado de secuencia
++
++La implementación D3-IMPL queda cerrada a nivel de código y validaciones específicas.
++
++El criterio formal de “suite completa verde” para desbloquear D2 **queda pendiente de la corrida global en una máquina donde `go test -p 1 ./... -count=1 -timeout 30m` pueda completarse sin el límite de ejecución del sandbox**.
+diff -ruN base/source/core/b96_33_34_behavior_audit_test.go work/source/core/b96_33_34_behavior_audit_test.go
+--- base/source/core/b96_33_34_behavior_audit_test.go	2026-09-20 18:57:14.000000000 +0000
++++ work/source/core/b96_33_34_behavior_audit_test.go	2026-09-23 14:24:01.240421933 +0000
+@@ -52,6 +52,7 @@
+ 	}
+ 	e.userModelStore = store
+ 	installF9LanguageStubs(t, e)
++	approveTestProductionExecution(t, e)
+ 	return e
+ }
+ 
+diff -ruN base/source/core/b96_postaudit_autonomy_authority_test.go work/source/core/b96_postaudit_autonomy_authority_test.go
+--- base/source/core/b96_postaudit_autonomy_authority_test.go	2026-09-22 00:03:34.000000000 +0000
++++ work/source/core/b96_postaudit_autonomy_authority_test.go	2026-09-23 14:23:51.056488023 +0000
+@@ -55,6 +55,7 @@
+ 	var foundFile string
+ 	var foundLine int
+ 	var authorityCount int
++	var authorityOwner string
+ 
+ 	err := filepath.Walk(root, func(path string, info os.FileInfo, walkErr error) error {
+ 		if walkErr != nil {
+@@ -88,8 +89,9 @@
+ 				}
+ 				return true
+ 			})
+-			if funcDecl.Name.Name == "authorityExecute" {
+-				authorityCount = local
++			if strings.HasPrefix(funcDecl.Name.Name, "authorityExecute") {
++				authorityCount += local
++				authorityOwner = funcDecl.Name.Name
+ 			}
+ 			// Avoid recursively counting the same nested function through the
+ 			// outer FuncDecl visitor; Go production files here do not declare
+@@ -104,8 +106,8 @@
+ 	if count != 1 {
+ 		t.Fatalf("I6 esperaba un único solving.Execute físico detrás de la autoridad; hallados=%d en %s:%d", count, foundFile, foundLine)
+ 	}
+-	if filepath.Clean(foundFile) != filepath.Clean(filepath.Join(root, "engine.go")) || authorityCount != 1 {
+-		t.Fatalf("I6 incumplido: solving.Execute debe vivir en Engine.authorityExecute; hallado=%s:%d authorityCount=%d", foundFile, foundLine, authorityCount)
++	if filepath.Clean(foundFile) != filepath.Clean(filepath.Join(root, "engine.go")) || authorityCount != 1 || !strings.HasPrefix(authorityOwner, "authorityExecute") {
++		t.Fatalf("I6 incumplido: solving.Execute debe vivir en la implementación de la autoridad Engine.authorityExecute*; hallado=%s:%d authorityCount=%d", foundFile, foundLine, authorityCount)
+ 	}
+ }
+ 
+diff -ruN base/source/core/engine.go work/source/core/engine.go
+--- base/source/core/engine.go	2026-09-22 16:16:17.000000000 +0000
++++ work/source/core/engine.go	2026-09-23 14:21:36.471910396 +0000
+@@ -291,16 +291,17 @@
+ 	// y el dominio Programming formen parte del Engine vivo, no solo de tests
+ 	// aislados. Capability/Production conservan la autoridad; Programming
+ 	// aporta la implementación especializada.
+-	capabilityRegistry     *capability.Registry
+-	capabilityDiscovery    *capability.Discovery
+-	capabilityResolver     *capability.Resolver
+-	programmingIntegration *programming.ProgrammingIntegration
+-	productionProviders    *production.ProviderRegistry
+-	technicalRecovery      *production.TechnicalRecoveryService
+-	productionRuntime      *integration.ProductionRuntime
+-	workStore              *production.WorkStore
+-	programmingWorkspace   *programming.ProgrammingWorkspace
+-	productionContext      *ProductionContext // B96 integration: latest produced project/artifacts for deterministic follow-up resolution
++	capabilityRegistry         *capability.Registry
++	capabilityDiscovery        *capability.Discovery
++	capabilityResolver         *capability.Resolver
++	programmingIntegration     *programming.ProgrammingIntegration
++	productionProviders        *production.ProviderRegistry
++	technicalRecovery          *production.TechnicalRecoveryService
++	productionRuntime          *integration.ProductionRuntime
++	workStore                  *production.WorkStore
++	capabilityApprovalResolver func(capability.ID) autonomy.Approval // identity/permission owner input; nil means no approval
++	programmingWorkspace       *programming.ProgrammingWorkspace
++	productionContext          *ProductionContext // B96 integration: latest produced project/artifacts for deterministic follow-up resolution
+ 
+ 	// FASE 6 — Autonomía Cognitiva e Iniciativa (B72-77). Ver el
+ 	// bloque de instanciación en NewEngine para el detalle de cada
+@@ -2266,7 +2267,7 @@
+ 	technicalRecovery := production.NewTechnicalRecoveryService()
+ 	productionContext := &production.ProductionContext{}
+ 	workStore := production.NewWorkStore("memory/production_work.json")
+-	productionRuntime, _ := integration.NewProductionRuntime(capResolver, capRegistry, productionProviders, productionContext, workStore)
++	productionRuntime, _ := integration.NewProductionRuntime(capResolver, capRegistry, productionProviders, productionContext, workStore, technicalRecovery)
+ 
+ 	// Programming usa el mismo Workspace de Production y los adaptadores OS
+ 	// especializados de B96. No se crea un segundo mundo ni un segundo
+@@ -2860,6 +2861,10 @@
+ // cross the physical execution boundary directly. This method is the
+ // architectural bridge: CapabilityDecision -> AuthorityExecute -> Execute.
+ func (e *Engine) authorityExecute(decision interaction.CapabilityInteractionDecision, semanticReq ...interaction.SemanticRequest) bool {
++	return e.authorityExecuteWithOptions(decision, production.ExecutionOptions{Approval: autonomy.ApprovalNone, RecoveryAttempt: 1}, semanticReq...)
++}
++
++func (e *Engine) authorityExecuteWithOptions(decision interaction.CapabilityInteractionDecision, options production.ExecutionOptions, semanticReq ...interaction.SemanticRequest) bool {
+ 	if e == nil || !decision.Executable || !decision.Request.HasOperation() {
+ 		if e != nil && e.flowTrace != nil {
+ 			e.flowTrace.Mark("EXECUTION AUTHORITY", "rejected: capability decision is not executable")
+@@ -2957,9 +2962,21 @@
+ 				}
+ 				return false
+ 			}
+-			result := e.productionRuntime.ExecuteFromAuthority(context.Background(), semanticReq[0], route)
++			if options.ApprovalResolver == nil {
++				options.ApprovalResolver = e.capabilityApprovalResolver
++			}
++			result := e.productionRuntime.ExecuteFromAuthority(context.Background(), semanticReq[0], route, options)
+ 			if e.flowTrace != nil {
+-				e.flowTrace.Mark("PRODUCTION RESULT", fmt.Sprintf("success=%t verified=%t work=%s producer=%s", result.Success, result.Verified, result.WorkID, result.Producer))
++				e.flowTrace.Mark("PRODUCTION RESULT", fmt.Sprintf("success=%t verified=%t work=%s producer=%s recovery=%v authorization_required=%t", result.Success, result.Verified, result.WorkID, result.Producer, result.Recovery, result.AuthorizationRequired))
++			}
++			if result.AuthorizationRequired {
++				if e.flowTrace != nil {
++					e.flowTrace.Mark("EXECUTION AUTHORITY", fmt.Sprintf("authorization required: capability=%s reason=%s", result.AuthorizationCapabilityID, result.AuthorizationReason))
++				}
++				return e.renderProductionAuthorizationRequired(semanticReq[0], result)
++			}
++			if result.Recovery != nil {
++				return e.applyProductionRecovery(decision, semanticReq[0], result, *result.Recovery, options)
+ 			}
+ 			return e.renderProductionActionResult(semanticReq[0], result)
+ 		}
+diff -ruN base/source/core/f9_behavioral_regression_test.go work/source/core/f9_behavioral_regression_test.go
+--- base/source/core/f9_behavioral_regression_test.go	2026-09-22 00:01:06.000000000 +0000
++++ work/source/core/f9_behavioral_regression_test.go	2026-09-23 14:23:51.056589576 +0000
+@@ -409,7 +409,7 @@
+ 		}
+ 		return true
+ 	})
+-	if len(executeCallOwners) != 1 || executeCallOwners[0] != "authorityExecute" {
++	if len(executeCallOwners) != 1 || !strings.HasPrefix(executeCallOwners[0], "authorityExecute") {
+ 		t.Fatalf("physical execution bypassed authority: %v", executeCallOwners)
+ 	}
+ 	turnPipeline, err := os.ReadFile("turn_pipeline.go")
+diff -ruN base/source/core/interaction_architecture_audit_96_32_15_test.go work/source/core/interaction_architecture_audit_96_32_15_test.go
+--- base/source/core/interaction_architecture_audit_96_32_15_test.go	2026-09-19 18:34:52.000000000 +0000
++++ work/source/core/interaction_architecture_audit_96_32_15_test.go	2026-09-23 14:23:51.056664869 +0000
+@@ -187,11 +187,14 @@
+ 		t.Fatal(err)
+ 	}
+ 	src := string(data)
+-	execStart := strings.Index(src, "func (r *ProductionRuntime) ExecuteFromAuthority(ctx context.Context, req interaction.SemanticRequest, route capability.Route)")
++	execStart := strings.Index(src, "func (r *ProductionRuntime) ExecuteFromAuthority(")
+ 	if execStart < 0 {
+ 		t.Fatal("structured ProductionRuntime.Execute not found")
+ 	}
+ 	body := src[execStart:]
++	if !strings.Contains(body, "options production.ExecutionOptions") {
++		t.Fatal("ProductionRuntime.ExecuteFromAuthority must consume structured execution options")
++	}
+ 	if strings.Contains(body, "interaction.Analyze(") {
+ 		t.Fatal("production runtime must not re-interpret a SemanticRequest")
+ 	}
+diff -ruN base/source/core/interaction_e2e_96_22_30_test.go work/source/core/interaction_e2e_96_22_30_test.go
+--- base/source/core/interaction_e2e_96_22_30_test.go	2026-09-20 18:59:42.000000000 +0000
++++ work/source/core/interaction_e2e_96_22_30_test.go	2026-09-23 14:24:01.240501953 +0000
+@@ -34,6 +34,7 @@
+ 	selfQuery := selfknowledge.NewSelfQuery(history, registry, "interaction-e2e")
+ 	e := NewEngine(sess, longMem, &shortMem, history, selfQuery)
+ 	installF9LanguageStubs(t, e)
++	approveTestProductionExecution(t, e)
+ 	return e
+ }
+ 
+diff -ruN base/source/core/phase1_execution_authority_test.go work/source/core/phase1_execution_authority_test.go
+--- base/source/core/phase1_execution_authority_test.go	2026-09-19 16:43:30.000000000 +0000
++++ work/source/core/phase1_execution_authority_test.go	2026-09-23 14:23:51.054251048 +0000
+@@ -46,8 +46,8 @@
+ 	if len(calls) != 1 {
+ 		t.Fatalf("Engine.execute must have exactly one entry point, got %d (%v)", len(calls), calls)
+ 	}
+-	if calls[0] != "authorityExecute" {
+-		t.Fatalf("Engine.execute entry point owned by %q, want authorityExecute", calls[0])
++	if !strings.HasPrefix(calls[0], "authorityExecute") {
++		t.Fatalf("Engine.execute entry point owned by %q, want authorityExecute* implementation", calls[0])
+ 	}
+ }
+ 
+diff -ruN base/source/core/pipeline_integration_test.go work/source/core/pipeline_integration_test.go
+--- base/source/core/pipeline_integration_test.go	2026-09-20 18:57:14.000000000 +0000
++++ work/source/core/pipeline_integration_test.go	2026-09-23 14:24:01.240281903 +0000
+@@ -29,6 +29,7 @@
+ 	selfQuery := selfknowledge.NewSelfQuery(history, registry, "v3.1")
+ 	e := NewEngine(sess, longMem, shortMem, history, selfQuery)
+ 	installF9LanguageStubs(t, e)
++	approveTestProductionExecution(t, e)
+ 	return e
+ }
+ 
+diff -ruN base/source/core/production_recovery.go work/source/core/production_recovery.go
+--- base/source/core/production_recovery.go	1970-01-01 00:00:00.000000000 +0000
++++ work/source/core/production_recovery.go	2026-09-23 14:21:44.833179699 +0000
+@@ -0,0 +1,210 @@
++package core
++
++import (
++	"fmt"
++	"strings"
++
++	"ahmelia/cognition"
++	"ahmelia/interaction"
++	"ahmelia/production"
++	"ahmelia/tools"
++)
++
++// productionRecoveryHandlers are ownership adapters only. The recovery
++// decision itself is produced by tools.RecoveryCoordinator; these handlers
++// ensure its mechanical application remains in the owner of each state.
++type productionRecoveryHandlers struct {
++	Retry   func() bool
++	Replan  func() bool
++	Block   func() bool
++	AskUser func() bool
++}
++
++func dispatchProductionRecovery(decision tools.RecoveryDecision, handlers productionRecoveryHandlers) bool {
++	switch decision.Action {
++	case tools.RecoveryRetry:
++		if handlers.Retry != nil {
++			return handlers.Retry()
++		}
++	case tools.RecoveryReplan:
++		if handlers.Replan != nil {
++			return handlers.Replan()
++		}
++	case tools.RecoveryBlock:
++		if handlers.Block != nil {
++			return handlers.Block()
++		}
++	case tools.RecoveryAskUser:
++		if handlers.AskUser != nil {
++			return handlers.AskUser()
++		}
++	}
++	return false
++}
++
++const maxAutomaticProductionRecoveryTransitions = 2
++
++func (e *Engine) applyProductionRecovery(
++	decision interaction.CapabilityInteractionDecision,
++	req interaction.SemanticRequest,
++	result production.ActionResult,
++	recovery tools.RecoveryDecision,
++	options production.ExecutionOptions,
++) bool {
++	if e == nil {
++		return false
++	}
++	if options.RecoveryAttempt < 1 {
++		options.RecoveryAttempt = 1
++	}
++
++	handlers := productionRecoveryHandlers{
++		Retry: func() bool {
++			if options.RecoveryAttempt >= maxAutomaticProductionRecoveryTransitions {
++				return e.renderProductionRecoveryOutcome(req, result, recovery)
++			}
++			if e.flowTrace != nil {
++				e.flowTrace.Mark("RECOVERY OWNER", "retry → authorityExecute")
++			}
++			options.RecoveryAttempt++
++			return e.authorityExecuteWithOptions(decision, options, req)
++		},
++		Replan: func() bool {
++			if options.RecoveryAttempt >= maxAutomaticProductionRecoveryTransitions {
++				return e.renderProductionRecoveryOutcome(req, result, recovery)
++			}
++			if e.capabilityResolver == nil {
++				return e.renderProductionRecoveryOutcome(req, result, recovery)
++			}
++			if e.flowTrace != nil {
++				e.flowTrace.Mark("RECOVERY OWNER", "replan → capability resolver / authority")
++			}
++			// The resolver is the capability-side owner of replanning available to
++			// the live provider-neutral path. Re-running authorityExecute performs
++			// a fresh semantic resolution; ProductionRuntime never selects the new
++			// route itself.
++			_ = e.capabilityResolver.Resolve(decision, req)
++			options.RecoveryAttempt++
++			return e.authorityExecuteWithOptions(decision, options, req)
++		},
++		Block: func() bool {
++			if e.workStore == nil || strings.TrimSpace(result.WorkID) == "" {
++				return e.renderProductionRecoveryOutcome(req, result, recovery)
++			}
++			if err := e.workStore.Block(result.WorkID, recovery.Reason); err != nil && e.flowTrace != nil {
++				e.flowTrace.Mark("RECOVERY OWNER", "block → WorkStore error: "+err.Error())
++				return e.renderProductionRecoveryOutcome(req, result, recovery)
++			}
++			if e.flowTrace != nil {
++				e.flowTrace.Mark("RECOVERY OWNER", "block → WorkStore")
++			}
++			return e.renderProductionRecoveryOutcome(req, result, recovery)
++		},
++		AskUser: func() bool {
++			if e.flowTrace != nil {
++				e.flowTrace.Mark("RECOVERY OWNER", "ask_user → Conversation/Initiative")
++			}
++			return e.renderProductionRecoveryOutcome(req, result, recovery)
++		},
++	}
++	return dispatchProductionRecovery(recovery, handlers)
++}
++
++// executionAuthorizationResponse and recovery outcome rendering stay in Core
++// because Conversation/Language are the sole owners of user-facing output.
++func (e *Engine) renderProductionAuthorizationRequired(req interaction.SemanticRequest, result production.ActionResult) bool {
++	if e == nil {
++		return false
++	}
++	snap := e.conversationState.Snapshot()
++	intent := interaction.ResponseIntent{
++		Kind:           interaction.ResponseIntentAsk,
++		Confidence:     .98,
++		NeedsUserInput: true,
++		ShouldContinue: true,
++		ShouldSpeak:    true,
++		ThreadID:       snap.ActiveThreadID,
++		Objective:      strings.TrimSpace(req.Objective.Text),
++		Language:       snap.Language,
++		Reason:         "production execution is blocked pending explicit capability authorization",
++	}
++	e.lastResponseIntent = intent
++	e.lastNaturalDialogue.Move = interaction.MoveAsk
++	contract := interaction.NewResponseContract(req, intent, interaction.MoveAsk)
++	contract.Source = "production_authorization_boundary"
++	contract.ShouldAct = false
++	reason := result.AuthorizationReason
++	if strings.TrimSpace(reason) == "" {
++		reason = "esta capacidad requiere autorización explícita antes de ejecutar"
++	}
++	capabilityID := string(result.AuthorizationCapabilityID)
++	if capabilityID == "" {
++		capabilityID = "la capacidad seleccionada"
++	}
++	contract.AddEvidence(fmt.Sprintf("Necesito tu autorización explícita para ejecutar %s. %s", capabilityID, reason), "production_authorization_required", true, .98)
++	strategy := productionAuthorizationResponseStrategy(intent.Confidence)
++	return e.renderResponseContractWithStrategy(req, contract, e.buildConversationalRuntimeFacts(snap), strategy)
++}
++
++func productionAuthorizationResponseStrategy(confidence float64) cognition.ConversationalResponseStrategy {
++	return cognition.ConversationalResponseStrategy{
++		Version: "B96.33.10", Mode: cognition.ResponseModeClarify,
++		Directness: cognition.DirectnessDirect, Structure: cognition.StructureExplanation,
++		Initiative: cognition.InitiativeHelpful, Confidence: confidence,
++		PreserveUserAgency: true, ExecutionBoundary: true, ShouldGenerateLanguage: true,
++		Reason: "language realization of an execution authorization request",
++	}
++}
++
++func (e *Engine) renderProductionRecoveryOutcome(req interaction.SemanticRequest, result production.ActionResult, recovery tools.RecoveryDecision) bool {
++	if e == nil {
++		return false
++	}
++	snap := e.conversationState.Snapshot()
++	intent := interaction.ResponseIntent{
++		Kind:           interaction.ResponseIntentAnswer,
++		Confidence:     .90,
++		ShouldSpeak:    true,
++		ShouldContinue: true,
++		ThreadID:       snap.ActiveThreadID,
++		Objective:      strings.TrimSpace(req.Objective.Text),
++		Language:       snap.Language,
++		Reason:         "production recovery decision must be communicated by the conversation owner",
++	}
++	move := interaction.MoveAnswer
++	strategyMode := cognition.ResponseModeAnswer
++	switch recovery.Action {
++	case tools.RecoveryAskUser:
++		intent.Kind = interaction.ResponseIntentAsk
++		intent.NeedsUserInput = true
++		move = interaction.MoveAsk
++		strategyMode = cognition.ResponseModeClarify
++	case tools.RecoveryReplan:
++		intent.Kind = interaction.ResponseIntentContinue
++		move = interaction.MoveContinue
++	case tools.RecoveryBlock:
++		intent.Kind = interaction.ResponseIntentWait
++		move = interaction.MoveWait
++	}
++	e.lastResponseIntent = intent
++	e.lastNaturalDialogue.Move = move
++	contract := interaction.NewResponseContract(req, intent, move)
++	contract.Source = "production_recovery_boundary"
++	contract.ShouldAct = false
++	reason := strings.TrimSpace(recovery.Reason)
++	if reason == "" {
++		reason = strings.TrimSpace(result.FailureReason)
++	}
++	if reason == "" {
++		reason = "la ejecución no pudo completar el resultado esperado"
++	}
++	contract.AddEvidence(fmt.Sprintf("Recuperación de producción: %s. %s", recovery.Action, reason), "production_recovery", true, .90)
++	strategy := cognition.ConversationalResponseStrategy{
++		Version: "B96.33.10", Mode: strategyMode,
++		Directness: cognition.DirectnessDirect, Structure: cognition.StructureExplanation,
++		Initiative: cognition.InitiativeHelpful, Confidence: intent.Confidence,
++		PreserveUserAgency: true, ExecutionBoundary: true, ShouldGenerateLanguage: true,
++		Reason: "language realization of a structured production recovery outcome",
++	}
++	return e.renderResponseContractWithStrategy(req, contract, e.buildConversationalRuntimeFacts(snap), strategy)
++}
+diff -ruN base/source/core/production_recovery_test.go work/source/core/production_recovery_test.go
+--- base/source/core/production_recovery_test.go	1970-01-01 00:00:00.000000000 +0000
++++ work/source/core/production_recovery_test.go	2026-09-23 14:24:59.891279362 +0000
+@@ -0,0 +1,53 @@
++package core
++
++import (
++	"testing"
++
++	"ahmelia/tools"
++)
++
++func TestDispatchProductionRecoveryRoutesEachDecisionToItsOwner(t *testing.T) {
++	cases := []struct {
++		name   string
++		action tools.RecoveryAction
++		want   string
++	}{
++		{name: "retry", action: tools.RecoveryRetry, want: "retry"},
++		{name: "replan", action: tools.RecoveryReplan, want: "replan"},
++		{name: "block", action: tools.RecoveryBlock, want: "block"},
++		{name: "ask_user", action: tools.RecoveryAskUser, want: "ask_user"},
++	}
++	for _, tc := range cases {
++		t.Run(tc.name, func(t *testing.T) {
++			owner := ""
++			handlers := productionRecoveryHandlers{
++				Retry:   func() bool { owner = "retry"; return true },
++				Replan:  func() bool { owner = "replan"; return true },
++				Block:   func() bool { owner = "block"; return true },
++				AskUser: func() bool { owner = "ask_user"; return true },
++			}
++			if !dispatchProductionRecovery(tools.RecoveryDecision{Action: tc.action, Reason: "test"}, handlers) {
++				t.Fatal("dispatch returned false")
++			}
++			if owner != tc.want {
++				t.Fatalf("owner=%q want=%q", owner, tc.want)
++			}
++		})
++	}
++}
++
++func TestDispatchProductionRecoveryDoesNotApplyUnknownDecision(t *testing.T) {
++	called := false
++	handlers := productionRecoveryHandlers{
++		Retry:   func() bool { called = true; return true },
++		Replan:  func() bool { called = true; return true },
++		Block:   func() bool { called = true; return true },
++		AskUser: func() bool { called = true; return true },
++	}
++	if dispatchProductionRecovery(tools.RecoveryDecision{Action: "invalid"}, handlers) {
++		t.Fatal("invalid recovery action must fail closed")
++	}
++	if called {
++		t.Fatal("invalid recovery action reached an owner")
++	}
++}
+diff -ruN base/source/core/production_test_authorization_test.go work/source/core/production_test_authorization_test.go
+--- base/source/core/production_test_authorization_test.go	1970-01-01 00:00:00.000000000 +0000
++++ work/source/core/production_test_authorization_test.go	2026-09-23 14:24:00.677213146 +0000
+@@ -0,0 +1,23 @@
++package core
++
++import (
++	"testing"
++
++	"ahmelia/autonomy"
++	"ahmelia/capability"
++)
++
++// approveTestProductionExecution supplies explicit authorization evidence for
++// E2E tests whose purpose is to validate successful production behavior. The
++// runtime itself remains fail-closed: production code defaults to ApprovalNone
++// and the identity/permission owner is the only source allowed to provide a
++// grant.
++func approveTestProductionExecution(t *testing.T, e *Engine) {
++	t.Helper()
++	if e == nil {
++		t.Fatal("nil engine")
++	}
++	e.capabilityApprovalResolver = func(_ capability.ID) autonomy.Approval {
++		return autonomy.ApprovalGranted
++	}
++}
+diff -ruN base/source/integration/d3_execution_runtime_test.go work/source/integration/d3_execution_runtime_test.go
+--- base/source/integration/d3_execution_runtime_test.go	1970-01-01 00:00:00.000000000 +0000
++++ work/source/integration/d3_execution_runtime_test.go	2026-09-23 14:32:33.602732841 +0000
+@@ -0,0 +1,159 @@
++package integration
++
++import (
++	"context"
++	"path/filepath"
++	"sync/atomic"
++	"testing"
++
++	"ahmelia/autonomy"
++	"ahmelia/capability"
++	"ahmelia/interaction"
++	"ahmelia/production"
++	"ahmelia/tools"
++)
++
++type recoveryTestProvider struct{ calls atomic.Int32 }
++
++func (p *recoveryTestProvider) ID() string { return "recovery-test-provider" }
++func (p *recoveryTestProvider) Execute(_ context.Context, req production.ProviderRequest) production.ProviderResult {
++	p.calls.Add(1)
++	if req.CapabilityID != req.Capability.ID {
++		return production.ProviderResult{Success: false, FailureReason: "provider identity incoherent"}
++	}
++	if req.Operation != req.Capability.Action {
++		return production.ProviderResult{Success: false, FailureReason: "provider operation incoherent"}
++	}
++	return production.ProviderResult{Success: false, Verified: false, FailureReason: "verified failure"}
++}
++
++type fixedRecoveryDecider struct{ action tools.RecoveryAction }
++
++func (d fixedRecoveryDecider) Decide(context.Context, tools.Failure) tools.RecoveryAction {
++	return d.action
++}
++
++func newRecoveryRuntime(t *testing.T, action tools.RecoveryAction) (*ProductionRuntime, *recoveryTestProvider, interaction.SemanticRequest, capability.Route) {
++	t.Helper()
++	reg := capability.NewRegistry()
++	c := capability.Capability{ID: "demo.recovery", Domain: capability.DomainLocal, Action: "recover_action", Description: "recovery test", Permission: capability.PermissionAutomatic}
++	if err := reg.Register(c); err != nil {
++		t.Fatal(err)
++	}
++	provider := &recoveryTestProvider{}
++	providers := production.NewProviderRegistry()
++	if err := providers.RegisterCapabilities(provider, c.ID); err != nil {
++		t.Fatal(err)
++	}
++	recovery := production.NewTechnicalRecoveryServiceWithDecider(fixedRecoveryDecider{action: action})
++	runtime, err := NewProductionRuntime(capability.NewResolver(reg), reg, providers, &production.ProductionContext{}, production.NewWorkStore(filepath.Join(t.TempDir(), "work.json")), recovery)
++	if err != nil {
++		t.Fatal(err)
++	}
++	req := productionTestRequest()
++	req.Action.Name = c.Action
++	req.RequestedAction = c.Action
++	req.Topic = "recovery"
++	decision := interaction.ResolveCapabilityInteraction(req)
++	route := capability.NewResolver(reg).Resolve(decision, req)
++	return runtime, provider, req, route
++}
++
++func TestProductionRuntimePermissionAskFirstFailsClosedBeforeProvider(t *testing.T) {
++	reg := capability.NewRegistry()
++	c := capability.Capability{ID: "demo.ask", Domain: capability.DomainLocal, Action: "ask_action", Description: "ask first", Permission: capability.PermissionAskFirst}
++	if err := reg.Register(c); err != nil {
++		t.Fatal(err)
++	}
++	provider := &recoveryTestProvider{}
++	providers := production.NewProviderRegistry()
++	if err := providers.RegisterCapabilities(provider, c.ID); err != nil {
++		t.Fatal(err)
++	}
++	runtime, err := NewProductionRuntime(capability.NewResolver(reg), reg, providers, &production.ProductionContext{}, production.NewWorkStore(filepath.Join(t.TempDir(), "work.json")), production.NewTechnicalRecoveryService())
++	if err != nil {
++		t.Fatal(err)
++	}
++	req := productionTestRequest()
++	req.Action.Name = c.Action
++	req.RequestedAction = c.Action
++	decision := interaction.ResolveCapabilityInteraction(req)
++	route := capability.NewResolver(reg).Resolve(decision, req)
++	result := runtime.ExecuteFromAuthority(context.Background(), req, route, production.ExecutionOptions{Approval: autonomy.ApprovalNone})
++	if result.Success || !result.AuthorizationRequired {
++		t.Fatalf("expected fail-closed authorization handoff, got %+v", result)
++	}
++	if result.AuthorizationCapabilityID != c.ID {
++		t.Fatalf("authorization capability=%q want %q", result.AuthorizationCapabilityID, c.ID)
++	}
++	if provider.calls.Load() != 0 {
++		t.Fatalf("provider was invoked despite missing authorization: calls=%d", provider.calls.Load())
++	}
++}
++
++func TestProductionRuntimeRecoveryDecisionRemainsWithOwner(t *testing.T) {
++	for _, action := range []tools.RecoveryAction{tools.RecoveryRetry, tools.RecoveryReplan, tools.RecoveryBlock, tools.RecoveryAskUser} {
++		t.Run(string(action), func(t *testing.T) {
++			runtime, provider, req, route := newRecoveryRuntime(t, action)
++			result := runtime.ExecuteFromAuthority(context.Background(), req, route, production.ExecutionOptions{Approval: autonomy.ApprovalGranted, RecoveryAttempt: 1})
++			if result.Success {
++				t.Fatalf("expected provider failure, got %+v", result)
++			}
++			if result.Recovery == nil || result.Recovery.Action != action {
++				t.Fatalf("runtime did not return canonical recovery decision: %+v", result)
++			}
++			if provider.calls.Load() != 1 {
++				t.Fatalf("ProductionRuntime applied recovery itself; provider calls=%d", provider.calls.Load())
++			}
++			if result.WorkID == "" {
++				t.Fatal("failed production attempt must remain attributable to a WorkStore record")
++			}
++		})
++	}
++}
++
++func TestProductionRuntimeUsesOwnerApprovalResolverAsAuthoritativeEvidence(t *testing.T) {
++	reg := capability.NewRegistry()
++	c := capability.Capability{ID: "demo.owner-approval", Domain: capability.DomainLocal, Action: "ask_action", Description: "owner approval", Permission: capability.PermissionAskFirst}
++	if err := reg.Register(c); err != nil {
++		t.Fatal(err)
++	}
++	provider := &recoveryTestProvider{}
++	providers := production.NewProviderRegistry()
++	if err := providers.RegisterCapabilities(provider, c.ID); err != nil {
++		t.Fatal(err)
++	}
++	runtime, err := NewProductionRuntime(capability.NewResolver(reg), reg, providers, &production.ProductionContext{}, production.NewWorkStore(filepath.Join(t.TempDir(), "work.json")), production.NewTechnicalRecoveryService())
++	if err != nil {
++		t.Fatal(err)
++	}
++	req := productionTestRequest()
++	req.Action.Name = c.Action
++	req.RequestedAction = c.Action
++	decision := interaction.ResolveCapabilityInteraction(req)
++	route := capability.NewResolver(reg).Resolve(decision, req)
++
++	blocked := runtime.ExecuteFromAuthority(context.Background(), req, route, production.ExecutionOptions{
++		Approval: autonomy.ApprovalGranted,
++		ApprovalResolver: func(capability.ID) autonomy.Approval {
++			return autonomy.ApprovalNone
++		},
++	})
++	if blocked.Success || !blocked.AuthorizationRequired {
++		t.Fatalf("owner denial must override caller-local approval evidence: %+v", blocked)
++	}
++	if provider.calls.Load() != 0 {
++		t.Fatalf("provider executed despite owner withholding approval: calls=%d", provider.calls.Load())
++	}
++}
++
++func TestProductionRuntimeProviderBoundaryCarriesCoherentCapabilityIdentity(t *testing.T) {
++	runtime, provider, req, route := newRecoveryRuntime(t, tools.RecoveryBlock)
++	result := runtime.ExecuteFromAuthority(context.Background(), req, route, production.ExecutionOptions{Approval: autonomy.ApprovalGranted, RecoveryAttempt: 1})
++	if result.Recovery == nil {
++		t.Fatalf("expected failure recovery: %+v", result)
++	}
++	if provider.calls.Load() != 1 {
++		t.Fatalf("provider call count=%d", provider.calls.Load())
++	}
++}
+diff -ruN base/source/integration/no_phrase_gate_test.go work/source/integration/no_phrase_gate_test.go
+--- base/source/integration/no_phrase_gate_test.go	1970-01-01 00:00:00.000000000 +0000
++++ work/source/integration/no_phrase_gate_test.go	2026-09-23 14:25:26.100012518 +0000
+@@ -0,0 +1,20 @@
++package integration
++
++import (
++	"os"
++	"strings"
++	"testing"
++)
++
++func TestNoPhraseGateIntegrationD3Boundary(t *testing.T) {
++	data, err := os.ReadFile("production_runtime.go")
++	if err != nil {
++		t.Fatal(err)
++	}
++	src := string(data)
++	// Whitelist: Integration may forward SemanticRequest.Raw to a provider as
++	// payload, but it must never classify authorization/execution from phrases.
++	if strings.Contains(src, "HasAnyPhrase") || strings.Contains(src, "strings.Contains(input") {
++		t.Fatal("ProductionRuntime contains phrase-gated execution routing")
++	}
++}
+diff -ruN base/source/integration/production_runtime.go work/source/integration/production_runtime.go
+--- base/source/integration/production_runtime.go	2026-09-20 16:55:56.000000000 +0000
++++ work/source/integration/production_runtime.go	2026-09-23 14:21:36.288594164 +0000
+@@ -6,6 +6,7 @@
+ 	"path/filepath"
+ 	"strings"
+ 
++	"ahmelia/autonomy"
+ 	"ahmelia/capability"
+ 	"ahmelia/interaction"
+ 	"ahmelia/production"
+@@ -21,22 +22,38 @@
+ 	providers    *production.ProviderRegistry
+ 	context      *production.ProductionContext
+ 	work         *production.WorkStore
++	guard        *production.ExecutionGuard
++	recovery     *production.TechnicalRecoveryService
+ }
+ 
+-func NewProductionRuntime(resolver *capability.Resolver, capabilities *capability.Registry, providers *production.ProviderRegistry, ctx *production.ProductionContext, work *production.WorkStore) (*ProductionRuntime, error) {
+-	if resolver == nil || capabilities == nil || providers == nil || ctx == nil || work == nil {
+-		return nil, fmt.Errorf("integration: production runtime requires resolver, providers, context and work store")
++func NewProductionRuntime(
++	resolver *capability.Resolver,
++	capabilities *capability.Registry,
++	providers *production.ProviderRegistry,
++	ctx *production.ProductionContext,
++	work *production.WorkStore,
++	recovery *production.TechnicalRecoveryService,
++) (*ProductionRuntime, error) {
++	if resolver == nil || capabilities == nil || providers == nil || ctx == nil || work == nil || recovery == nil {
++		return nil, fmt.Errorf("integration: production runtime requires resolver, providers, context, work store and recovery")
+ 	}
+-	return &ProductionRuntime{resolver: resolver, capabilities: capabilities, providers: providers, context: ctx, work: work}, nil
++	guard, err := production.NewExecutionGuard(capabilities, providers)
++	if err != nil {
++		return nil, err
++	}
++	return &ProductionRuntime{
++		resolver: resolver, capabilities: capabilities, providers: providers,
++		context: ctx, work: work, guard: guard, recovery: recovery,
++	}, nil
+ }
+ 
+ // execute performs production only after the Engine execution authority has
+ // accepted the provider-neutral request. ProductionRuntime is an execution
+ // adapter, not a second execution gateway: callers outside the central
+ // authority must not invoke this method.
+-func (r *ProductionRuntime) ExecuteFromAuthority(ctx context.Context, req interaction.SemanticRequest, route capability.Route) production.ActionResult {
+-	if r == nil {
+-		return production.ActionResult{Err: fmt.Errorf("production runtime: nil"), Success: false}
++func (r *ProductionRuntime) ExecuteFromAuthority(ctx context.Context, req interaction.SemanticRequest, route capability.Route, options production.ExecutionOptions) production.ActionResult {
++	if r == nil || r.guard == nil || r.recovery == nil {
++		return production.ActionResult{Err: fmt.Errorf("production runtime: execution dependencies unavailable"), Success: false}
+ 	}
+ 	if route.Kind != capability.IntentProduction {
+ 		return production.ActionResult{Err: fmt.Errorf("production runtime: invalid capability decision %q", route.Kind), Success: false}
+@@ -44,17 +61,53 @@
+ 	if ctx == nil {
+ 		ctx = context.Background()
+ 	}
++	if options.Approval == "" {
++		options.Approval = autonomy.ApprovalNone
++	}
++	if options.RecoveryAttempt < 1 {
++		options.RecoveryAttempt = 1
++	}
+ 	for _, candidate := range route.Candidates {
+-		provider, ok := r.providers.Resolve(candidate)
+-		if !ok {
+-			continue
++		approval := options.Approval
++		if options.ApprovalResolver != nil {
++			approval = options.ApprovalResolver(candidate.ID)
+ 		}
++		if approval == "" {
++			approval = autonomy.ApprovalNone
++		}
++		preflight, err := r.guard.Check(candidate, candidate.ID, candidate.Action, approval)
++		if err != nil {
++			return production.ActionResult{
++				Success: false, FailureReason: "execution_preflight_failed: " + err.Error(), Err: err,
++			}
++		}
++		if !preflight.Allowed {
++			return production.ActionResult{
++				Success:                   false,
++				AuthorizationRequired:     preflight.NeedsAuthorization,
++				AuthorizationCapabilityID: candidate.ID,
++				AuthorizationReason:       preflight.AuthorizationReason,
++				FailureReason:             "execution_not_authorized",
++			}
++		}
++
++		provider, ok := r.providers.Resolve(preflight.Capability)
++		if !ok || provider == nil {
++			return production.ActionResult{
++				Success:       false,
++				FailureReason: "execution_provider_missing_after_preflight",
++			}
++		}
++
+ 		work, err := r.work.Begin(req)
+ 		if err != nil {
+ 			return production.ActionResult{Err: err, Success: false}
+ 		}
+ 
+-		providerResult := provider.Execute(ctx, production.ProviderRequest{Input: req.Raw, Capability: candidate})
++		providerResult := provider.Execute(ctx, production.ProviderRequest{
++			Input: req.Raw, Capability: preflight.Capability,
++			CapabilityID: preflight.Capability.ID, Operation: preflight.Capability.Action,
++		})
+ 		if providerResult.ProductionID != "" && providerResult.Project.Valid() {
+ 			r.context.Set(providerResult.ProductionID, providerResult.Producer, providerResult.Project, providerResult.Artifacts)
+ 		}
+@@ -64,17 +117,34 @@
+ 		for _, a := range providerResult.Artifacts {
+ 			_ = r.work.RecordArtifact(work.ID, a)
+ 		}
+-		if providerResult.Err != nil {
+-			_ = r.work.Complete(work.ID, false, providerResult.Err.Error())
++
++		if providerResult.Err != nil || !providerResult.Success {
++			detail := providerResult.FailureReason
++			if detail == "" && providerResult.Err != nil {
++				detail = providerResult.Err.Error()
++			}
++			if detail == "" {
++				detail = providerResult.Summary
++			}
++			if detail == "" {
++				detail = "provider_execution_failed"
++			}
++			_ = r.work.Complete(work.ID, false, detail)
+ 			result := production.ActionResult{
+ 				Success: false, WorkID: work.ID, ProductionID: providerResult.ProductionID,
+ 				Producer: providerResult.Producer, Project: providerResult.Project,
+-				Artifacts: providerResult.Artifacts, Err: providerResult.Err,
+-				FailureReason: providerResult.Err.Error(),
++				Artifacts: providerResult.Artifacts, Summary: providerResult.Summary,
++				FailedStage: providerResult.FailedStage, FailureReason: detail, Err: providerResult.Err,
++			}
++			if recovery, recoverErr := r.recovery.Recover(ctx, string(preflight.Capability.ID), detail, options.RecoveryAttempt); recoverErr == nil {
++				result.Recovery = &recovery.Decision
++			} else if result.FailureReason == "" {
++				result.FailureReason = recoverErr.Error()
+ 			}
+ 			_ = r.work.RecordActionResult(work.ID, result)
+ 			return result
+ 		}
++
+ 		if providerResult.Success {
+ 			_ = r.work.Complete(work.ID, true, providerResult.Summary)
+ 			result := production.ActionResult{
+@@ -85,19 +155,6 @@
+ 			_ = r.work.RecordActionResult(work.ID, result)
+ 			return result
+ 		}
+-		detail := providerResult.FailureReason
+-		if detail == "" {
+-			detail = providerResult.Summary
+-		}
+-		_ = r.work.Complete(work.ID, false, detail)
+-		result := production.ActionResult{
+-			Success: false, Verified: false, WorkID: work.ID, ProductionID: providerResult.ProductionID,
+-			Producer: providerResult.Producer, Project: providerResult.Project,
+-			Artifacts: providerResult.Artifacts, Summary: providerResult.Summary,
+-			FailedStage: providerResult.FailedStage, FailureReason: detail,
+-		}
+-		_ = r.work.RecordActionResult(work.ID, result)
+-		return result
+ 	}
+ 
+ 	return production.ActionResult{
+diff -ruN base/source/integration/production_runtime_test.go work/source/integration/production_runtime_test.go
+--- base/source/integration/production_runtime_test.go	2026-09-22 02:48:32.000000000 +0000
++++ work/source/integration/production_runtime_test.go	2026-09-23 14:21:44.833344836 +0000
+@@ -7,6 +7,7 @@
+ 	"strings"
+ 	"testing"
+ 
++	"ahmelia/autonomy"
+ 	"ahmelia/capability"
+ 	"ahmelia/interaction"
+ 	"ahmelia/production"
+@@ -35,7 +36,7 @@
+ 	if err := providers.RegisterCapabilities(fakeProvider{}, c.ID); err != nil {
+ 		t.Fatal(err)
+ 	}
+-	runtime, err := NewProductionRuntime(capability.NewResolver(reg), reg, providers, &production.ProductionContext{}, production.NewWorkStore(filepath.Join(dir, "work.json")))
++	runtime, err := NewProductionRuntime(capability.NewResolver(reg), reg, providers, &production.ProductionContext{}, production.NewWorkStore(filepath.Join(dir, "work.json")), production.NewTechnicalRecoveryService())
+ 	if err != nil {
+ 		t.Fatal(err)
+ 	}
+@@ -79,7 +80,7 @@
+ 	req := productionTestRequest()
+ 	decision := interaction.ResolveCapabilityInteraction(req)
+ 	route := capability.NewResolver(reg).Resolve(decision, req)
+-	result := runtime.ExecuteFromAuthority(context.Background(), req, route)
++	result := runtime.ExecuteFromAuthority(context.Background(), req, route, production.ExecutionOptions{Approval: autonomy.ApprovalGranted, RecoveryAttempt: 1})
+ 	if !result.Success || !result.Verified || result.WorkID == "" || result.ProductionID != "p1" {
+ 		t.Fatalf("result=%+v", result)
+ 	}
+@@ -96,7 +97,7 @@
+ 	req := productionTestRequest()
+ 	decision := interaction.ResolveCapabilityInteraction(req)
+ 	route := capability.NewResolver(reg).Resolve(decision, req)
+-	result := runtime.ExecuteFromAuthority(context.Background(), req, route)
++	result := runtime.ExecuteFromAuthority(context.Background(), req, route, production.ExecutionOptions{Approval: autonomy.ApprovalGranted, RecoveryAttempt: 1})
+ 	if !result.Success {
+ 		t.Fatalf("production=%+v", result)
+ 	}
+@@ -116,7 +117,7 @@
+ 	req := productionTestRequest()
+ 	decision := interaction.ResolveCapabilityInteraction(req)
+ 	route := capability.NewResolver(reg).Resolve(decision, req)
+-	result := runtime.ExecuteFromAuthority(context.Background(), req, route)
++	result := runtime.ExecuteFromAuthority(context.Background(), req, route, production.ExecutionOptions{Approval: autonomy.ApprovalGranted, RecoveryAttempt: 1})
+ 	if !result.Success {
+ 		t.Fatalf("production=%+v", result)
+ 	}
+@@ -135,7 +136,7 @@
+ 	req := productionTestRequest()
+ 	decision := interaction.ResolveCapabilityInteraction(req)
+ 	route := capability.NewResolver(reg).Resolve(decision, req)
+-	result := runtime.ExecuteFromAuthority(context.Background(), req, route)
++	result := runtime.ExecuteFromAuthority(context.Background(), req, route, production.ExecutionOptions{Approval: autonomy.ApprovalGranted, RecoveryAttempt: 1})
+ 	if !result.Success {
+ 		t.Fatalf("production=%+v", result)
+ 	}
+@@ -173,7 +174,7 @@
+ 	}
+ 	decision := interaction.ResolveCapabilityInteraction(req)
+ 	route := capability.NewResolver(reg).Resolve(decision, req)
+-	result := runtime.ExecuteFromAuthority(context.Background(), req, route)
++	result := runtime.ExecuteFromAuthority(context.Background(), req, route, production.ExecutionOptions{Approval: autonomy.ApprovalGranted, RecoveryAttempt: 1})
+ 	if !result.Success || !result.Verified || !strings.Contains(result.Summary, "Trabajo terminado") {
+ 		t.Fatalf("result=%+v", result)
+ 	}
+@@ -190,7 +191,7 @@
+ 	req := productionTestRequest()
+ 	decision := interaction.ResolveCapabilityInteraction(req)
+ 	route := capability.NewResolver(reg).Resolve(decision, req)
+-	result := runtime.ExecuteFromAuthority(context.Background(), req, route)
++	result := runtime.ExecuteFromAuthority(context.Background(), req, route, production.ExecutionOptions{Approval: autonomy.ApprovalGranted, RecoveryAttempt: 1})
+ 	if !result.Success || result.Verified {
+ 		t.Fatalf("execution and verification must remain distinct: %+v", result)
+ 	}
+diff -ruN base/source/production/execution_guard.go work/source/production/execution_guard.go
+--- base/source/production/execution_guard.go	1970-01-01 00:00:00.000000000 +0000
++++ work/source/production/execution_guard.go	2026-09-23 14:29:05.315864221 +0000
+@@ -0,0 +1,137 @@
++package production
++
++import (
++	"fmt"
++	"strings"
++
++	"ahmelia/autonomy"
++	"ahmelia/capability"
++)
++
++// ExecutionOptions carries execution-time authorization evidence and the
++// recovery attempt ordinal. Approval is supplied by the identity/permission
++// owner; Production never invents it.
++type ExecutionOptions struct {
++	Approval autonomy.Approval
++	// ApprovalResolver is supplied by the identity/permission owner. Production
++	// never infers approval from the natural-language request.
++	ApprovalResolver func(capability.ID) autonomy.Approval
++	RecoveryAttempt  int
++}
++
++// ExecutionPreflight is the provider-neutral decision produced immediately
++// before a Provider can be invoked. It contains no Tool/Environment model.
++type ExecutionPreflight struct {
++	Capability           capability.Capability
++	Authorization        AuthorizationResult
++	Safety               SafetyAssessment
++	Allowed              bool
++	NeedsAuthorization   bool
++	AuthorizationReason  string
++	RegisteredProviderID string
++}
++
++// ExecutionGuard is the single provider-neutral pre-execution invariant gate.
++// It reuses the existing capability Registry, SafetyGate and AuthorizationGate
++// instead of introducing a parallel permission system.
++type ExecutionGuard struct {
++	registry      *capability.Registry
++	providers     *ProviderRegistry
++	safety        *SafetyGate
++	authorization *AuthorizationGate
++}
++
++func NewExecutionGuard(registry *capability.Registry, providers *ProviderRegistry) (*ExecutionGuard, error) {
++	if registry == nil {
++		return nil, fmt.Errorf("production: execution guard registry nil")
++	}
++	if providers == nil {
++		return nil, fmt.Errorf("production: execution guard provider registry nil")
++	}
++	authorization, err := NewAuthorizationGate(registry)
++	if err != nil {
++		return nil, err
++	}
++	return &ExecutionGuard{
++		registry:      registry,
++		providers:     providers,
++		safety:        NewSafetyGate(),
++		authorization: authorization,
++	}, nil
++}
++
++// Check enforces identity, Registry membership, Provider availability and
++// authorization before execution. Any inconsistency fails closed.
++func (g *ExecutionGuard) Check(candidate capability.Capability, capabilityID capability.ID, operation string, approval autonomy.Approval) (ExecutionPreflight, error) {
++	if g == nil || g.registry == nil || g.providers == nil || g.safety == nil || g.authorization == nil {
++		return ExecutionPreflight{}, fmt.Errorf("production: execution guard unavailable")
++	}
++	if strings.TrimSpace(string(capabilityID)) == "" {
++		return ExecutionPreflight{}, fmt.Errorf("production: execution capability ID vacío")
++	}
++	if candidate.ID != capabilityID {
++		return ExecutionPreflight{}, fmt.Errorf("production: capability identity mismatch: %q != %q", capabilityID, candidate.ID)
++	}
++	if err := candidate.Validate(); err != nil {
++		return ExecutionPreflight{}, err
++	}
++
++	registered, ok := g.registry.Get(candidate.ID)
++	if !ok {
++		return ExecutionPreflight{}, fmt.Errorf("production: capability %q no está registrada", candidate.ID)
++	}
++	if err := registered.Validate(); err != nil {
++		return ExecutionPreflight{}, fmt.Errorf("production: capability registrada inválida: %w", err)
++	}
++	if registered.Domain != candidate.Domain || registered.Action != candidate.Action || registered.Permission != candidate.Permission {
++		return ExecutionPreflight{}, fmt.Errorf("production: capability %q no coincide con su definición registrada", candidate.ID)
++	}
++
++	provider, ok := g.providers.Resolve(registered)
++	if !ok || provider == nil || strings.TrimSpace(provider.ID()) == "" {
++		return ExecutionPreflight{}, fmt.Errorf("production: capability %q no tiene proveedor ejecutable", candidate.ID)
++	}
++
++	if strings.TrimSpace(operation) == "" {
++		operation = registered.Action
++	}
++	if operation != registered.Action {
++		return ExecutionPreflight{}, fmt.Errorf("production: operation mismatch for capability %q: %q != %q", registered.ID, operation, registered.Action)
++	}
++	safety, err := g.safety.Assess(registered, operation)
++	if err != nil {
++		return ExecutionPreflight{}, err
++	}
++	authorization, err := g.authorization.Authorize(registered.ID, approval)
++	if err != nil {
++		return ExecutionPreflight{}, err
++	}
++
++	preflight := ExecutionPreflight{
++		Capability:           registered,
++		Authorization:        authorization,
++		Safety:               safety,
++		RegisteredProviderID: provider.ID(),
++	}
++
++	if (safety.RequiresConfirmation || safety.RequiresAuthorization) && approval != autonomy.ApprovalGranted {
++		preflight.NeedsAuthorization = true
++		preflight.AuthorizationReason = safety.Reason
++		return preflight, nil
++	}
++	if !authorization.CanExecute() {
++		preflight.NeedsAuthorization = authorization.Decision.NeedsApproval || registered.Permission == capability.PermissionAskFirst
++		preflight.AuthorizationReason = authorization.Decision.Reason
++		if preflight.AuthorizationReason == "" {
++			preflight.AuthorizationReason = safety.Reason
++		}
++		return preflight, nil
++	}
++	if !authorization.CanExecute() {
++		preflight.AuthorizationReason = authorization.Decision.Reason
++		return preflight, nil
++	}
++
++	preflight.Allowed = true
++	return preflight, nil
++}
+diff -ruN base/source/production/execution_guard_test.go work/source/production/execution_guard_test.go
+--- base/source/production/execution_guard_test.go	1970-01-01 00:00:00.000000000 +0000
++++ work/source/production/execution_guard_test.go	2026-09-23 14:29:05.315993785 +0000
+@@ -0,0 +1,134 @@
++package production
++
++import (
++	"context"
++	"testing"
++
++	"ahmelia/autonomy"
++	"ahmelia/capability"
++)
++
++type guardTestProvider struct{}
++
++func (guardTestProvider) ID() string { return "guard-provider" }
++func (guardTestProvider) Execute(context.Context, ProviderRequest) ProviderResult {
++	return ProviderResult{Success: true, Verified: true}
++}
++
++func guardCapability(permission capability.PermissionLevel) capability.Capability {
++	return capability.Capability{
++		ID:          "test.capability",
++		Domain:      capability.DomainLocal,
++		Action:      "guard_action",
++		Description: "execution guard test",
++		Permission:  permission,
++	}
++}
++
++func newGuard(t *testing.T, c capability.Capability) (*ExecutionGuard, *capability.Registry, *ProviderRegistry) {
++	t.Helper()
++	registry := capability.NewRegistry()
++	if err := registry.Register(c); err != nil {
++		t.Fatal(err)
++	}
++	providers := NewProviderRegistry()
++	if err := providers.RegisterCapabilities(guardTestProvider{}, c.ID); err != nil {
++		t.Fatal(err)
++	}
++	guard, err := NewExecutionGuard(registry, providers)
++	if err != nil {
++		t.Fatal(err)
++	}
++	return guard, registry, providers
++}
++
++func TestExecutionGuardPermissionAskFirstFailsClosedWithoutApproval(t *testing.T) {
++	c := guardCapability(capability.PermissionAskFirst)
++	guard, _, _ := newGuard(t, c)
++
++	preflight, err := guard.Check(c, c.ID, c.Action, autonomy.ApprovalNone)
++	if err != nil {
++		t.Fatal(err)
++	}
++	if preflight.Allowed {
++		t.Fatal("PermissionAskFirst must fail closed without explicit approval")
++	}
++	if !preflight.NeedsAuthorization {
++		t.Fatalf("expected authorization handoff, got %+v", preflight)
++	}
++	if preflight.AuthorizationReason == "" {
++		t.Fatal("authorization reason must be structured before execution")
++	}
++}
++
++func TestExecutionGuardPermissionAskFirstAllowsOnlyExplicitApproval(t *testing.T) {
++	c := guardCapability(capability.PermissionAskFirst)
++	guard, _, _ := newGuard(t, c)
++
++	preflight, err := guard.Check(c, c.ID, c.Action, autonomy.ApprovalGranted)
++	if err != nil {
++		t.Fatal(err)
++	}
++	if !preflight.Allowed {
++		t.Fatalf("explicitly approved AskFirst capability should pass preflight: %+v", preflight)
++	}
++	if preflight.Authorization.Decision.Approval != autonomy.ApprovalGranted {
++		t.Fatalf("unexpected authorization evidence: %+v", preflight.Authorization)
++	}
++}
++
++func TestExecutionGuardRejectsCapabilityIdentityMismatch(t *testing.T) {
++	registered := guardCapability(capability.PermissionAutomatic)
++	guard, _, _ := newGuard(t, registered)
++	candidate := registered
++	candidate.ID = "other.capability"
++
++	if _, err := guard.Check(candidate, registered.ID, registered.Action, autonomy.ApprovalGranted); err == nil {
++		t.Fatal("identity mismatch must fail closed")
++	}
++}
++
++func TestExecutionGuardRejectsCapabilityRegistryInconsistency(t *testing.T) {
++	registered := guardCapability(capability.PermissionAutomatic)
++	guard, _, _ := newGuard(t, registered)
++	candidate := registered
++	candidate.Action = "different_action"
++
++	if _, err := guard.Check(candidate, candidate.ID, candidate.Action, autonomy.ApprovalGranted); err == nil {
++		t.Fatal("candidate/registry disagreement must fail closed")
++	}
++}
++
++func TestExecutionGuardRejectsInvalidCapabilityBeforeProviderResolution(t *testing.T) {
++	registered := guardCapability(capability.PermissionAutomatic)
++	guard, _, _ := newGuard(t, registered)
++	candidate := registered
++	candidate.Permission = capability.PermissionLevel("invalid")
++
++	if _, err := guard.Check(candidate, candidate.ID, candidate.Action, autonomy.ApprovalGranted); err == nil {
++		t.Fatal("invalid capability contract must fail closed")
++	}
++}
++
++func TestExecutionGuardRejectsUnknownActionWithoutExplicitApproval(t *testing.T) {
++	c := guardCapability(capability.PermissionAutomatic)
++	c.Action = "unclassified_action"
++	guard, _, _ := newGuard(t, c)
++
++	preflight, err := guard.Check(c, c.ID, c.Action, autonomy.ApprovalNone)
++	if err != nil {
++		t.Fatal(err)
++	}
++	if preflight.Allowed || !preflight.NeedsAuthorization {
++		t.Fatalf("unknown actions must fail closed before provider execution: %+v", preflight)
++	}
++}
++
++func TestExecutionGuardRejectsOperationMismatch(t *testing.T) {
++	c := guardCapability(capability.PermissionAutomatic)
++	guard, _, _ := newGuard(t, c)
++
++	if _, err := guard.Check(c, c.ID, "different_operation", autonomy.ApprovalGranted); err == nil {
++		t.Fatal("operation mismatch must fail closed")
++	}
++}
+diff -ruN base/source/production/no_phrase_gate_test.go work/source/production/no_phrase_gate_test.go
+--- base/source/production/no_phrase_gate_test.go	1970-01-01 00:00:00.000000000 +0000
++++ work/source/production/no_phrase_gate_test.go	2026-09-23 14:24:59.890013403 +0000
+@@ -0,0 +1,22 @@
++package production
++
++import (
++	"os"
++	"strings"
++	"testing"
++)
++
++func TestNoPhraseGateProductionD3Boundary(t *testing.T) {
++	for _, name := range []string{"execution_guard.go", "recovery.go", "provider_registry.go"} {
++		data, err := os.ReadFile(name)
++		if err != nil {
++			t.Fatal(err)
++		}
++		src := string(data)
++		// Whitelist: production may contain machine-state/error text and
++		// provider IDs, but D3 execution decisions must consume typed contracts.
++		if strings.Contains(src, "HasAnyPhrase") || strings.Contains(src, "strings.Contains(input") {
++			t.Fatalf("D3 production boundary contains phrase-gated routing in %s", name)
++		}
++	}
++}
+diff -ruN base/source/production/provider_registry.go work/source/production/provider_registry.go
+--- base/source/production/provider_registry.go	2026-09-20 16:57:44.000000000 +0000
++++ work/source/production/provider_registry.go	2026-09-23 14:19:39.830708022 +0000
+@@ -8,6 +8,7 @@
+ 	"sync"
+ 
+ 	"ahmelia/capability"
++	"ahmelia/tools"
+ )
+ 
+ // Provider is a domain adapter for Production. It turns a resolved Capability
+@@ -32,9 +33,17 @@
+ 
+ // ProviderRequest is the domain-neutral input handed to a production
+ // provider. Capability is the declarative contract selected by the resolver.
++// CapabilityID repeats the selected identity explicitly so the execution
++// boundary can prove reference coherence without introducing tools.Action.
+ type ProviderRequest struct {
+ 	Input      string
+ 	Capability capability.Capability
++	// CapabilityID is the execution-bound identity. It must equal
++	// Capability.ID at the provider boundary.
++	CapabilityID capability.ID
++	// Operation is the resolved capability action, not the original natural
++	// language operation, so provider matching stays provider-neutral.
++	Operation string
+ }
+ 
+ // RepairIntent preserves the complete prior materialized result so a provider
+@@ -79,6 +88,16 @@
+ 	FailedStage   string               `json:"failed_stage,omitempty"`
+ 	FailureReason string               `json:"failure_reason,omitempty"`
+ 	Err           error                `json:"-"`
++
++	// AuthorizationRequired is a structured handoff to the identity/permission
++	// owner. Production never asks or answers the user itself.
++	AuthorizationRequired     bool          `json:"authorization_required,omitempty"`
++	AuthorizationCapabilityID capability.ID `json:"authorization_capability_id,omitempty"`
++	AuthorizationReason       string        `json:"authorization_reason,omitempty"`
++
++	// Recovery is a policy result. It is returned upward; ProductionRuntime
++	// never applies Retry/Replan/Block/AskUser itself.
++	Recovery *tools.RecoveryDecision `json:"recovery,omitempty"`
+ }
+ 
+ func (r ActionResult) Confidence() float64 {
+diff -ruN base/source/production/recovery.go work/source/production/recovery.go
+--- base/source/production/recovery.go	2026-09-19 16:43:30.000000000 +0000
++++ work/source/production/recovery.go	2026-09-23 14:19:06.928505947 +0000
+@@ -121,10 +121,22 @@
+ 	Decision tools.RecoveryDecision
+ }
+ 
+-type TechnicalRecoveryService struct{}
++type TechnicalRecoveryService struct {
++	decider tools.RecoveryDecider
++}
+ 
+ func NewTechnicalRecoveryService() *TechnicalRecoveryService {
+-	return &TechnicalRecoveryService{}
++	return NewTechnicalRecoveryServiceWithDecider(tools.RetryThenReplan{MaxRetries: 1})
++}
++
++// NewTechnicalRecoveryServiceWithDecider injects a RecoveryDecider while still
++// reusing the canonical tools.RecoveryCoordinator. It exists for integration
++// seams/tests; it does not create a second recovery model.
++func NewTechnicalRecoveryServiceWithDecider(decider tools.RecoveryDecider) *TechnicalRecoveryService {
++	if decider == nil {
++		decider = tools.RetryThenReplan{MaxRetries: 1}
++	}
++	return &TechnicalRecoveryService{decider: decider}
+ }
+ 
+ func (s *TechnicalRecoveryService) Recover(ctx context.Context, actionID, reason string, attempts int) (TechnicalRecoveryResult, error) {
+@@ -143,7 +155,11 @@
+ 		Reason:   reason,
+ 		Attempts: []tools.Attempt{{Number: attempts, Verification: tools.Verification{Success: false, Reason: reason}}},
+ 	}
+-	coordinator := tools.NewRecoveryCoordinator(tools.DefaultFailureDiagnoser{}, tools.RetryThenReplan{MaxRetries: 1})
++	decider := s.decider
++	if decider == nil {
++		decider = tools.RetryThenReplan{MaxRetries: 1}
++	}
++	coordinator := tools.NewRecoveryCoordinator(tools.DefaultFailureDiagnoser{}, decider)
+ 	decision, err := coordinator.Recover(ctx, result)
+ 	if err != nil {
+ 		return TechnicalRecoveryResult{}, err
+diff -ruN base/source/production/work_session.go work/source/production/work_session.go
+--- base/source/production/work_session.go	2026-09-20 16:55:34.000000000 +0000
++++ work/source/production/work_session.go	2026-09-23 14:19:39.830708022 +0000
+@@ -100,6 +100,16 @@
+ 	})
+ }
+ 
++// Block records that the operational work must stop. Applying this state is
++// the WorkStore's responsibility; it does not execute or select a capability.
++func (s *WorkStore) Block(id, detail string) error {
++	return s.update(id, func(w *WorkSession) {
++		w.Status = WorkBlocked
++		if strings.TrimSpace(detail) != "" {
++			w.Events = append(w.Events, WorkEvent{Time: time.Now().UTC(), Type: "blocked", Detail: detail})
++		}
++	})
++}
+ func (s *WorkStore) Complete(id string, success bool, detail string) error {
+ 	return s.update(id, func(w *WorkSession) {
+ 		if success {
+@@ -274,5 +284,9 @@
+ 
+ func cloneActionResult(r ActionResult) ActionResult {
+ 	r.Artifacts = cloneArtifacts(r.Artifacts)
++	if r.Recovery != nil {
++		copy := *r.Recovery
++		r.Recovery = &copy
++	}
+ 	return r
+ }
