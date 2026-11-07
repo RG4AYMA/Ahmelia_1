@@ -15,7 +15,6 @@ package core
 import (
 	"fmt"
 	"strings"
-	"time"
 
 	"ahmelia/agency"
 	"ahmelia/deliberation"
@@ -83,6 +82,7 @@ func (e *Engine) RejectAgentGoal(id, reason string) (agency.GoalRecord, error) {
 	if e == nil || e.agentGoalLedger == nil {
 		return agency.GoalRecord{}, fmt.Errorf("agency: libro no configurado")
 	}
+	e.discardGoalPlan(id)
 	return e.agentGoalLedger.Reject(id, reason)
 }
 
@@ -110,12 +110,14 @@ func (e *Engine) buildImpulses(t *processTurn) []agency.Impulse {
 	if e == nil || t == nil {
 		return nil
 	}
-	// Paso 3.4: el modo descanso cierra la ventana de metas propias. El
-	// propietario sigue pudiendo cambiar de modo cuando quiera.
-	if !e.persistentModeAllowsImpulses() {
+	// Paso 3.4: el modo descanso cierra la ventana de metas propias. Escena 1:
+	// una restricción temporal de trabajo o un estado sensible activo hacen lo
+	// mismo sin cambiar el modo. El propietario sigue pudiendo dar órdenes
+	// concretas y cambiar de modo.
+	if !e.persistentModeAllowsImpulses() || e.ownerWorkInitiativeRestrictedNow() || e.OwnerQuiet(e.nowTime()) {
 		return nil
 	}
-	in := agency.ImpulseInput{Now: time.Now()}
+	in := agency.ImpulseInput{Now: e.nowTime()}
 	in.Uncertainty = e.lastBehavioralDecision.Uncertainty
 
 	if e.clarificationQueue != nil {
@@ -242,5 +244,6 @@ func (e *Engine) recordAgentGoal(rec deliberation.Record, ws *deliberation.Works
 		e.deliberationMu.Unlock()
 		return
 	}
+	e.scheduleIdeaPlan(record)
 	fmt.Printf("🧭 [meta propia propuesta] %s (id=%s)\n", record.Goal.Summary(), record.ID)
 }

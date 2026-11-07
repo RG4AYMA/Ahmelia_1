@@ -14,9 +14,9 @@ import (
 type ProposalKind string
 
 const (
-	ProposalKindInteractive  ProposalKind = "interactive"  // from user turn decisionPhase
-	ProposalKindInitiative   ProposalKind = "initiative"   // from idle initiative evaluation
-	ProposalKindAutonomous   ProposalKind = "autonomous"   // from Cycle.RunStep planner
+	ProposalKindInteractive ProposalKind = "interactive" // from user turn decisionPhase
+	ProposalKindInitiative  ProposalKind = "initiative"  // from idle initiative evaluation
+	ProposalKindAutonomous  ProposalKind = "autonomous"  // from Cycle.RunStep planner
 )
 
 func (k ProposalKind) String() string {
@@ -27,9 +27,9 @@ func (k ProposalKind) String() string {
 // to the shared FocusArbiter. It carries the minimum context needed for
 // arbitration: intention, evidence, urgency, interruption cost, and constraints.
 type ProposalContract struct {
-	ID              string
-	Kind            ProposalKind
-	CreatedAt       time.Time
+	ID        string
+	Kind      ProposalKind
+	CreatedAt time.Time
 
 	// Intention: what the proposal wants to do/say
 	Intention       string
@@ -37,22 +37,22 @@ type ProposalContract struct {
 	Action          *ProposedAction
 
 	// Evidence backing this proposal (from Situation/DecisionEvidence)
-	Evidence        []ProposalEvidence
+	Evidence []ProposalEvidence
 
 	// Urgency/Priority signals
-	Priority        ProposalPriority
-	Urgency         ProposalUrgency
+	Priority ProposalPriority
+	Urgency  ProposalUrgency
 
 	// Cost of interruption: how disruptive this would be RIGHT NOW
 	InterruptionCost InterruptionCost
 
 	// Constraints and conditions
 	RequiresDirectTurn bool
-	Privacy           initiative.InformationPolicy
-	Channel           interaction.InputChannel
+	Privacy            initiative.InformationPolicy
+	Channel            interaction.InputChannel
 
 	// Provenance for traceability
-	Provenance        initiative.Provenance
+	Provenance initiative.Provenance
 
 	// Initiative is the delivery payload of an initiative proposal. The
 	// arbiter decides WHETHER it speaks; this payload is what lets the
@@ -62,9 +62,9 @@ type ProposalContract struct {
 
 // ProposedAction represents a concrete action the proposal wants to execute.
 type ProposedAction struct {
-	Name       string
-	Target     string
-	Parameters map[string]string
+	Name         string
+	Target       string
+	Parameters   map[string]string
 	CapabilityID string
 	RequiresAuth bool
 }
@@ -95,10 +95,10 @@ const (
 type ProposalUrgency string
 
 const (
-	ProposalUrgencyNone  ProposalUrgency = "none"
-	ProposalUrgencyLow   ProposalUrgency = "low"
-	ProposalUrgencyMed   ProposalUrgency = "medium"
-	ProposalUrgencyHigh  ProposalUrgency = "high"
+	ProposalUrgencyNone      ProposalUrgency = "none"
+	ProposalUrgencyLow       ProposalUrgency = "low"
+	ProposalUrgencyMed       ProposalUrgency = "medium"
+	ProposalUrgencyHigh      ProposalUrgency = "high"
 	ProposalUrgencyImmediate ProposalUrgency = "immediate"
 )
 
@@ -107,13 +107,13 @@ type InterruptionCost struct {
 	// Base cost from policy (0-1)
 	BaseCost float64
 	// User state modifiers
-	UserUrgency    float64
+	UserUrgency     float64
 	UserFrustration float64
-	UserConfusion  float64
+	UserConfusion   float64
 	// Context modifiers
-	InMeeting       bool
-	InFocus         bool
-	IsResting       bool
+	InMeeting        bool
+	InFocus          bool
+	IsResting        bool
 	ConversationLoad ConversationLoadLevel
 	// Computed total (0-1, higher = more costly to interrupt)
 	Total float64
@@ -139,7 +139,7 @@ func FromInteractiveDecision(
 	// Extract intention from cognition decision
 	actionKind := e.lastConversationalCognition.Action.Primary
 	goalKind := e.lastConversationalCognition.Goal.Primary
-	
+
 	intention := ""
 	if actionKind != "" {
 		intention = string(actionKind)
@@ -171,25 +171,25 @@ func FromInteractiveDecision(
 	requiresDirect := e.lastNaturalDialogue.RequiresDirectTurn
 
 	return &ProposalContract{
-		ID:              "interactive-" + time.Now().UTC().Format("20060102T150405.000000000"),
-		Kind:            ProposalKindInteractive,
-		CreatedAt:       time.Now(),
-		Intention:       intention,
-		IntentionDetail: e.lastConversationalCognition.Goal.Objective,
-		Action:          extractProposedAction(e, t),
-		Evidence:        evidence,
-		Priority:        priorityFromConfidence(e.lastConversationalCognition.Model.Signals.Confidence),
-		Urgency:         urgencyFromSignals(snap),
-		InterruptionCost: cost,
+		ID:                 "interactive-" + time.Now().UTC().Format("20060102T150405.000000000"),
+		Kind:               ProposalKindInteractive,
+		CreatedAt:          time.Now(),
+		Intention:          intention,
+		IntentionDetail:    e.lastConversationalCognition.Goal.Objective,
+		Action:             extractProposedAction(e, t),
+		Evidence:           evidence,
+		Priority:           priorityFromConfidence(e.lastConversationalCognition.Model.Signals.Confidence),
+		Urgency:            urgencyFromSignals(snap),
+		InterruptionCost:   cost,
 		RequiresDirectTurn: requiresDirect,
-		Privacy:         initiative.InformationAllowed, // NaturalDialogue doesn't have Privacy field
-		Channel:         t.semanticReq.Channel,
+		Privacy:            initiative.InformationAllowed, // NaturalDialogue doesn't have Privacy field
+		Channel:            t.semanticReq.Channel,
 		Provenance: initiative.Provenance{
-			Component:   "turn_pipeline.decisionPhase",
-			Subsystem:   "interactive",
-			SignalType:  "user_turn",
-			OriginID:    sit.ID,
-			CreatedAt:   time.Now(),
+			Component:  "turn_pipeline.decisionPhase",
+			Subsystem:  "interactive",
+			SignalType: "user_turn",
+			OriginID:   sit.ID,
+			CreatedAt:  time.Now(),
 		},
 	}
 }
@@ -219,25 +219,25 @@ func FromIdleInitiative(
 	cost := ComputeInterruptionCost(snap, e.autonomousState, situation.DecisionEvidence{})
 
 	return &ProposalContract{
-		ID:              "initiative-" + time.Now().UTC().Format("20060102T150405.000000000"),
-		Kind:            ProposalKindInitiative,
-		CreatedAt:       time.Now(),
-		Intention:       string(opportunity.Reason),
-		IntentionDetail: opportunity.Target,
-		Action:          extractInitiativeAction(opportunity),
-		Evidence:        evidence,
-		Priority:        priorityFromInitiativePriority(opportunity.Priority),
-		Urgency:         urgencyFromInitiativeUrgency(opportunity.Urgency),
-		InterruptionCost: cost,
+		ID:                 "initiative-" + time.Now().UTC().Format("20060102T150405.000000000"),
+		Kind:               ProposalKindInitiative,
+		CreatedAt:          time.Now(),
+		Intention:          string(opportunity.Reason),
+		IntentionDetail:    opportunity.Target,
+		Action:             extractInitiativeAction(opportunity),
+		Evidence:           evidence,
+		Priority:           priorityFromInitiativePriority(opportunity.Priority),
+		Urgency:            urgencyFromInitiativeUrgency(opportunity.Urgency),
+		InterruptionCost:   cost,
 		RequiresDirectTurn: opportunity.RequiresDirectTurn,
-		Privacy:         opportunity.Privacy,
-		Channel:         interaction.InputChannel(opportunity.Channel),
+		Privacy:            opportunity.Privacy,
+		Channel:            interaction.InputChannel(opportunity.Channel),
 		Provenance: initiative.Provenance{
-			Component:   "evaluateIdleConversationalInitiative",
-			Subsystem:   "initiative",
-			SignalType:  "idle_initiative",
-			OriginID:    sit.ID,
-			CreatedAt:   time.Now(),
+			Component:  "evaluateIdleConversationalInitiative",
+			Subsystem:  "initiative",
+			SignalType: "idle_initiative",
+			OriginID:   sit.ID,
+			CreatedAt:  time.Now(),
 		},
 	}
 }
@@ -281,19 +281,19 @@ func FromAutonomousPlan(
 			CapabilityID: req.Parameters["capability_id"],
 			RequiresAuth: true,
 		},
-		Evidence:        evidence,
-		Priority:        priorityFromAutonomy(req),
-		Urgency:         urgencyFromAutonomy(req),
-		InterruptionCost: cost,
+		Evidence:           evidence,
+		Priority:           priorityFromAutonomy(req),
+		Urgency:            urgencyFromAutonomy(req),
+		InterruptionCost:   cost,
 		RequiresDirectTurn: false,
-		Privacy:         initiative.InformationAllowed,
-		Channel:         interaction.ChannelText,
+		Privacy:            initiative.InformationAllowed,
+		Channel:            interaction.ChannelText,
 		Provenance: initiative.Provenance{
-			Component:   "autonomy.Cycle.RunStep",
-			Subsystem:   "autonomous",
-			SignalType:  "autonomous_plan",
-			OriginID:    sit.ID,
-			CreatedAt:   time.Now(),
+			Component:  "autonomy.Cycle.RunStep",
+			Subsystem:  "autonomous",
+			SignalType: "autonomous_plan",
+			OriginID:   sit.ID,
+			CreatedAt:  time.Now(),
 		},
 	}
 }
@@ -355,54 +355,73 @@ func extractProposedAction(e *Engine, t *processTurn) *ProposedAction {
 		return nil
 	}
 	return &ProposedAction{
-		Name:  string(action),
+		Name:   string(action),
 		Target: e.lastConversationalCognition.Goal.Objective,
 	}
 }
 
 func extractInitiativeAction(op initiative.InitiativeOpportunity) *ProposedAction {
 	return &ProposedAction{
-		Name:  string(op.Reason),
+		Name:   string(op.Reason),
 		Target: op.Target,
 	}
 }
 
 func priorityFromConfidence(conf float64) ProposalPriority {
 	switch {
-	case conf >= 0.9: return ProposalPriorityHigh
-	case conf >= 0.7: return ProposalPriorityMedium
-	case conf >= 0.5: return ProposalPriorityLow
-	default: return ProposalPriorityNone
+	case conf >= 0.9:
+		return ProposalPriorityHigh
+	case conf >= 0.7:
+		return ProposalPriorityMedium
+	case conf >= 0.5:
+		return ProposalPriorityLow
+	default:
+		return ProposalPriorityNone
 	}
 }
 
 func urgencyFromSignals(snap interaction.ConversationSnapshot) ProposalUrgency {
 	switch {
-	case snap.UserState.Urgency >= 0.8: return ProposalUrgencyImmediate
-	case snap.UserState.Urgency >= 0.6: return ProposalUrgencyHigh
-	case snap.UserState.Urgency >= 0.4: return ProposalUrgencyMed
-	case snap.UserState.Urgency > 0: return ProposalUrgencyLow
-	default: return ProposalUrgencyNone
+	case snap.UserState.Urgency >= 0.8:
+		return ProposalUrgencyImmediate
+	case snap.UserState.Urgency >= 0.6:
+		return ProposalUrgencyHigh
+	case snap.UserState.Urgency >= 0.4:
+		return ProposalUrgencyMed
+	case snap.UserState.Urgency > 0:
+		return ProposalUrgencyLow
+	default:
+		return ProposalUrgencyNone
 	}
 }
 
 func priorityFromInitiativePriority(p initiative.Priority) ProposalPriority {
 	switch p {
-	case initiative.PriorityCritical: return ProposalPriorityCritical
-	case initiative.PriorityHigh: return ProposalPriorityHigh
-	case initiative.PriorityMedium: return ProposalPriorityMedium
-	case initiative.PriorityLow: return ProposalPriorityLow
-	default: return ProposalPriorityNone
+	case initiative.PriorityCritical:
+		return ProposalPriorityCritical
+	case initiative.PriorityHigh:
+		return ProposalPriorityHigh
+	case initiative.PriorityMedium:
+		return ProposalPriorityMedium
+	case initiative.PriorityLow:
+		return ProposalPriorityLow
+	default:
+		return ProposalPriorityNone
 	}
 }
 
 func urgencyFromInitiativeUrgency(u initiative.Urgency) ProposalUrgency {
 	switch u {
-	case initiative.UrgencyCritical: return ProposalUrgencyImmediate
-	case initiative.UrgencyHigh: return ProposalUrgencyHigh
-	case initiative.UrgencyMedium: return ProposalUrgencyMed
-	case initiative.UrgencyLow: return ProposalUrgencyLow
-	default: return ProposalUrgencyNone
+	case initiative.UrgencyCritical:
+		return ProposalUrgencyImmediate
+	case initiative.UrgencyHigh:
+		return ProposalUrgencyHigh
+	case initiative.UrgencyMedium:
+		return ProposalUrgencyMed
+	case initiative.UrgencyLow:
+		return ProposalUrgencyLow
+	default:
+		return ProposalUrgencyNone
 	}
 }
 
@@ -414,7 +433,7 @@ func priorityFromAutonomy(req autonomy.ActionRequest) ProposalPriority {
 func urgencyFromAutonomy(req autonomy.ActionRequest) ProposalUrgency {
 	// Check if autonomous action has urgency markers
 	if strings.Contains(strings.ToLower(req.Objective), "urgent") ||
-	   strings.Contains(strings.ToLower(req.Objective), "critical") {
+		strings.Contains(strings.ToLower(req.Objective), "critical") {
 		return ProposalUrgencyHigh
 	}
 	return ProposalUrgencyMed

@@ -13,9 +13,10 @@ import (
 )
 
 func (e *Engine) runInitiativeDecisionPhase(t *processTurn) bool {
-	// Paso 3.4: el modo descanso no abre iniciativa proactiva. La respuesta al
-	// turno actual sigue su curso normal; lo que se cierra es la intervención.
-	if !e.persistentModeAllowsInitiative() {
+	// Paso 3.4: el modo descanso no abre iniciativa proactiva. Escena 1: una
+	// restricción temporal de trabajo tampoco. La respuesta al turno actual
+	// sigue su curso normal; lo que se cierra es la intervención.
+	if !e.ownerAllowsInitiative(e.nowTime()) {
 		return false
 	}
 	// B96.22.19 — Conversational Initiative. Legacy provider retained only as a candidate/signal source.

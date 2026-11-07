@@ -126,11 +126,31 @@ func main() {
 	// crítica y el árbitro registra la relación con la decisión del arnés. No
 	// altera la respuesta ni ejecuta nada.
 	engine.EnableShadowDeliberation()
+	// Escena 1 (2026-11-04) — consulta acotada en segundo plano: el modelo
+	// interpreta frases de descanso que el parser explícito no reconoció. El
+	// arnés solo admite una restricción provisional con fuente
+	// confirmed_inference; nunca cambia el turno ni ejecuta.
+	engine.EnableModelConsultation()
 	engine.EnableAgentGoals()
 	engine.EnableSelfTastes()
 	// Paso 3.4 (2026-11-02) — la postura durable del propietario se lee al
 	// arrancar y la aplica el arnés; el modelo solo la ve y puede sugerirla.
 	engine.EnablePersistentMode()
+	// Escena 1 (2026-11-04) — prohibiciones temporales del propietario. Una
+	// restricción de trabajo resta iniciativa propia hasta fin del día; no es
+	// un modo ni bloquea una orden autorizada. El modelo no las crea ni las
+	// levanta.
+	engine.EnableOwnerRestrictions()
+	if note := engine.LastOwnerRestrictionNote(); note != "" {
+		fmt.Println("⚠️ RESTRICCIÓN DEL PROPIETARIO:", note)
+	}
+	// Escena 1 (2026-11-05) — estado efímero y sensible del propietario:
+	// dolor/cansancio con TTL y receptividad. No es un hecho médico del
+	// UserModel y no bloquea órdenes explícitas.
+	engine.EnableOwnerState()
+	if note := engine.LastOwnerStateNote(); note != "" {
+		fmt.Println("⚠️ ESTADO DEL PROPIETARIO:", note)
+	}
 	// Paso 4.1 (2026-11-04) — el arnés declara qué debería observarse antes
 	// de ejecutar una acción local y emite un veredicto durable después de
 	// observar. El modelo solo lee el acta y puede sugerir una hipótesis.

@@ -60,6 +60,12 @@ type processTurn struct {
 	// deliberación en sombra solo corre si hay algo real que comparar; de lo
 	// contrario usaría la decisión del turno anterior.
 	cognitionRan bool
+	// ownerRestrictionHandled marca que la puerta determinista ya consumió la
+	// frase de descanso/reapertura. La consulta al modelo no debe reinterpretar
+	// una orden que el arnés ya aplicó.
+	ownerRestrictionHandled bool
+	// ownerStateHandled marca que la puerta de estado efímero consumió la frase.
+	ownerStateHandled bool
 }
 
 // inputContextPhase crosses the input and context boundaries. It does not execute,

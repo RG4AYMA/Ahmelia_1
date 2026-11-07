@@ -7,8 +7,11 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
+	"time"
 
+	"ahmelia/experience"
 	"ahmelia/programming"
+	"ahmelia/tools"
 )
 
 // StructuredCodeObjectiveSynthesizer is a bounded synthesis capability. Its
@@ -24,7 +27,8 @@ type StructuredCodeStreamGenerator interface {
 }
 
 type StructuredCodeObjectiveSynthesizer struct {
-	Client StructuredCodeGenerator
+	Client     StructuredCodeGenerator
+	Experience *experience.Store
 }
 
 // GenerationSource reports who proposed the code so downstream experience can
@@ -40,7 +44,7 @@ func (s *StructuredCodeObjectiveSynthesizer) GenerationSource() string {
 }
 
 // OllamaCodeObjectiveSynthesizer remains as a source-compatible name for
-// existing callers. Runtime wiring injects OpenCode instead.
+// existing callers. The Engine injects the local Ollama client.
 type OllamaCodeObjectiveSynthesizer = StructuredCodeObjectiveSynthesizer
 
 func NewOllamaCodeObjectiveSynthesizerWithClient(client StructuredCodeGenerator) *StructuredCodeObjectiveSynthesizer {
@@ -61,6 +65,97 @@ type synthesizedProject struct {
 	Files []synthesizedFile `json:"files"`
 }
 
+func (s *StructuredCodeObjectiveSynthesizer) generate(ctx context.Context, prompt string) (string, error) {
+	if streamer, ok := s.Client.(StructuredCodeStreamGenerator); ok {
+		return streamer.GenerateStructuredStreamContext(ctx, prompt, codeSynthesisSchema(), 2048, nil)
+	}
+	return s.Client.GenerateStructuredContext(ctx, prompt, codeSynthesisSchema(), 2048)
+}
+
+func synthesizedHasTest(files []synthesizedFile) bool {
+	for _, f := range files {
+		if strings.HasSuffix(strings.ToLower(filepath.ToSlash(strings.TrimSpace(f.Path))), "_test.go") {
+			return true
+		}
+	}
+	return false
+}
+
+// goProjectHasTest accepts a test that already exists in the project. A repair
+// may legitimately omit unchanged files; demanding that the model resend the
+// test would turn a minimal repair into a false rejection.
+func goProjectHasTest(objective programming.CodeObjective, files []synthesizedFile) bool {
+	if synthesizedHasTest(files) {
+		return true
+	}
+	for _, f := range objective.Files {
+		if strings.HasSuffix(strings.ToLower(filepath.ToSlash(strings.TrimSpace(f.Path))), "_test.go") {
+			return true
+		}
+	}
+	return objectiveFileExistsOnDiskBySuffix(objective.ProjectRoot, "_test.go")
+}
+
+func truncateSynthesisRetry(raw string, limit int) string {
+	runes := []rune(raw)
+	if len(runes) <= limit {
+		return raw
+	}
+	return string(runes[:limit]) + "…"
+}
+
+func appendSynthesisRetry(prompt, raw, lesson string) string {
+	return prompt +
+		"\nYour previous response was rejected: " + lesson +
+		"\nReturn the complete project again and do not omit required files.\nPREVIOUS RESPONSE (truncated):\n" +
+		truncateSynthesisRetry(raw, 6000)
+}
+
+func (s *StructuredCodeObjectiveSynthesizer) recordExperience(objective programming.CodeObjective, attempt int, stage, errText, outcome, lesson string) {
+	if s == nil || s.Experience == nil {
+		return
+	}
+	if err := s.Experience.Append(experience.Record{
+		At:        time.Now(),
+		Domain:    "programming",
+		ProjectID: objective.ProjectID,
+		Attempt:   attempt,
+		Stage:     stage,
+		Error:     errText,
+		Outcome:   outcome,
+		Lesson:    lesson,
+		Source:    s.GenerationSource(),
+	}); err != nil {
+		fmt.Printf("⚠️ [experiencia] no se pudo registrar el intento %d (%s): %v\n", attempt, stage, err)
+	}
+}
+
+// recoveryLesson turns an observed failure into a short reusable correction.
+// It is deliberately deterministic: the model proposes code, the harness owns
+// the lesson extracted from verification evidence.
+func recoveryLesson(c *tools.RecoveryContext) string {
+	if c == nil {
+		return ""
+	}
+	observed := c.FailureReason
+	for _, state := range c.ObservedState {
+		observed += " " + state
+	}
+	return recoveryLessonFromText(observed)
+}
+
+func recoveryLessonFromText(observed string) string {
+	observed = strings.ToLower(observed)
+	switch {
+	case strings.Contains(observed, "test"):
+		return "Read the failing test assertion first; repair the production code it calls and rerun the whole test suite."
+	case strings.Contains(observed, "build"), strings.Contains(observed, "compile"):
+		return "Fix the reported build diagnostic at its file and line before changing behavior; rerun build and tests."
+	default:
+		return "Use the observed failure as the contract for the next attempt; change only the diagnosed artifact and rerun verification."
+	}
+}
+
 func (s *StructuredCodeObjectiveSynthesizer) Synthesize(ctx context.Context, objective programming.CodeObjective) (*programming.MultiFilePlan, error) {
 	if s == nil || s.Client == nil {
 		return nil, fmt.Errorf("programming synthesis: code generation provider unavailable")
@@ -69,24 +164,98 @@ func (s *StructuredCodeObjectiveSynthesizer) Synthesize(ctx context.Context, obj
 		return nil, err
 	}
 
-	prompt := buildCodeSynthesisPrompt(objective)
-	var raw string
-	var err error
-	if streamer, ok := s.Client.(StructuredCodeStreamGenerator); ok {
-		raw, err = streamer.GenerateStructuredStreamContext(ctx, prompt, codeSynthesisSchema(), 2048, nil)
-	} else {
-		raw, err = s.Client.GenerateStructuredContext(ctx, prompt, codeSynthesisSchema(), 2048)
+	if s.Experience != nil {
+		attempt := 1
+		failure, lesson := "", ""
+		if recovery := objective.RecoveryContext; recovery != nil {
+			failure = strings.TrimSpace(recovery.FailureReason)
+			if failure == "" && len(recovery.ObservedState) > 0 {
+				failure = strings.TrimSpace(recovery.ObservedState[0])
+			}
+			if recovery.AttemptNumber > 0 {
+				attempt = recovery.AttemptNumber
+			}
+			lesson = recoveryLesson(recovery)
+		} else if evidence := strings.TrimSpace(objective.RecoveryEvidence); evidence != "" {
+			// The Engine's automatic recovery appends plain-text evidence to the
+			// objective instead of a structured RecoveryContext. Persist the
+			// observed failure either way; the next prompt receives its lesson.
+			failure = evidence
+			lesson = recoveryLessonFromText(evidence)
+		}
+		if failure != "" {
+			s.recordExperience(objective, attempt, "recovery", truncateSynthesisRetry(failure, 4000), "retry", lesson)
+		}
 	}
-	if err != nil {
-		return nil, fmt.Errorf("programming synthesis: %w", err)
+	prompt := buildCodeSynthesisPrompt(objective)
+	if s.Experience != nil {
+		if lessons := s.Experience.Lessons("programming", 5); len(lessons) > 0 {
+			prompt += "\nLESSONS FROM PREVIOUS ATTEMPTS:\n- " + strings.Join(lessons, "\n- ") + "\n"
+		}
 	}
 
+	const maxAttempts = 3
 	var response synthesizedProject
-	if err := json.Unmarshal([]byte(stripJSONCodeFence(raw)), &response); err != nil {
-		return nil, fmt.Errorf("programming synthesis: invalid structured response: %w", err)
+	var lastErr error
+	for attempt := 1; attempt <= maxAttempts; attempt++ {
+		raw, err := s.generate(ctx, prompt)
+		if err != nil {
+			lastErr = fmt.Errorf("programming synthesis: %w", err)
+			s.recordExperience(objective, attempt, "generate", lastErr.Error(), "failure", "")
+			return nil, lastErr
+		}
+		var candidate synthesizedProject
+		if err := json.Unmarshal([]byte(stripJSONCodeFence(raw)), &candidate); err != nil {
+			lastErr = fmt.Errorf("programming synthesis: invalid structured response: %w", err)
+			lesson := "Return only the requested JSON object with a top-level files array."
+			outcome := "retry"
+			if attempt == maxAttempts {
+				outcome = "failure"
+			}
+			s.recordExperience(objective, attempt, "parse", lastErr.Error(), outcome, lesson)
+			if attempt == maxAttempts {
+				break
+			}
+			prompt = appendSynthesisRetry(prompt, raw, lesson)
+			continue
+		}
+		if len(candidate.Files) == 0 {
+			lastErr = fmt.Errorf("programming synthesis: model returned no files")
+			lesson := "Return at least one source file in the files array."
+			outcome := "retry"
+			if attempt == maxAttempts {
+				outcome = "failure"
+			}
+			s.recordExperience(objective, attempt, "synthesis", lastErr.Error(), outcome, lesson)
+			if attempt == maxAttempts {
+				break
+			}
+			prompt = appendSynthesisRetry(prompt, raw, lesson)
+			continue
+		}
+		if strings.EqualFold(objective.Language, "Go") && !goProjectHasTest(objective, candidate.Files) {
+			lastErr = fmt.Errorf("programming synthesis: Go project must include or already contain at least one _test.go")
+			lesson := "For Go, put every Test... function in a separate *_test.go package main file importing \"testing\"; remove Test functions from source files; include func main() in the executable source."
+			outcome := "retry"
+			if attempt == maxAttempts {
+				outcome = "failure"
+			}
+			s.recordExperience(objective, attempt, "synthesis", lastErr.Error(), outcome, lesson)
+			if attempt == maxAttempts {
+				break
+			}
+			prompt = appendSynthesisRetry(prompt, raw, lesson)
+			continue
+		}
+		response = candidate
+		s.recordExperience(objective, attempt, "synthesis", "", "success", "")
+		break
 	}
 	if len(response.Files) == 0 {
-		return nil, fmt.Errorf("programming synthesis: model returned no files")
+		if lastErr == nil {
+			lastErr = fmt.Errorf("programming synthesis: model returned no files")
+		}
+		return nil, lastErr
 	}
 
 	project := programming.CodeProject{
@@ -345,6 +514,8 @@ func buildCodeSynthesisPrompt(o programming.CodeObjective) string {
 	b.WriteString("You must produce a complete coherent project, not a demonstration scaffold.\n")
 	b.WriteString("Every test must exercise the actual production code, not duplicate the implementation inside the test.\n")
 	b.WriteString("For Go, always include go.mod, compilable source, and at least one _test.go that calls production functions.\n")
+	b.WriteString("Never put a Test... function inside a source file. Go tests belong in a separate *_test.go file with import \"testing\"; source files must not declare Test functions and must not use testing.T.\n")
+	b.WriteString("A Go executable must include func main() in a source file; do not leave package main without an entrypoint.\n")
 	b.WriteString("For a single-directory Go project, source and test files must use the same package declaration (usually package main) and tests must call production functions directly. Never import the project's own module from its root test file; self-imports such as the project ID or module path are invalid for package main and can create import cycles. Do not define duplicate function names or create a custom TestMain unless the test runner genuinely requires one.\n")
 	b.WriteString("All file paths must be relative to PROJECT_ROOT. Do not prefix paths with PROJECT_ID or create a nested directory named PROJECT_ID unless explicitly requested.\n")
 	b.WriteString("For an existing project, preserve its identity and modify the existing files needed to satisfy the new objective; do not create a replacement project.\n")

@@ -37,6 +37,11 @@ const (
 	// una petición más prioritaria, el gobernador cancela este lease tras
 	// 500 ms de gracia.
 	shadowDeliberationBudget = 300 * time.Second
+	// shadowDeliberationMaxTokens acota la salida del carril de ideas. 260
+	// truncaba el JSON de modelos de 4B cuando incluían self_goal; 400 deja
+	// espacio para la lectura, la crítica y la meta sin abrir la puerta a una
+	// respuesta ilimitada.
+	shadowDeliberationMaxTokens = 400
 	// shadowDeliberationMaxEvidence acota la evidencia de situación que entra
 	// al espacio de trabajo.
 	shadowDeliberationMaxEvidence = 6
@@ -134,7 +139,7 @@ func (e *Engine) deliberateShadow(ctx context.Context, ws *deliberation.Workspac
 	if e == nil || e.deliberationClient == nil {
 		return deliberation.UnavailableRecord(harness, input, turnID, fmt.Errorf("deliberation client unavailable"))
 	}
-	raw, err := e.deliberationClient.GenerateShadowContext(ctx, deliberation.BuildPrompt(ws, harness), deliberation.Schema(), 260)
+	raw, err := e.deliberationClient.GenerateShadowContext(ctx, deliberation.BuildPrompt(ws, harness), deliberation.Schema(), shadowDeliberationMaxTokens)
 	if err != nil {
 		return e.recordShadow(deliberation.UnavailableRecord(harness, input, turnID, err))
 	}
@@ -204,6 +209,9 @@ func (e *Engine) buildDeliberationWorkspace(t *processTurn) *deliberation.Worksp
 	// autorización para cambiarla.
 	if state, ok := e.persistentModeState(); ok {
 		ws.Add("modo_persistente", persistentModeSummary(state), "persistent_mode", 1)
+	}
+	if state, ok := e.OwnerStateActive(e.nowTime()); ok {
+		ws.Add("estado_propietario", state.Kind, "owner_state", 1)
 	}
 
 	if text := describeSemanticRequest(t.semanticReq); text != "" {

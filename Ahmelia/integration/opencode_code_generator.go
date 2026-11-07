@@ -122,9 +122,12 @@ func (g *OpenCodeCodeGenerator) GenerateStructuredContext(ctx context.Context, p
 		}
 		diagnostic := summarizeOpenCodeStderr(stderr.String())
 		if diagnostic == "" {
+			diagnostic = summarizeOpenCodeStdout(stdout.String())
+		}
+		if diagnostic == "" {
 			return "", fmt.Errorf("OpenCode code synthesis command failed: %w", err)
 		}
-		return "", fmt.Errorf("OpenCode code synthesis command failed: %w; stderr: %s", err, diagnostic)
+		return "", fmt.Errorf("OpenCode code synthesis command failed: %w; diagnostic: %s", err, diagnostic)
 	}
 	if stdout.overflow {
 		return "", fmt.Errorf("OpenCode code synthesis output exceeded %d bytes", openCodeMaxOutput)
@@ -195,6 +198,28 @@ type openCodeEvent struct {
 	Properties struct {
 		Part openCodeEventPart `json:"part"`
 	} `json:"properties"`
+	Error struct {
+		Message string `json:"message"`
+	} `json:"error"`
+}
+
+func summarizeOpenCodeStdout(output string) string {
+	scanner := bufio.NewScanner(strings.NewReader(output))
+	scanner.Buffer(make([]byte, 64<<10), openCodeMaxOutput)
+	for scanner.Scan() {
+		line := bytes.TrimSpace(scanner.Bytes())
+		if len(line) == 0 {
+			continue
+		}
+		var event openCodeEvent
+		if err := json.Unmarshal(line, &event); err != nil {
+			continue
+		}
+		if event.Type == "error" && strings.TrimSpace(event.Error.Message) != "" {
+			return summarizeOpenCodeStderr(event.Error.Message)
+		}
+	}
+	return ""
 }
 
 func openCodeResponseText(output []byte) (string, error) {

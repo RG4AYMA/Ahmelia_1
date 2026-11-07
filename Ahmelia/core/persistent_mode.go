@@ -19,6 +19,7 @@ import (
 	"errors"
 	"fmt"
 	"strings"
+	"time"
 
 	"ahmelia/agency"
 	"ahmelia/cognition"
@@ -135,9 +136,31 @@ func (e *Engine) persistentModeAllowsInitiative() bool {
 	return !ok || profile.Proactive
 }
 
+// ownerAllowsInitiative is the single gate for proactive intervention in the
+// conversational path. Two independent owner decisions close it: the durable
+// mode (paso 3.4) and the bounded restriction (escena 1). Neither one is a
+// model suggestion. The restriction is evaluated at the caller's instant so a
+// simulated day can drive it without rewriting the mode.
+func (e *Engine) ownerAllowsInitiative(now time.Time) bool {
+	if !e.persistentModeAllowsInitiative() {
+		return false
+	}
+	if e.OwnerQuiet(now) {
+		return false
+	}
+	return !e.OwnerWorkInitiativeRestricted(now)
+}
+
 // agentGoalPlannerQuota returns the owner's ceiling for Ahmelia-owned goals.
-// Rest sets it to zero; the other modes keep the previous quota of one.
+// Rest sets it to zero; a work restriction does the same without changing the
+// durable mode. The other modes keep the previous quota of one.
 func (e *Engine) agentGoalPlannerQuota() int {
+	if e.OwnerQuiet(e.nowTime()) {
+		return 0
+	}
+	if e.ownerWorkInitiativeRestrictedNow() {
+		return 0
+	}
 	profile, ok := e.persistentModeProfile()
 	if !ok {
 		return AgentGoalPlannerQuota

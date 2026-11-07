@@ -8,16 +8,16 @@ import (
 
 // ScheduleItem es un elemento en la agenda mental
 type ScheduleItem struct {
-	ID          string
-	Title       string
-	Type        string           // "goal", "task", "reminder"
-	Priority    GoalPriority
-	DueDate     time.Time
-	CreatedAt   time.Time
-	Status      string           // "pending", "in_progress", "completed"
-	TimeSlot    time.Time
-	Estimated   time.Duration
-	Dependencies []string        // Otros items de los que depende
+	ID           string
+	Title        string
+	Type         string // "goal", "task", "reminder"
+	Priority     GoalPriority
+	DueDate      time.Time
+	CreatedAt    time.Time
+	Status       string // "pending", "in_progress", "completed"
+	TimeSlot     time.Time
+	Estimated    time.Duration
+	Dependencies []string // Otros items de los que depende
 }
 
 // Scheduler gestiona la agenda mental y priorización
@@ -262,7 +262,7 @@ func (s *Scheduler) GetContextForItem(itemID string) string {
 func (s *Scheduler) GetCapacity() float64 {
 	// Asumir 8 horas de trabajo disponibles
 	workingHoursPerDay := 8.0
-	
+
 	totalPending := time.Duration(0)
 	for _, item := range s.items {
 		if item.Status != "completed" {

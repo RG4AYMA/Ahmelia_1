@@ -29,6 +29,15 @@ func NewOllamaGoalTaskDecomposer(client StructuredGoalPlanner) *OllamaGoalTaskDe
 	return &OllamaGoalTaskDecomposer{client: client, timeout: 45 * time.Second}
 }
 
+// NewOllamaGoalTaskDecomposerWithTimeout is the background-lane constructor.
+// It keeps the same validation and fallback; only the model budget changes.
+func NewOllamaGoalTaskDecomposerWithTimeout(client StructuredGoalPlanner, timeout time.Duration) *OllamaGoalTaskDecomposer {
+	if timeout <= 0 {
+		timeout = 45 * time.Second
+	}
+	return &OllamaGoalTaskDecomposer{client: client, timeout: timeout}
+}
+
 func boundedPlanningBaseline(ctx context.Context) string {
 	baseline := planning.EnvironmentBaseline(ctx)
 	const maxBytes = 6000

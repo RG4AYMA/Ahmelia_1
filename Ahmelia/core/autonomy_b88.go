@@ -102,10 +102,10 @@ func (e engineSituationalCycleEvaluator) EvaluateSituation(ctx context.Context, 
 		if sit.ID != "" {
 			if e.engine.goalPlanningAdapter != nil {
 				req := autonomy.ActionRequest{
-					ID:       "auto-" + time.Now().UTC().Format("20060102T150405.000000000"),
-					Action:   "autonomous_action",
-					Objective: "autonomous_goal",
-					Target:   "autonomous_target",
+					ID:         "auto-" + time.Now().UTC().Format("20060102T150405.000000000"),
+					Action:     "autonomous_action",
+					Objective:  "autonomous_goal",
+					Target:     "autonomous_target",
 					Parameters: map[string]string{},
 				}
 				autoProp := FromAutonomousPlan(e.engine, sit, e.engine.lastSituationContributions, req, evidence)
@@ -518,6 +518,17 @@ func (e *Engine) StartAutonomousCycle(ctx context.Context) error {
 		autonomyGoalAdapter{monitor: e.goalMonitor},
 	)
 	e.autonomousLoop.SetRunLock(&e.autonomyRuntimeMu)
+	// Escena 1: el loop consulta la misma puerta que el camino conversacional.
+	// Sin restricciones habilitadas el proveedor no cambia el comportamiento.
+	e.autonomousLoop.SetOwnerRestrictions(e, nil)
+	// Consulta asíncrona de reanudación no urgente: el modelo puede pedir
+	// esperar, pero nunca crear una acción ni tocar el camino crítico.
+	e.deliberationMu.Lock()
+	consultWorker := e.consultWorker
+	e.deliberationMu.Unlock()
+	if consultWorker != nil {
+		e.autonomousLoop.SetInitiativeConsultant(initiativeConsultantAdapter{worker: consultWorker})
+	}
 	loopCtx, cancel := context.WithCancel(ctx)
 	e.autonomyCancel = cancel
 	e.autonomousLoop.Start(loopCtx)

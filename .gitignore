@@ -1,0 +1,19 @@
+# Build artifacts
+*.exe
+*.test
+*.out
+*.log
+
+# Python
+__pycache__/
+*.pyc
+
+# Runtime state and generated workspaces
+Ahmelia/memory/
+Ahmelia/workspaces/
+Ahmelia/.gotmp-validation/
+Ahmelia/testdata/tmp/
+
+# Local environment
+.env
+.env.*

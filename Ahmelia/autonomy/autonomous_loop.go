@@ -2,8 +2,12 @@ package autonomy
 
 import (
 	"context"
+	"fmt"
+	"strings"
 	"sync"
 	"time"
+
+	"ahmelia/consult"
 )
 
 // StateProvider define la interfaz requerida para consultar la última actividad del usuario (B72).
@@ -14,6 +18,21 @@ type StateProvider interface {
 // GoalProvider define la interfaz requerida para consultar objetivos pendientes (B73).
 type GoalProvider interface {
 	PendingGoal() (hasPending bool, goalID string)
+}
+
+// OwnerRestrictionProvider reports whether the owner closed Ahmelia's own work
+// initiative at now. *core.Engine satisfies it; the loop never reads the store
+// directly, so there is a single gate for mode + restriction.
+type OwnerRestrictionProvider interface {
+	OwnerWorkInitiativeRestricted(now time.Time) bool
+}
+
+// InitiativeConsultant is the optional asynchronous lane for non-urgent
+// initiative. ProposeInitiative must never block; FreshInitiative returns only
+// a current proposal for the fingerprint.
+type InitiativeConsultant interface {
+	ProposeInitiative(req consult.Request, fingerprint string) bool
+	FreshInitiative(fingerprint string) (consult.Proposal, bool)
 }
 
 // LoopConfig define los parámetros operativos del bucle autónomo.
@@ -48,6 +67,17 @@ type AutonomousLoop struct {
 	dialogue   *ConversationManager
 	stateProv  StateProvider
 	goalProv   GoalProvider
+
+	// Escena 1: restricción temporal del propietario y reloj inyectable. El
+	// provider es opcional; sin él el loop conserva su comportamiento previo.
+	restrictions OwnerRestrictionProvider
+	now          func() time.Time
+
+	// Consulta asíncrona de reanudación no urgente. El modelo solo puede
+	// proponer esperar o proceder; nunca crea una acción ni toca lo crítico.
+	consultant         InitiativeConsultant
+	consultFingerprint string
+	consultSubmitted   bool
 }
 
 // NewAutonomousLoop crea el orquestador B77 existente.
@@ -112,6 +142,38 @@ func (al *AutonomousLoop) SetRunLock(lock sync.Locker) {
 	al.mu.Lock()
 	al.runLock = lock
 	al.mu.Unlock()
+}
+
+// SetOwnerRestrictions connects the loop to the owner's bounded prohibitions.
+// A nil provider keeps the previous behavior. now may be nil; it defaults to
+// time.Now. Both values are read under the loop mutex at the start of a tick.
+func (al *AutonomousLoop) SetOwnerRestrictions(provider OwnerRestrictionProvider, now func() time.Time) {
+	if al == nil {
+		return
+	}
+	al.mu.Lock()
+	defer al.mu.Unlock()
+	al.restrictions = provider
+	al.now = now
+}
+
+func (al *AutonomousLoop) restrictionSnapshot() (OwnerRestrictionProvider, func() time.Time) {
+	al.mu.Lock()
+	defer al.mu.Unlock()
+	return al.restrictions, al.now
+}
+
+// SetInitiativeConsultant connects the optional background consultation lane.
+// A nil consultant keeps the previous deterministic behavior.
+func (al *AutonomousLoop) SetInitiativeConsultant(c InitiativeConsultant) {
+	if al == nil {
+		return
+	}
+	al.mu.Lock()
+	defer al.mu.Unlock()
+	al.consultant = c
+	al.consultFingerprint = ""
+	al.consultSubmitted = false
 }
 
 // IsRunning indica si el bucle autónomo está activo.
@@ -226,6 +288,19 @@ func (al *AutonomousLoop) runIntegratedTick(ctx context.Context) {
 
 	observations := al.observer.GetUnprocessedObservations()
 
+	provider, clock := al.restrictionSnapshot()
+	now := time.Now()
+	if clock != nil {
+		now = clock()
+	}
+	workClosed := provider != nil && provider.OwnerWorkInitiativeRestricted(now)
+	quiet := false
+	if provider != nil {
+		if q, ok := provider.(interface{ OwnerQuiet(time.Time) bool }); ok {
+			quiet = q.OwnerQuiet(now)
+		}
+	}
+
 	var lastActivity time.Time
 	if al.stateProv != nil {
 		lastActivity = al.stateProv.LastUserActivity()
@@ -237,12 +312,24 @@ func (al *AutonomousLoop) runIntegratedTick(ctx context.Context) {
 		hasPending, pendingGoalID = al.goalProv.PendingGoal()
 	}
 
+	// Escena 1: la prohibición del propietario o un estado sensible activo
+	// restan la iniciativa propia (reanudar metas, abrir trabajo), pero no
+	// silencian el camino de interrupción. Las señales críticas siguen llegando
+	// al motor de decisión.
+	evaluationObservations := observations
+	if workClosed || quiet {
+		hasPending = false
+		pendingGoalID = ""
+		evaluationObservations = criticalSignals(observations)
+	}
+
 	initDecision := al.initiative.Evaluate(
-		observations,
+		evaluationObservations,
 		hasPending,
 		pendingGoalID,
 		lastActivity,
 	)
+	al.applyInitiativeConsultation(&initDecision, hasPending, pendingGoalID, lastActivity, now)
 
 	// B88.5: esto es lo que antes faltaba. Cycle.RunStep() ya no corre
 	// incondicionalmente — solo cuando InitiativeEngine decidió que hay
@@ -282,6 +369,118 @@ func (al *AutonomousLoop) runIntegratedTick(ctx context.Context) {
 			al.observer.MarkAsProcessed(obs.ID)
 		}
 	}
+}
+
+// initiativeConsultLead is how long before the inactivity threshold the loop
+// asks the model for a judgment. On this hardware the model takes tens of
+// seconds, so the consultation starts early and nobody waits for it.
+const initiativeConsultLead = 90 * time.Second
+
+// applyInitiativeConsultation gives the model one bounded voice over a
+// non-urgent resume: it can say "wait" once per context. It cannot create an
+// action, and it is never consulted for a critical signal.
+func (al *AutonomousLoop) applyInitiativeConsultation(decision *InitiativeDecision, hasPending bool, goalID string, lastActivity, now time.Time) {
+	if al == nil || decision == nil || al.consultant == nil || !hasPending {
+		return
+	}
+	goalID = strings.TrimSpace(goalID)
+	if goalID == "" || lastActivity.IsZero() {
+		return
+	}
+	fp := fmt.Sprintf("goal:%s:last:%d", goalID, lastActivity.Unix())
+	if fp != al.consultFingerprint {
+		al.consultFingerprint = fp
+		al.consultSubmitted = false
+	}
+
+	if decision.Action == ActionResumeGoal {
+		al.consumeResumeConsultation(decision, fp, now)
+		return
+	}
+	// Only the quiet states before a resume are eligible. A critical signal,
+	// an explicit question or an active goal-state notice is not.
+	if decision.Action != ActionWait && decision.Action != ActionNoAction {
+		return
+	}
+	if al.consultSubmitted {
+		return
+	}
+	threshold := al.initiative.MinInactivityForResume()
+	if threshold <= 0 {
+		return
+	}
+	lead := initiativeConsultLead
+	if lead >= threshold {
+		lead = threshold / 2
+	}
+	if now.Sub(lastActivity) < threshold-lead {
+		return
+	}
+
+	req := consult.Request{
+		Scene:          "autonomy_resume_goal",
+		Input:          fmt.Sprintf("objetivo pendiente %s; inactividad %s", goalID, now.Sub(lastActivity).Round(time.Second)),
+		HarnessReading: decision.Reason,
+		OwnerState:     "absent",
+		Candidates:     initiativeResumeCandidates(),
+		Evidence: []consult.Evidence{
+			{ID: "goal", Text: "objetivo pendiente " + goalID},
+			{ID: "inactivity", Text: now.Sub(lastActivity).Round(time.Second).String()},
+			{ID: "decision", Text: decision.Reason},
+		},
+	}
+	if al.consultant.ProposeInitiative(req, fp) {
+		al.consultSubmitted = true
+	}
+}
+
+func (al *AutonomousLoop) consumeResumeConsultation(decision *InitiativeDecision, fingerprint string, now time.Time) {
+	proposal, ok := al.consultant.FreshInitiative(fingerprint)
+	if !ok {
+		return
+	}
+	verdict := consult.Decide(
+		proposal,
+		initiativeResumeCandidates(),
+		func(c consult.Candidate) (bool, string) {
+			switch c.ID {
+			case "proceed", "wait":
+				return true, ""
+			default:
+				return false, "not_authorized:" + c.ID
+			}
+		},
+		"proceed",
+	)
+	if verdict.Accepted && verdict.Candidate.ID == "wait" {
+		decision.Action = ActionWait
+		decision.Reason = "model_consultation_wait"
+		decision.Timestamp = now
+	}
+}
+
+func initiativeResumeCandidates() []consult.Candidate {
+	return []consult.Candidate{
+		{ID: "proceed", Kind: "resume", Description: "Reanudar el objetivo pendiente", Authorized: true, Risk: "low", Reversible: true},
+		{ID: "wait", Kind: "wait", Description: "Esperar; no interrumpir todavía", Authorized: true, Risk: "low", Reversible: true},
+		{ID: "interrupt_now", Kind: "interrupt", Description: "Interrumpir de inmediato", Authorized: false, Risk: "high", Reversible: false},
+	}
+}
+
+// criticalSignals keeps only the observations that belong to the interruption
+// path. A work restriction subtracts Ahmelia's own initiative; it must not hide
+// a critical system signal.
+func criticalSignals(observations []ContextObservation) []ContextObservation {
+	out := make([]ContextObservation, 0, len(observations))
+	for _, obs := range observations {
+		if obs.Processed || obs.Type != TypeSystemSignal {
+			continue
+		}
+		if severity, _ := obs.Payload["severity"].(string); severity == "CRITICAL" {
+			out = append(out, obs)
+		}
+	}
+	return out
 }
 
 // NewIntegratedAutonomousLoop combina B83 (Cycle real) con el camino

@@ -142,6 +142,15 @@ func (c *OllamaClient) ModelName() string {
 	return strings.TrimSpace(c.Model)
 }
 
+// GenerationSource identifies the local model service in production and
+// experience records.
+func (c *OllamaClient) GenerationSource() string {
+	if c == nil || c.ModelName() == "" {
+		return "ollama"
+	}
+	return "ollama:" + c.ModelName()
+}
+
 const (
 	OllamaServerUnreachable = "SERVER_UNREACHABLE"
 	OllamaModelWarming      = "MODEL_WARMING"

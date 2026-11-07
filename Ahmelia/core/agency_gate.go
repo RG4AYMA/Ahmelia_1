@@ -206,7 +206,11 @@ func (e *Engine) applyAgentGoalCommand(cmd agentGoalCommand) (string, bool) {
 			fmt.Fprintf(&b, "Y %d más.\n", len(open)-limit)
 		}
 		if e.agentGoalPlannerQuota() <= 0 {
-			b.WriteString("Ahora el modo persistente es descanso: no hay cupo de metas. Cambia a focus o explore para autorizar y registrar.")
+			if e.ownerWorkInitiativeRestrictedNow() {
+				b.WriteString("Hoy el propietario cerró la iniciativa de trabajo: no hay cupo de metas. La restricción vence al final del día.")
+			} else {
+				b.WriteString("Ahora el modo persistente es descanso: no hay cupo de metas. Cambia a focus o explore para autorizar y registrar.")
+			}
 		} else {
 			b.WriteString("Para decidir: «autoriza la meta <id>» o «rechaza la meta <id>». Autorizar la registra en el planificador con cupo 1; no la ejecuta.")
 		}
@@ -217,8 +221,12 @@ func (e *Engine) applyAgentGoalCommand(cmd agentGoalCommand) (string, bool) {
 		// without registering would leave the record stuck in "authorized"
 		// with no conversational path to register it later.
 		if cmd.Kind == agentGoalAuthorize && e.agentGoalPlannerQuota() <= 0 {
+			reason := "el modo persistente es descanso y no abre cupo de metas. Cambia a focus o explore y vuelve a autorizarla"
+			if e.ownerWorkInitiativeRestrictedNow() {
+				reason = "el propietario cerró la iniciativa de trabajo hasta el final del día y no hay cupo de metas"
+			}
 			if rec, ok := e.AgentGoalRecord(cmd.ID); ok && rec.Status == agency.GoalProposed {
-				return fmt.Sprintf("No autoricé la meta %s (%q): el modo persistente es descanso y no abre cupo de metas. Cambia a focus o explore y vuelve a autorizarla. No cambié nada.", rec.ID, rec.Goal.Title), true
+				return fmt.Sprintf("No autoricé la meta %s (%q): %s. No cambié nada.", rec.ID, rec.Goal.Title, reason), true
 			}
 		}
 		var (
@@ -254,6 +262,8 @@ func (e *Engine) applyAgentGoalCommand(cmd agentGoalCommand) (string, bool) {
 				switch {
 				case errors.Is(regErr, ErrAgentGoalRestMode):
 					return fmt.Sprintf("Marco la meta %s como autorizada: %q. No la registré en el planificador: el modo persistente es descanso y no abre cupo de metas. Cambia a focus o explore para registrarla. No ejecuté nada.", rec.ID, rec.Goal.Title), true
+				case errors.Is(regErr, ErrAgentGoalOwnerRestriction):
+					return fmt.Sprintf("Marco la meta %s como autorizada: %q. No la registré en el planificador: el propietario cerró la iniciativa de trabajo hasta el final del día. No ejecuté nada.", rec.ID, rec.Goal.Title), true
 				case errors.Is(regErr, ErrAgentGoalPlannerQuota):
 					return fmt.Sprintf("Marco la meta %s como autorizada: %q. No la registré en el planificador: %v. No ejecuté nada.", rec.ID, rec.Goal.Title, regErr), true
 				case errors.Is(regErr, agency.ErrAlreadyRegistered):

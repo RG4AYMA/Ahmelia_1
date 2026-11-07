@@ -73,6 +73,17 @@ func NewInitiativeEngine(cfg InitiativeConfig) *InitiativeEngine {
 	}
 }
 
+// MinInactivityForResume reports the configured threshold. It is read-only and
+// lets the caller anticipate a consultation before the threshold is crossed.
+func (ie *InitiativeEngine) MinInactivityForResume() time.Duration {
+	if ie == nil {
+		return 0
+	}
+	ie.mu.RLock()
+	defer ie.mu.RUnlock()
+	return ie.config.MinInactivityForResume
+}
+
 // Evaluate evalúa las observaciones y estados aplicando la jerarquía estricta:
 // CRITICAL > RESUME_GOAL > GOAL_STATE_CHANGED > WAIT > NO_ACTION
 func (ie *InitiativeEngine) Evaluate(

@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"sort"
 	"strings"
+	"sync"
 	"sync/atomic"
 	"time"
 )
@@ -65,6 +66,12 @@ type Planner struct {
 	tasks        map[string]*Task
 	dependencies *DependencyGraph
 	decomposer   GoalTaskDecomposer
+	// precomputed holds validated blueprints produced by a background model
+	// before the first plan for a goal is generated. It is consumed once; a
+	// late proposal never replaces an already generated plan.
+	precomputedMu sync.Mutex
+	precomputed   map[string][]GoalTaskBlueprint
+	planned       map[string]bool
 }
 
 // planIDSeq — ver comentario de cabecera de GeneratePlan (hallazgo de
@@ -79,6 +86,8 @@ func NewPlanner() *Planner {
 		goals:        make(map[string]*Goal),
 		tasks:        make(map[string]*Task),
 		dependencies: NewDependencyGraph(),
+		precomputed:  make(map[string][]GoalTaskBlueprint),
+		planned:      make(map[string]bool),
 	}
 }
 
@@ -89,6 +98,32 @@ func (p *Planner) SetGoalTaskDecomposer(decomposer GoalTaskDecomposer) {
 		return
 	}
 	p.decomposer = decomposer
+}
+
+// SetPrecomputedBlueprints attaches a validated task graph to a goal before
+// its first plan is generated. The graph is consumed once and never replaces a
+// plan that already exists. The caller must validate with
+// ValidateGoalTaskBlueprints first; the planner revalidates at materialization.
+func (p *Planner) SetPrecomputedBlueprints(goalID string, blueprints []GoalTaskBlueprint) {
+	if p == nil || strings.TrimSpace(goalID) == "" || len(blueprints) == 0 {
+		return
+	}
+	p.precomputedMu.Lock()
+	defer p.precomputedMu.Unlock()
+	if p.planned[goalID] {
+		return
+	}
+	if p.precomputed == nil {
+		p.precomputed = make(map[string][]GoalTaskBlueprint)
+	}
+	p.precomputed[goalID] = append([]GoalTaskBlueprint(nil), blueprints...)
+}
+
+// ValidateGoalTaskBlueprints checks shape, text limits and backward-only
+// dependencies without materializing or registering anything.
+func ValidateGoalTaskBlueprints(goal *Goal, blueprints []GoalTaskBlueprint) error {
+	_, err := materializeTaskBlueprints(goal, blueprints)
+	return err
 }
 
 // RegisterGoal registra un objetivo
@@ -181,33 +216,65 @@ func (p *Planner) GeneratePlanContext(ctx context.Context, goal *Goal) *Plan {
 		return plan
 	}
 
-	// Step 1: derive the task graph from the goal. The runtime may supply a
-	// general decomposer; deterministic legacy decomposition remains the
-	// fallback when the model capability is unavailable or returns invalid data.
+	// Step 1: derive the task graph from the goal. A precomputed, validated
+	// background plan is preferred if it arrived before this first generation.
+	// Otherwise the runtime may supply a general decomposer; deterministic
+	// legacy decomposition remains the fallback when the model capability is
+	// unavailable or returns invalid data.
 	var tasks []*Task
 	var planningWarnings []string
-	if p.decomposer != nil {
-		blueprints, err := p.decomposer.DecomposeGoal(ctx, *goal)
-		if err == nil {
-			tasks, err = materializeTaskBlueprints(goal, blueprints)
-		}
-		if err != nil {
-			if ctxErr := ctx.Err(); ctxErr != nil {
-				plan.Feasible = false
-				plan.Issues = []string{"planning cancelled during decomposition: " + ctxErr.Error()}
-				return plan
-			}
-			tasks = p.decomposeGoal(goal)
-			planningWarnings = append(planningWarnings, "adaptive decomposition unavailable; deterministic fallback used: "+err.Error())
+	usedBlueprints := false
+
+	p.precomputedMu.Lock()
+	var precomputed []GoalTaskBlueprint
+	hasPrecomputed := false
+	if !p.planned[goal.ID] {
+		precomputed, hasPrecomputed = p.precomputed[goal.ID]
+		if hasPrecomputed {
+			delete(p.precomputed, goal.ID)
 		}
 	} else {
-		tasks = p.decomposeGoal(goal)
+		delete(p.precomputed, goal.ID)
+	}
+	p.precomputedMu.Unlock()
+
+	if hasPrecomputed {
+		materialized, err := materializeTaskBlueprints(goal, precomputed)
+		if err == nil {
+			tasks = materialized
+			usedBlueprints = true
+		} else {
+			planningWarnings = append(planningWarnings, "precomputed plan discarded: "+err.Error())
+		}
+	}
+
+	if tasks == nil {
+		if p.decomposer != nil {
+			blueprints, err := p.decomposer.DecomposeGoal(ctx, *goal)
+			if err == nil {
+				tasks, err = materializeTaskBlueprints(goal, blueprints)
+				if err == nil {
+					usedBlueprints = true
+				}
+			}
+			if err != nil {
+				if ctxErr := ctx.Err(); ctxErr != nil {
+					plan.Feasible = false
+					plan.Issues = []string{"planning cancelled during decomposition: " + ctxErr.Error()}
+					return plan
+				}
+				tasks = p.decomposeGoal(goal)
+				planningWarnings = append(planningWarnings, "adaptive decomposition unavailable; deterministic fallback used: "+err.Error())
+			}
+		} else {
+			tasks = p.decomposeGoal(goal)
+		}
 	}
 	plan.Tasks = tasks
 
 	// Step 2: deterministic fallback uses the legacy sequential dependencies;
-	// adaptive blueprints already carry validated dependencies.
-	if p.decomposer == nil || len(planningWarnings) > 0 {
+	// precomputed and adaptive blueprints already carry validated dependencies.
+	if !usedBlueprints && (p.decomposer == nil || len(planningWarnings) > 0) {
 		p.detectDependencies(tasks)
 	}
 
@@ -224,6 +291,10 @@ func (p *Planner) GeneratePlanContext(ctx context.Context, goal *Goal) *Plan {
 
 	// Paso 5: Ordenar tareas por dependencias
 	p.orderTasksByDependencies(plan)
+
+	p.precomputedMu.Lock()
+	p.planned[goal.ID] = true
+	p.precomputedMu.Unlock()
 
 	return plan
 }

@@ -7,37 +7,37 @@ import (
 
 // Review representa una evaluación de un plan completado
 type Review struct {
-	ID              string
-	GoalID          string
-	PlanID          string
-	ReviewedAt      time.Time
-	
+	ID         string
+	GoalID     string
+	PlanID     string
+	ReviewedAt time.Time
+
 	// Evaluación básica
-	WasPlanAccurate bool         // ¿Se ajustó a las estimaciones?
-	WasSuccessful   bool         // ¿Se logró el objetivo?
+	WasPlanAccurate bool // ¿Se ajustó a las estimaciones?
+	WasSuccessful   bool // ¿Se logró el objetivo?
 	LessonsLearned  []string
-	
+
 	// Análisis de tiempo
-	EstimatedTime   time.Duration
-	ActualTime      time.Duration
-	Variance        float64      // % de diferencia
-	
+	EstimatedTime time.Duration
+	ActualTime    time.Duration
+	Variance      float64 // % de diferencia
+
 	// Análisis de tareas
-	TasksCompleted  int
-	TasksFailed     int
-	TasksBlocked    int
-	SuccessRate     float64
-	
+	TasksCompleted int
+	TasksFailed    int
+	TasksBlocked   int
+	SuccessRate    float64
+
 	// Calidad
-	ErrorsFound     int
-	FatalErrors     int
-	QualityScore    float64      // 0.0 - 1.0
-	
+	ErrorsFound  int
+	FatalErrors  int
+	QualityScore float64 // 0.0 - 1.0
+
 	// Reflexión
-	WhatWentWell    []string
-	WhatWentWrong   []string
-	ShouldRepeat    bool         // ¿Repetir este proceso?
-	Improvements    []string
+	WhatWentWell  []string
+	WhatWentWrong []string
+	ShouldRepeat  bool // ¿Repetir este proceso?
+	Improvements  []string
 }
 
 // Reviewer realiza evaluaciones de planes
@@ -55,19 +55,19 @@ func NewReviewer() *Reviewer {
 // ReviewGoal evalúa un objetivo completado
 func (r *Reviewer) ReviewGoal(goal *Goal, plan *Plan, progress *Progress) *Review {
 	review := &Review{
-		ID:              fmt.Sprintf("review-%d", time.Now().Unix()),
-		GoalID:          goal.ID,
-		PlanID:          plan.ID,
-		ReviewedAt:      time.Now(),
-		EstimatedTime:   plan.TotalEstimate,
-		ActualTime:      progress.TimeElapsed,
-		TasksCompleted:  progress.TasksCompleted,
-		TasksFailed:     progress.TasksFailed,
-		SuccessRate:     progress.SuccessRate,
-		LessonsLearned:  []string{},
-		WhatWentWell:    []string{},
-		WhatWentWrong:   []string{},
-		Improvements:    []string{},
+		ID:             fmt.Sprintf("review-%d", time.Now().Unix()),
+		GoalID:         goal.ID,
+		PlanID:         plan.ID,
+		ReviewedAt:     time.Now(),
+		EstimatedTime:  plan.TotalEstimate,
+		ActualTime:     progress.TimeElapsed,
+		TasksCompleted: progress.TasksCompleted,
+		TasksFailed:    progress.TasksFailed,
+		SuccessRate:    progress.SuccessRate,
+		LessonsLearned: []string{},
+		WhatWentWell:   []string{},
+		WhatWentWrong:  []string{},
+		Improvements:   []string{},
 	}
 
 	// Análisis de tiempo
@@ -241,16 +241,16 @@ func (r *Review) GetSummary() string {
 // GetMetrics retorna métricas detalladas
 func (r *Review) GetMetrics() map[string]interface{} {
 	return map[string]interface{}{
-		"estimated_hours":  r.EstimatedTime.Hours(),
-		"actual_hours":     r.ActualTime.Hours(),
-		"time_variance":    r.Variance,
-		"success_rate":     r.SuccessRate,
-		"quality_score":    r.QualityScore,
-		"tasks_completed":  r.TasksCompleted,
-		"tasks_failed":     r.TasksFailed,
-		"errors_found":     r.ErrorsFound,
-		"was_successful":   r.WasSuccessful,
-		"plan_accurate":    r.WasPlanAccurate,
-		"should_repeat":    r.ShouldRepeat,
+		"estimated_hours": r.EstimatedTime.Hours(),
+		"actual_hours":    r.ActualTime.Hours(),
+		"time_variance":   r.Variance,
+		"success_rate":    r.SuccessRate,
+		"quality_score":   r.QualityScore,
+		"tasks_completed": r.TasksCompleted,
+		"tasks_failed":    r.TasksFailed,
+		"errors_found":    r.ErrorsFound,
+		"was_successful":  r.WasSuccessful,
+		"plan_accurate":   r.WasPlanAccurate,
+		"should_repeat":   r.ShouldRepeat,
 	}
 }

@@ -7,36 +7,36 @@ import (
 
 // Progress rastrea el progreso de un objetivo
 type Progress struct {
-	GoalID          string
-	StartTime       time.Time
-	LastUpdated     time.Time
-	
+	GoalID      string
+	StartTime   time.Time
+	LastUpdated time.Time
+
 	// Contadores
-	TasksCompleted  int
-	TasksTotal      int
-	TasksFailed     int
-	
+	TasksCompleted int
+	TasksTotal     int
+	TasksFailed    int
+
 	// Métricas
-	PercentComplete float64         // 0.0 - 1.0
-	Velocity        float64         // tasks/hour
-	BurndownRate    float64         // tasks completadas por hora
-	
+	PercentComplete float64 // 0.0 - 1.0
+	Velocity        float64 // tasks/hour
+	BurndownRate    float64 // tasks completadas por hora
+
 	// Tiempo
-	TimeElapsed     time.Duration
-	TimeRemaining   time.Duration
-	TimeEstimated   time.Duration
-	
+	TimeElapsed   time.Duration
+	TimeRemaining time.Duration
+	TimeEstimated time.Duration
+
 	// Calidad
 	ErrorCount      int
-	SuccessRate     float64         // 0.0 - 1.0
-	EfficiencyScore float64         // 0.0 - 1.0 (cuán eficiente es)
-	
+	SuccessRate     float64 // 0.0 - 1.0
+	EfficiencyScore float64 // 0.0 - 1.0 (cuán eficiente es)
+
 	// Bloqueos
-	Blockers        []string
-	BlockTime       time.Duration
-	
+	Blockers  []string
+	BlockTime time.Duration
+
 	// Historial
-	Snapshots       []ProgressSnapshot
+	Snapshots []ProgressSnapshot
 }
 
 // ProgressSnapshot es un punto en el tiempo del progreso
@@ -205,10 +205,10 @@ func (p *Progress) GetVelocityTrend() string {
 	}
 
 	firstHalf := len(p.Snapshots) / 2
-	oldVelocity := float64(p.Snapshots[firstHalf].TasksCompleted) / 
+	oldVelocity := float64(p.Snapshots[firstHalf].TasksCompleted) /
 		(p.Snapshots[firstHalf].Timestamp.Sub(p.StartTime).Hours())
-	
-	currentVelocity := float64(p.TasksCompleted) / 
+
+	currentVelocity := float64(p.TasksCompleted) /
 		(p.TimeElapsed.Hours() + 0.001) // Evitar división por cero
 
 	if currentVelocity > oldVelocity*1.1 {

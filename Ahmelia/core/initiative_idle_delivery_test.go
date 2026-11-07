@@ -159,8 +159,8 @@ func idleOpening(ch interaction.InputChannel, availability initiative.UserAvaila
 	return &ProposalContract{
 		ID: "idle-opening", Kind: ProposalKindInitiative, CreatedAt: time.Now(),
 		Intention: "useful_information", Priority: ProposalPriorityMedium, Urgency: ProposalUrgencyNone,
-		Channel:  ch,
-		Evidence: []ProposalEvidence{{Confidence: 0.9}},
+		Channel:    ch,
+		Evidence:   []ProposalEvidence{{Confidence: 0.9}},
 		Initiative: &InitiativeDelivery{Idle: true, Opportunity: initiative.InitiativeOpportunity{UserAvailability: availability}},
 	}
 }

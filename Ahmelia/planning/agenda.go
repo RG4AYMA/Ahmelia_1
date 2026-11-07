@@ -7,19 +7,19 @@ import (
 
 // MentalState representa el estado mental actual de Ahmelia sobre sus objetivos
 type MentalState struct {
-	CurrentFocus    *Goal                 // En qué objetivo está enfocada
-	PendingGoals    []*Goal               // Objetivos por empezar
-	ActiveGoals     []*Goal               // Objetivos en progreso
-	CompletedGoals  []*Goal               // Objetivos logrados
-	BlockedGoals    []*Goal               // Objetivos bloqueados
-	
-	LastUpdateTime  time.Time
-	Confidence      float64               // Confianza general (0.0-1.0)
-	MentalCapacity  float64               // Carga mental (0.0-1.0)
-	
-	Preoccupations  []string              // Cosas que la preocupan
-	Observations    []string              // Cosas que ha notado
-	Hypotheses      []string              // Cosas que hipotesiza
+	CurrentFocus   *Goal   // En qué objetivo está enfocada
+	PendingGoals   []*Goal // Objetivos por empezar
+	ActiveGoals    []*Goal // Objetivos en progreso
+	CompletedGoals []*Goal // Objetivos logrados
+	BlockedGoals   []*Goal // Objetivos bloqueados
+
+	LastUpdateTime time.Time
+	Confidence     float64 // Confianza general (0.0-1.0)
+	MentalCapacity float64 // Carga mental (0.0-1.0)
+
+	Preoccupations []string // Cosas que la preocupan
+	Observations   []string // Cosas que ha notado
+	Hypotheses     []string // Cosas que hipotesiza
 }
 
 // AgendaManager gestiona la agenda mental de Ahmelia
@@ -158,7 +158,7 @@ func (am *AgendaManager) GetStatusReport() string {
 	// Enfoque actual
 	if am.mentality.CurrentFocus != nil {
 		report += fmt.Sprintf("🎯 Enfoque actual: %s\n", am.mentality.CurrentFocus.Name)
-		report += fmt.Sprintf("   Estado: %v (Progreso: %.0f%%)\n", 
+		report += fmt.Sprintf("   Estado: %v (Progreso: %.0f%%)\n",
 			am.mentality.CurrentFocus.Status,
 			am.mentality.CurrentFocus.Progress*100,
 		)

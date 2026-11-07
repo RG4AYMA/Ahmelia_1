@@ -143,11 +143,11 @@ func TestB9644RestartContinuity_E2E_PersistenceToSituation(t *testing.T) {
 	// ── 6. Verificar siguiente decisión/cognición usa esa Situation ──────────
 	iteration := situation.NewIterationContext("interactive_turn_restarted", sit, contributions)
 	cognitiveContext := cognition.SituationalCognitionContext{
-		Iteration:            iteration,
-		Situation:            sit,
-		Contributions:        contributions,
-		Work:                 workContext,
-		HasWork:              hasWork,
+		Iteration:             iteration,
+		Situation:             sit,
+		Contributions:         contributions,
+		Work:                  workContext,
+		HasWork:               hasWork,
 		AuthoritativeEvidence: e2.authoritativeUserModelEvidence(req),
 	}
 

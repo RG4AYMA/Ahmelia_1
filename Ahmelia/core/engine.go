@@ -19,23 +19,27 @@ import (
 	"ahmelia/cognition"
 	"ahmelia/competence"
 	"ahmelia/comprehension"
+	"ahmelia/consult"
 	contextintelligence "ahmelia/contextintelligence"
 	"ahmelia/deliberation"
 	"ahmelia/dialogue"
 	"ahmelia/environment"
 	"ahmelia/execution"
 	"ahmelia/expectation"
+	"ahmelia/experience"
 	"ahmelia/files"
 	"ahmelia/gateway"
 	conversationalinitiative "ahmelia/initiative"
 	"ahmelia/integration"
 	"ahmelia/interaction"
+	"ahmelia/interrupt"
 	"ahmelia/knowledge"
 	"ahmelia/language"
 	"ahmelia/linguistics"
 	"ahmelia/memory"
 	memoryintelligence "ahmelia/memory_intelligence"
 	naturaldialogue "ahmelia/naturaldialogue"
+	"ahmelia/ownerstate"
 	"ahmelia/persistentmode"
 	"ahmelia/personality"
 	"ahmelia/planning"
@@ -46,6 +50,7 @@ import (
 	"ahmelia/reasoning_deep"
 	"ahmelia/reference"
 	"ahmelia/resource"
+	"ahmelia/restriction"
 	"ahmelia/selfknowledge"
 	"ahmelia/shared"
 	"ahmelia/situation"
@@ -313,6 +318,52 @@ type Engine struct {
 	lastExpectation       expectation.Verdict
 	lastExpectationSeen   bool
 	lastExpectationErr    string
+	// Escena 1 (2026-11-04) - prohibición temporal del propietario. Restringe
+	// solo su alcance declarado (iniciativa de trabajo u orden concreta); no es
+	// un modo durable ni un hecho del propietario. Un archivo ilegible apaga el
+	// mecanismo: el arnés no inventa una restricción.
+	ownerRestrictions        *restriction.Store
+	ownerRestrictionsOn      bool
+	lastOwnerRestrictionNote string
+	// Escena 1 (2026-11-05) - estado efímero y sensible del propietario. Dolor,
+	// cansancio y receptividad con TTL; nunca se guarda como hecho médico del
+	// UserModel y nunca se usa como autoridad sobre una orden explícita.
+	ownerState         *ownerstate.Store
+	ownerStateOn       bool
+	lastOwnerStateNote string
+	// Escena 2 (2026-11-05) - runtime de interrupciones. El bus de canales es
+	// inyectable; el camino crítico es determinista y no consulta al modelo.
+	interruptionStore         *interrupt.Store
+	interruptionBus           NoticeChannel
+	interruptionOn            bool
+	interruptionCooldown      time.Duration
+	interruptionReminderAfter time.Duration
+	interruptionSilence       bool
+	lastInterruptionNote      string
+	// sceneNow is the injectable clock for scene runs. Nil means time.Now.
+	// The scene-1 gates read it; the rest of the engine keeps its own clock.
+	sceneNow func() time.Time
+	// Consulta acotada del modelo (2026-11-04). El modelo interpreta una frase
+	// de descanso que el parser explícito no reconoció; el arnés valida y, como
+	// mucho, admite una restricción provisional con fuente confirmed_inference.
+	// Nunca corre en el turno: se agenda al final y no bloquea la respuesta.
+	consultClient            consult.Client
+	consultWorker            *consult.Worker
+	modelConsultationOn      bool
+	modelConsultationRunning bool
+	consultTurnID            string
+	consultSeq               uint64
+	lastModelConsultation    consult.Decision
+	lastModelConsultationErr string
+	// Planificación de fondo (2026-11-05): el modelo propone un grafo de tareas
+	// mientras el propietario decide. El planner lo valida y lo usa solo si
+	// llega antes de generar el primer plan del objetivo; un plan tardío nunca
+	// reemplaza uno existente.
+	planClient    integration.StructuredGoalPlanner
+	planMu        sync.Mutex
+	planProposals map[string]goalPlanProposal
+	planGoalIDs   map[string]pendingPlanGoal
+	planRunning   bool
 	// Latido N0+N1 v0 (2026-10-17) — continuidad temporal: percepción de
 	// foco (N0), digestión del mundo (N1) y driver del gobernador. Estado
 	// bajo heartbeatMu; las fuentes quedan inyectables para tests (defaults
@@ -2787,8 +2838,9 @@ func NewEngine(sess *memory.Session, longMem *memory.LongMemory, shortMem *Short
 
 	productionProviders := production.NewProviderRegistry()
 
-	// One local language-provider lifecycle belongs to the linguistic/planning
-	// side of the Engine. Programming code proposals use OpenCode separately.
+	// One local language-provider lifecycle belongs to the Engine. The same
+	// Ollama client proposes code, task graphs and language; OpenCode is not an
+	// Ahmelia runtime dependency.
 	linguisticClient := linguistics.NewOllamaClient()
 	// The linguistic model proposes a task graph; the canonical planning.Planner
 	// still validates and owns Goal/Plan/Task identity.
@@ -2804,7 +2856,10 @@ func NewEngine(sess *memory.Session, longMem *memory.LongMemory, shortMem *Short
 	// el driver periódico (latido N0) llame PreemptIfNeeded.
 	resourceGovernor := resource.NewGovernor(resource.GovernorConfig{})
 	linguisticClient.Gate = resource.NewLinguisticsGate(resourceGovernor)
-	programmingSynthesizer := integration.NewStructuredCodeObjectiveSynthesizerWithClient(integration.NewOpenCodeCodeGeneratorFromEnv())
+	programmingSynthesizer := integration.NewStructuredCodeObjectiveSynthesizerWithClient(linguisticClient)
+	if store, err := experience.Open(experience.StorePath); err == nil {
+		programmingSynthesizer.Experience = store
+	}
 	_ = integration.RegisterRuntimeProvidersWithSynthesizer(capRegistry, productionProviders, world, programmingSynthesizer)
 	programmingIntegration, _ := integration.NewProgrammingIntegration(world)
 	technicalRecovery := production.NewTechnicalRecoveryService()
@@ -3822,6 +3877,10 @@ func (e *Engine) ProcessWithChannel(input string, channel interaction.InputChann
 	// aquí (no antes) permite leer el turno y el estado final; al ser LIFO,
 	// corre antes del cleanup conversacional y antes de las lecturas diferidas.
 	defer e.scheduleShadowDeliberation(t)
+	// Escena 1 (2026-11-04): si el parser determinista no consumió una frase de
+	// descanso, el modelo puede interpretarla en segundo plano. El turno ya
+	// respondió; el arnés decide si admite una restricción provisional.
+	defer e.scheduleModelConsultation(t)
 
 	// Explicit owner decisions (persistent mode, tastes and self-goals) are
 	// deterministic acts of the harness. They run before a pending work

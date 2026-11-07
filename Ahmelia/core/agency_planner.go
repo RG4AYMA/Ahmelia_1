@@ -36,6 +36,10 @@ var ErrAgentGoalPlannerQuota = errors.New("agency: cupo 1 del planificador ocupa
 // puede quedar autorizada en el libro, pero no se registra en el planificador.
 var ErrAgentGoalRestMode = errors.New("agency: el modo descanso no abre cupo de metas propias")
 
+// ErrAgentGoalOwnerRestriction indica que una restricción temporal del
+// propietario cerró la iniciativa de trabajo, aunque el modo no sea descanso.
+var ErrAgentGoalOwnerRestriction = errors.New("agency: el propietario cerró la iniciativa de trabajo")
+
 // RegisterAgentGoal convierte una meta autorizada en un goal del planificador.
 // Es un acto posterior y separado de la autorización: AuthorizeAgentGoal por sí
 // solo no registra nada.
@@ -62,6 +66,9 @@ func (e *Engine) RegisterAgentGoal(id string) (agency.GoalRecord, planning.Goal,
 	}
 	quota := e.agentGoalPlannerQuota()
 	if quota <= 0 {
+		if e.ownerWorkInitiativeRestrictedNow() {
+			return rec, planning.Goal{}, fmt.Errorf("%w: %s", ErrAgentGoalOwnerRestriction, rec.ID)
+		}
 		return rec, planning.Goal{}, fmt.Errorf("%w: %s", ErrAgentGoalRestMode, rec.ID)
 	}
 	if active := e.ahmeliaPlannerGoals(); len(active) >= quota {
@@ -87,6 +94,7 @@ func (e *Engine) RegisterAgentGoal(id string) (agency.GoalRecord, planning.Goal,
 	default:
 		return rec, *goal, errors.New("agency: planificador no configurado")
 	}
+	e.registerGoalPlan(rec.ID, goal.ID)
 
 	updated, err := e.agentGoalLedger.MarkRegistered(rec.ID, goal.ID)
 	if err != nil {

@@ -20,62 +20,62 @@ const (
 type GoalPriority int
 
 const (
-	PriorityLow    GoalPriority = 1
-	PriorityMedium GoalPriority = 2
-	PriorityHigh   GoalPriority = 3
+	PriorityLow      GoalPriority = 1
+	PriorityMedium   GoalPriority = 2
+	PriorityHigh     GoalPriority = 3
 	PriorityCritical GoalPriority = 4
-	PriorityUrgent GoalPriority = 5
+	PriorityUrgent   GoalPriority = 5
 )
 
 // Goal representa un objetivo que Ahmelia puede perseguir
 type Goal struct {
-	ID              string
-	Name            string
-	Description     string
-	Status          GoalStatus
-	Priority        GoalPriority
-	Confidence      float64      // 0.0 - 1.0 (qué tan segura está)
-	Owner           string       // "user" | "ahmelia"
-	CreatedAt       time.Time
-	Deadline        time.Time
-	EstimatedHours  int
-	CompletedAt     time.Time
-	
+	ID             string
+	Name           string
+	Description    string
+	Status         GoalStatus
+	Priority       GoalPriority
+	Confidence     float64 // 0.0 - 1.0 (qué tan segura está)
+	Owner          string  // "user" | "ahmelia"
+	CreatedAt      time.Time
+	Deadline       time.Time
+	EstimatedHours int
+	CompletedAt    time.Time
+
 	// Relaciones
-	Dependencies    []string     // Goal IDs que deben completarse primero
-	DependentOn     []string     // Goal IDs que dependen de este
-	
+	Dependencies []string // Goal IDs que deben completarse primero
+	DependentOn  []string // Goal IDs que dependen de este
+
 	// Progreso
-	Progress        float64      // 0.0 - 1.0
-	TasksCompleted  int
-	TasksTotal      int
-	
+	Progress       float64 // 0.0 - 1.0
+	TasksCompleted int
+	TasksTotal     int
+
 	// Bloqueos
-	Blockers        []string     // Razones por las que está bloqueado
-	BlockedAt       time.Time
-	
+	Blockers  []string // Razones por las que está bloqueado
+	BlockedAt time.Time
+
 	// Tracking
-	TimeInvested    time.Duration
-	LastUpdated     time.Time
-	Notes           []string
+	TimeInvested time.Duration
+	LastUpdated  time.Time
+	Notes        []string
 }
 
 // NewGoal crea un nuevo objetivo
 func NewGoal(name, description string, priority GoalPriority, owner string) *Goal {
 	return &Goal{
-		ID:          generateID(),
-		Name:        name,
-		Description: description,
-		Status:      GoalActive,
-		Priority:    priority,
-		Confidence:  0.5,
-		Owner:       owner,
-		CreatedAt:   time.Now(),
-		LastUpdated: time.Now(),
+		ID:           generateID(),
+		Name:         name,
+		Description:  description,
+		Status:       GoalActive,
+		Priority:     priority,
+		Confidence:   0.5,
+		Owner:        owner,
+		CreatedAt:    time.Now(),
+		LastUpdated:  time.Now(),
 		Dependencies: []string{},
-		DependentOn: []string{},
-		Blockers:    []string{},
-		Notes:       []string{},
+		DependentOn:  []string{},
+		Blockers:     []string{},
+		Notes:        []string{},
 	}
 }
 
@@ -105,14 +105,14 @@ func (g *Goal) CanStart(allGoals map[string]*Goal) bool {
 func (g *Goal) GetDependencyChain(allGoals map[string]*Goal) []*Goal {
 	chain := []*Goal{}
 	visited := make(map[string]bool)
-	
+
 	var traverse func(goalID string)
 	traverse = func(goalID string) {
 		if visited[goalID] {
 			return
 		}
 		visited[goalID] = true
-		
+
 		if goal, ok := allGoals[goalID]; ok {
 			for _, depID := range goal.Dependencies {
 				traverse(depID)
@@ -120,7 +120,7 @@ func (g *Goal) GetDependencyChain(allGoals map[string]*Goal) []*Goal {
 			chain = append(chain, goal)
 		}
 	}
-	
+
 	traverse(g.ID)
 	return chain
 }
