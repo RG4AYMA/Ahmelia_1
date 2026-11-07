@@ -349,6 +349,30 @@ func (e *Engine) blockCanceledWork(workID string) {
 	}
 }
 
+// SetBackgroundNotifier installs the proactive delivery sink for completed
+// background work. If nil, results stay in the durable queue and are announced
+// at the next turn. A real channel adapter can call this method.
+func (e *Engine) SetBackgroundNotifier(notifier func(string)) {
+	if e != nil {
+		e.backgroundNotifier = notifier
+	}
+}
+
+// enqueueBackgroundResult delivers proactively when a notifier exists;
+// otherwise it persists the result for the next turn.
+func (e *Engine) enqueueBackgroundResult(item backgroundResult) {
+	if e == nil {
+		return
+	}
+	if e.backgroundNotifier != nil {
+		if text := strings.TrimSpace(backgroundResultText(item)); text != "" {
+			e.backgroundNotifier(text)
+			return
+		}
+	}
+	e.backgroundResults.enqueue(item)
+}
+
 // CancelBackgroundJob cancels a running job. A late result is discarded.
 func (e *Engine) CancelBackgroundJob(id string) bool {
 	if e == nil {
@@ -392,7 +416,7 @@ func (e *Engine) ReconcileInterruptedProgrammingWork(ctx context.Context) int {
 			} else {
 				_ = e.workStore.Complete(work.ID, false, result.FailureReason)
 			}
-			e.backgroundResults.enqueue(backgroundResult{
+			e.enqueueBackgroundResult(backgroundResult{
 				WorkID: work.ID, Result: result, Recovered: true,
 			})
 			reconciled++
@@ -437,7 +461,7 @@ func (e *Engine) RecoverInterruptedWork() int {
 			continue
 		}
 		_ = e.workStore.Block(work.ID, "work interrupted by process restart; reconcile before retry")
-		e.backgroundResults.enqueue(backgroundResult{
+		e.enqueueBackgroundResult(backgroundResult{
 			JobID: jobID, WorkID: work.ID,
 			Err:         fmt.Errorf("%w: %s", errInterruptedWork, work.ID),
 			Interrupted: true,

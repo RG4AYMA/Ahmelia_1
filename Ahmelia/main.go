@@ -120,6 +120,12 @@ func main() {
 	if err := engine.EnableBackgroundResultPersistence("memory/background_results.json"); err != nil {
 		fmt.Printf("⚠️ [background] no se pudo abrir la cola durable de resultados: %v\n", err)
 	}
+	// Canal de notificación proactiva. La UI/voz/dispositivos pueden reemplazar
+	// este sink por su propio adaptador; si es nil, el resultado queda en la cola
+	// durable y se anuncia en el siguiente turno.
+	engine.SetBackgroundNotifier(func(text string) {
+		fmt.Println("🔔 [fondo] " + text)
+	})
 	// Persistencia/reconciliación: un intento que quedó running/unverified por
 	// un cierre del proceso se intenta resolver observando el efecto durable
 	// (archivos + build/tests). Lo que no se pueda observar se bloquea y se

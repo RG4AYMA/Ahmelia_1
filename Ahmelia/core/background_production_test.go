@@ -379,6 +379,47 @@ func TestNewObjectiveAfterCancelStartsReplacement(t *testing.T) {
 	}
 }
 
+func TestBackgroundResultNotifiesProactively(t *testing.T) {
+	provider := &slowProductionProvider{
+		started: make(chan struct{}),
+		release: make(chan struct{}),
+		result: production.ProviderResult{
+			Success: true, Observed: true, Verified: true,
+			OutcomeStatus: production.OutcomeSucceeded, Producer: "slow-provider",
+		},
+	}
+	e, req, workID := newAsyncProductionEngine(t, provider)
+	notifications := make(chan string, 2)
+	e.SetBackgroundNotifier(func(text string) { notifications <- text })
+	decision := interaction.ResolveCapabilityInteraction(req)
+	res := e.authorityExecuteWithOptions(decision, production.ExecutionOptions{
+		Context: context.Background(), Approval: autonomy.ApprovalGranted,
+		WorkID: workID, ExperimentalBypassCognition: true, Async: true,
+	}, req)
+	if res.BackgroundJobID == "" {
+		t.Fatalf("async production job missing: %+v", res)
+	}
+	<-provider.started
+	close(provider.release)
+	_ = waitForBackgroundJob(t, e, res.BackgroundJobID, BackgroundJobCompleted)
+
+	select {
+	case text := <-notifications:
+		if !strings.Contains(text, "Terminé el trabajo en segundo plano") {
+			t.Fatalf("unexpected proactive notification: %q", text)
+		}
+	case <-time.After(2 * time.Second):
+		t.Fatal("proactive notification was not delivered")
+	}
+
+	var responses []string
+	e.SetResponseCallback(func(response string) { responses = append(responses, response) })
+	e.Process("hola")
+	if joined := strings.Join(responses, " "); strings.Contains(joined, "Terminé el trabajo en segundo plano") {
+		t.Fatalf("proactively notified result was announced again: %q", joined)
+	}
+}
+
 func TestAsyncProductionDoesNotHideAuthorization(t *testing.T) {
 	provider := &slowProductionProvider{started: make(chan struct{}),
 		release: make(chan struct{}),

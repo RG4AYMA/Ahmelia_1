@@ -458,6 +458,7 @@ type Engine struct {
 	autonomySupervisor           *GoroutineSupervisor
 	backgroundJobs               backgroundJobRegistry
 	backgroundResults            backgroundResultQueue
+	backgroundNotifier           func(string)
 	asyncProduction              bool
 	autonomyDecisionConsumerHook func(autonomy.ConversationDecision) // test/diagnostic seam; never an authority                    // B93.4 — ownership común entre Process() y un tick autónomo completo
 
@@ -4122,7 +4123,7 @@ func (e *Engine) authorityExecuteWithOptions(decision interaction.CapabilityInte
 			if job.Status == BackgroundJobCanceled {
 				e.blockCanceledWork(workID)
 				if !job.SuppressNotice {
-					e.backgroundResults.enqueue(backgroundResult{
+					e.enqueueBackgroundResult(backgroundResult{
 						JobID: job.ID, WorkID: workID, Err: errBackgroundJobCanceled, Canceled: true,
 					})
 				}
@@ -4131,7 +4132,7 @@ func (e *Engine) authorityExecuteWithOptions(decision interaction.CapabilityInte
 			if job.Status != BackgroundJobCompleted && job.Status != BackgroundJobFailed {
 				return
 			}
-			e.backgroundResults.enqueue(backgroundResult{
+			e.enqueueBackgroundResult(backgroundResult{
 				JobID: job.ID, WorkID: workID, Result: job.Result, Err: job.Err,
 			})
 		})
