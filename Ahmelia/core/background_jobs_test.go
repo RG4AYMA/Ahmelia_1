@@ -212,6 +212,40 @@ func TestRecoverInterruptedWorkSurvivesRestart(t *testing.T) {
 	}
 }
 
+func TestBackgroundResultsSurviveRestart(t *testing.T) {
+	path := filepath.Join(t.TempDir(), "background_results.json")
+	first := buildTestEngine(t)
+	if err := first.EnableBackgroundResultPersistence(path); err != nil {
+		t.Fatalf("enable persistence: %v", err)
+	}
+	first.backgroundResults.enqueue(backgroundResult{
+		JobID: "job-persisted", WorkID: "work-persisted", Recovered: true,
+		Result: production.ActionResult{Success: true, Verified: true, Summary: "resultado persistido"},
+	})
+
+	restarted := buildTestEngine(t)
+	if err := restarted.EnableBackgroundResultPersistence(path); err != nil {
+		t.Fatalf("reload persistence: %v", err)
+	}
+	var responses []string
+	restarted.SetResponseCallback(func(response string) { responses = append(responses, response) })
+	restarted.Process("hola")
+	if joined := strings.Join(responses, " "); !strings.Contains(joined, "Reconcilié el trabajo interrumpido: resultado persistido") {
+		t.Fatalf("persisted result was not announced: %q", joined)
+	}
+
+	again := buildTestEngine(t)
+	if err := again.EnableBackgroundResultPersistence(path); err != nil {
+		t.Fatalf("reload after take: %v", err)
+	}
+	var second []string
+	again.SetResponseCallback(func(response string) { second = append(second, response) })
+	again.Process("hola")
+	if joined := strings.Join(second, " "); strings.Contains(joined, "Reconcilié el trabajo interrumpido") {
+		t.Fatalf("persisted result was announced twice: %q", joined)
+	}
+}
+
 func TestReconcileInterruptedProgrammingWorkResolvesFromDurablePlan(t *testing.T) {
 	root := t.TempDir()
 	mainContent := "package main\n\nfunc Add(a, b int) int { return a + b }\n\nfunc main() {}\n"

@@ -117,6 +117,9 @@ func main() {
 
 	// ─── Engine: toda la lógica de decisión ───────────────────────
 	engine := core.NewEngine(sess, longMem, &shortMem, history, selfQuery)
+	if err := engine.EnableBackgroundResultPersistence("memory/background_results.json"); err != nil {
+		fmt.Printf("⚠️ [background] no se pudo abrir la cola durable de resultados: %v\n", err)
+	}
 	// Persistencia/reconciliación: un intento que quedó running/unverified por
 	// un cierre del proceso se intenta resolver observando el efecto durable
 	// (archivos + build/tests). Lo que no se pueda observar se bloquea y se

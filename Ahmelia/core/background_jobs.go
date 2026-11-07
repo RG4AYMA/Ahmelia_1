@@ -45,21 +45,43 @@ type backgroundJob struct {
 }
 
 type backgroundResult struct {
-	JobID     string
-	WorkID    string
-	Result    production.ActionResult
-	Err       error
-	Recovered bool
+	JobID       string
+	WorkID      string
+	Result      production.ActionResult
+	Err         error
+	Recovered   bool
+	Interrupted bool
 }
 
 type backgroundResultQueue struct {
 	mu    sync.Mutex
 	items []backgroundResult
+	store *backgroundResultStore
+}
+
+func (q *backgroundResultQueue) setStore(store *backgroundResultStore) error {
+	items, err := store.Load()
+	if err != nil {
+		return err
+	}
+	q.mu.Lock()
+	defer q.mu.Unlock()
+	q.store = store
+	q.items = items
+	return nil
 }
 
 func (q *backgroundResultQueue) enqueue(item backgroundResult) {
 	q.mu.Lock()
+	key := backgroundResultKey(item)
+	for _, existing := range q.items {
+		if backgroundResultKey(existing) == key {
+			q.mu.Unlock()
+			return
+		}
+	}
 	q.items = append(q.items, item)
+	_ = q.store.Save(q.items)
 	q.mu.Unlock()
 }
 
@@ -71,6 +93,7 @@ func (q *backgroundResultQueue) take() []backgroundResult {
 	}
 	out := q.items
 	q.items = nil
+	_ = q.store.Save(nil)
 	return out
 }
 
@@ -212,7 +235,7 @@ func (e *Engine) deliverBackgroundResults(input string, channel interaction.Inpu
 }
 
 func backgroundResultText(item backgroundResult) string {
-	if errors.Is(item.Err, errInterruptedWork) {
+	if item.Interrupted || errors.Is(item.Err, errInterruptedWork) {
 		return "El trabajo en segundo plano quedó interrumpido por un reinicio. No lo repetiré sin reconciliar antes el estado del proyecto."
 	}
 	if item.Err != nil {
@@ -247,6 +270,16 @@ func backgroundResultText(item backgroundResult) string {
 		reason = "sin detalle"
 	}
 	return "El trabajo en segundo plano terminó con un problema: " + reason
+}
+
+// EnableBackgroundResultPersistence loads pending results from path and
+// persists the queue after every enqueue/take. It is called by the composition
+// root; tests can use a temporary path.
+func (e *Engine) EnableBackgroundResultPersistence(path string) error {
+	if e == nil {
+		return fmt.Errorf("background results: engine nil")
+	}
+	return e.backgroundResults.setStore(OpenBackgroundResultStore(path))
 }
 
 // EnableAsyncProduction opts this Engine into background execution for
@@ -371,7 +404,8 @@ func (e *Engine) RecoverInterruptedWork() int {
 		_ = e.workStore.Block(work.ID, "work interrupted by process restart; reconcile before retry")
 		e.backgroundResults.enqueue(backgroundResult{
 			JobID: jobID, WorkID: work.ID,
-			Err: fmt.Errorf("%w: %s", errInterruptedWork, work.ID),
+			Err:         fmt.Errorf("%w: %s", errInterruptedWork, work.ID),
+			Interrupted: true,
 		})
 		recovered++
 	}
