@@ -934,6 +934,7 @@ func (e *Engine) cancelBackgroundWorkPhase(t *processTurn) bool {
 			continue
 		}
 		if e.backgroundJobs.cancel(job.ID, true) {
+			e.blockCanceledWork(job.WorkID)
 			canceled++
 		}
 	}

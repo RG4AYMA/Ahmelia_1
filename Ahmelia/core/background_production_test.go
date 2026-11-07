@@ -304,6 +304,81 @@ func TestNewProductionObjectiveDuringJobIsRejected(t *testing.T) {
 	_ = waitForBackgroundJob(t, e, res.BackgroundJobID, BackgroundJobCanceled)
 }
 
+type twoPhaseProvider struct {
+	calls        atomic.Int32
+	firstStarted chan struct{}
+	firstRelease chan struct{}
+}
+
+func (p *twoPhaseProvider) ID() string { return "slow-provider" }
+
+func (p *twoPhaseProvider) Execute(ctx context.Context, _ production.ProviderRequest) production.ProviderResult {
+	if p.calls.Add(1) == 1 {
+		close(p.firstStarted)
+		select {
+		case <-p.firstRelease:
+		case <-ctx.Done():
+			return production.ProviderResult{
+				Success: false, OutcomeStatus: production.OutcomeFailed,
+				FailureReason: ctx.Err().Error(), Producer: p.ID(),
+			}
+		}
+	}
+	return production.ProviderResult{
+		Success: true, Observed: true, Verified: true,
+		OutcomeStatus: production.OutcomeSucceeded, Producer: p.ID(),
+	}
+}
+
+func waitForCompletedBackgroundJob(t *testing.T, e *Engine) BackgroundJob {
+	t.Helper()
+	deadline := time.Now().Add(5 * time.Second)
+	for time.Now().Before(deadline) {
+		for _, job := range e.BackgroundJobs() {
+			if job.Status == BackgroundJobCompleted {
+				return job
+			}
+		}
+		time.Sleep(5 * time.Millisecond)
+	}
+	t.Fatalf("no completed background job: %+v", e.BackgroundJobs())
+	return BackgroundJob{}
+}
+
+func TestNewObjectiveAfterCancelStartsReplacement(t *testing.T) {
+	provider := &twoPhaseProvider{firstStarted: make(chan struct{}), firstRelease: make(chan struct{})}
+	e, req, workID := newAsyncProductionEngine(t, provider)
+	e.EnableAsyncProduction()
+	decision := interaction.ResolveCapabilityInteraction(req)
+	res := e.authorityExecuteWithOptions(decision, production.ExecutionOptions{
+		Context: context.Background(), Approval: autonomy.ApprovalGranted,
+		WorkID: workID, ExperimentalBypassCognition: true, Async: true,
+	}, req)
+	if res.BackgroundJobID == "" {
+		t.Fatalf("first async job missing: %+v", res)
+	}
+	<-provider.firstStarted
+	e.Process("cancela el trabajo")
+	close(provider.firstRelease)
+	_ = waitForBackgroundJob(t, e, res.BackgroundJobID, BackgroundJobCanceled)
+
+	e.Process("Crea otro programa Go que reste dos números")
+	deadline := time.Now().Add(5 * time.Second)
+	for provider.calls.Load() < 2 && time.Now().Before(deadline) {
+		time.Sleep(5 * time.Millisecond)
+	}
+	if provider.calls.Load() < 2 {
+		t.Fatalf("replacement objective never reached the provider: %+v", e.BackgroundJobs())
+	}
+	second := waitForCompletedBackgroundJob(t, e)
+	if second.Result.Success != true || second.Result.Verified != true {
+		t.Fatalf("replacement job did not complete: %+v", second)
+	}
+	if jobs := e.BackgroundJobs(); len(jobs) < 2 {
+		t.Fatalf("expected canceled + completed jobs, got %+v", jobs)
+	}
+}
+
 func TestAsyncProductionDoesNotHideAuthorization(t *testing.T) {
 	provider := &slowProductionProvider{started: make(chan struct{}),
 		release: make(chan struct{}),

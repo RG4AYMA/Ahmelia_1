@@ -4120,9 +4120,7 @@ func (e *Engine) authorityExecuteWithOptions(decision interaction.CapabilityInte
 			return result, nil
 		}, func(job BackgroundJob) {
 			if job.Status == BackgroundJobCanceled {
-				if workID != "" {
-					_ = e.workStore.Block(workID, "background job canceled; reconcile before retry")
-				}
+				e.blockCanceledWork(workID)
 				if !job.SuppressNotice {
 					e.backgroundResults.enqueue(backgroundResult{
 						JobID: job.ID, WorkID: workID, Err: errBackgroundJobCanceled, Canceled: true,

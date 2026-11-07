@@ -332,6 +332,23 @@ func (e *Engine) BackgroundJobs() []BackgroundJob {
 	return e.backgroundJobs.all()
 }
 
+// blockCanceledWork stops the durable Work and releases conversational
+// ownership so a replacement objective can start a new Work instead of
+// reusing a canceled one.
+func (e *Engine) blockCanceledWork(workID string) {
+	workID = strings.TrimSpace(workID)
+	if workID == "" || e == nil || e.workStore == nil {
+		return
+	}
+	if work, ok := e.workStore.Get(workID); ok && work.Status != production.WorkBlocked {
+		_ = e.workStore.Block(workID, "background job canceled; reconcile before retry")
+	}
+	if e.conversationState != nil && e.conversationState.ActiveWork() == workID {
+		e.conversationState.SetActiveWork("")
+		_ = e.conversationState.Save(interaction.ConversationStatePath)
+	}
+}
+
 // CancelBackgroundJob cancels a running job. A late result is discarded.
 func (e *Engine) CancelBackgroundJob(id string) bool {
 	if e == nil {
