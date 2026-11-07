@@ -219,6 +219,56 @@ func TestAsyncProductionResultIsAnnouncedOnNextTurn(t *testing.T) {
 	}
 }
 
+func TestConversationalCancelStopsRunningJob(t *testing.T) {
+	provider := &slowProductionProvider{
+		started: make(chan struct{}),
+		release: make(chan struct{}),
+		result: production.ProviderResult{
+			Success: true, Observed: true, Verified: true,
+			OutcomeStatus: production.OutcomeSucceeded, Producer: "slow-provider",
+		},
+	}
+	e, req, workID := newAsyncProductionEngine(t, provider)
+	decision := interaction.ResolveCapabilityInteraction(req)
+	res := e.authorityExecuteWithOptions(decision, production.ExecutionOptions{
+		Context: context.Background(), Approval: autonomy.ApprovalGranted,
+		WorkID: workID, ExperimentalBypassCognition: true, Async: true,
+	}, req)
+	if res.BackgroundJobID == "" {
+		t.Fatalf("async production job missing: %+v", res)
+	}
+	<-provider.started
+
+	var responses []string
+	e.SetResponseCallback(func(response string) { responses = append(responses, response) })
+	e.Process("cancela el trabajo")
+	if joined := strings.Join(responses, " "); !strings.Contains(joined, "Cancelé el trabajo en segundo plano") {
+		t.Fatalf("conversational cancel was not acknowledged: %q", joined)
+	}
+	close(provider.release)
+	job := waitForBackgroundJob(t, e, res.BackgroundJobID, BackgroundJobCanceled)
+	if job.Result.Success || job.Result.Verified {
+		t.Fatalf("late result was applied after conversational cancel: %+v", job.Result)
+	}
+	deadline := time.Now().Add(2 * time.Second)
+	for {
+		work, ok := e.workStore.Get(workID)
+		if ok && work.Status == production.WorkBlocked {
+			break
+		}
+		if time.Now().After(deadline) {
+			t.Fatalf("conversationally canceled work was not blocked: ok=%t work=%+v", ok, work)
+		}
+		time.Sleep(5 * time.Millisecond)
+	}
+
+	before := len(responses)
+	e.Process("hola")
+	if joined := strings.Join(responses[before:], " "); strings.Contains(joined, "Cancelé el trabajo en segundo plano") {
+		t.Fatalf("suppressed cancellation was announced twice: %q", joined)
+	}
+}
+
 func TestAsyncProductionDoesNotHideAuthorization(t *testing.T) {
 	provider := &slowProductionProvider{
 		started: make(chan struct{}),

@@ -882,6 +882,75 @@ func (e *Engine) resumePendingAuthorizationIfConfirmed(t *processTurn) bool {
 	return true
 }
 
+// isCancelWorkRequest is deliberately narrow: it only treats an explicit
+// stop/pause about the current work as a background cancellation. A plain
+// "salir" or an unrelated stop keeps its normal meaning.
+func isCancelWorkRequest(req interaction.SemanticRequest) bool {
+	if req.Kind == interaction.KindQuestion || req.Kind == interaction.KindSearch {
+		return false
+	}
+	normalized := strings.ToLower(strings.TrimSpace(req.Normalized))
+	if normalized == "" {
+		normalized = strings.ToLower(strings.TrimSpace(req.Raw))
+	}
+	if normalized == "" {
+		return false
+	}
+	verb := false
+	for _, marker := range []string{"cancela", "cancel", "deten", "detén", "aborta", "para el trabajo", "para la tarea"} {
+		if strings.Contains(normalized, marker) {
+			verb = true
+			break
+		}
+	}
+	if !verb {
+		return false
+	}
+	if req.Kind == interaction.KindStop || req.Kind == interaction.KindPause {
+		return true
+	}
+	for _, object := range []string{"trabajo", "tarea", "job", "eso", "proyecto", "segundo plano", "background"} {
+		if strings.Contains(normalized, object) {
+			return true
+		}
+	}
+	return false
+}
+
+func (e *Engine) cancelBackgroundWorkPhase(t *processTurn) bool {
+	if e == nil || t == nil || !isCancelWorkRequest(t.semanticReq) {
+		return false
+	}
+	activeWork := ""
+	if e.conversationState != nil {
+		activeWork = strings.TrimSpace(e.conversationState.ActiveWork())
+	}
+	canceled := 0
+	for _, job := range e.BackgroundJobs() {
+		if job.Status != BackgroundJobRunning {
+			continue
+		}
+		if activeWork != "" && job.WorkID != "" && job.WorkID != activeWork {
+			continue
+		}
+		if e.backgroundJobs.cancel(job.ID, true) {
+			canceled++
+		}
+	}
+	if canceled == 0 {
+		return false
+	}
+	e.renderCanonicalSystemResponse(
+		t.semanticReq,
+		"background_canceled",
+		"Cancelé el trabajo en segundo plano. No aplicaré un resultado tardío; queda bloqueado para reconciliar.",
+		interaction.MoveAcknowledge,
+		interaction.ResponseIntentAcknowledge,
+		false,
+	)
+	return true
+}
+
 func (e *Engine) preExecutionPhase(t *processTurn) bool {
 	if e.flowTrace != nil {
 		e.flowTrace.Mark("RUNTIME", fmt.Sprintf("action=%s", t.semanticReq.Action.Name))

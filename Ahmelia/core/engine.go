@@ -3876,6 +3876,10 @@ func (e *Engine) ProcessWithChannel(input string, channel interaction.InputChann
 	conversationCleanup := e.conversationStatePhase(t)
 	defer conversationCleanup()
 
+	if e.cancelBackgroundWorkPhase(t) {
+		return
+	}
+
 	// Deliberación en sombra: se captura al cerrar el turno, después de que la
 	// decisión del arnés existe, y corre en segundo plano. Registrar el defer
 	// aquí (no antes) permite leer el turno y el estado final; al ser LIFO,
@@ -4119,9 +4123,11 @@ func (e *Engine) authorityExecuteWithOptions(decision interaction.CapabilityInte
 				if workID != "" {
 					_ = e.workStore.Block(workID, "background job canceled; reconcile before retry")
 				}
-				e.backgroundResults.enqueue(backgroundResult{
-					JobID: job.ID, WorkID: workID, Err: errBackgroundJobCanceled, Canceled: true,
-				})
+				if !job.SuppressNotice {
+					e.backgroundResults.enqueue(backgroundResult{
+						JobID: job.ID, WorkID: workID, Err: errBackgroundJobCanceled, Canceled: true,
+					})
+				}
 				return
 			}
 			if job.Status != BackgroundJobCompleted && job.Status != BackgroundJobFailed {

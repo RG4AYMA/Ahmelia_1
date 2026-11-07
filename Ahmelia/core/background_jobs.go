@@ -31,14 +31,15 @@ const (
 // BackgroundJob is a snapshot of one job. A canceled job never exposes a
 // completed result: the late result is discarded instead of being applied.
 type BackgroundJob struct {
-	ID         string
-	Name       string
-	WorkID     string
-	Status     BackgroundJobStatus
-	StartedAt  time.Time
-	FinishedAt time.Time
-	Result     production.ActionResult
-	Err        error
+	ID             string
+	Name           string
+	WorkID         string
+	Status         BackgroundJobStatus
+	StartedAt      time.Time
+	FinishedAt     time.Time
+	Result         production.ActionResult
+	Err            error
+	SuppressNotice bool
 }
 
 type backgroundJob struct {
@@ -171,7 +172,7 @@ func (r *backgroundJobRegistry) snapshot(id string) (BackgroundJob, bool) {
 	return job.BackgroundJob, true
 }
 
-func (r *backgroundJobRegistry) cancel(id string) bool {
+func (r *backgroundJobRegistry) cancel(id string, suppressNotice bool) bool {
 	r.mu.Lock()
 	defer r.mu.Unlock()
 	job, ok := r.jobs[id]
@@ -186,6 +187,7 @@ func (r *backgroundJobRegistry) cancel(id string) bool {
 	job.FinishedAt = time.Now().UTC()
 	job.Err = context.Canceled
 	job.Result = production.ActionResult{}
+	job.SuppressNotice = suppressNotice
 	return true
 }
 
@@ -335,7 +337,7 @@ func (e *Engine) CancelBackgroundJob(id string) bool {
 	if e == nil {
 		return false
 	}
-	return e.backgroundJobs.cancel(id)
+	return e.backgroundJobs.cancel(id, false)
 }
 
 // ReconcileInterruptedProgrammingWork resolves durable programming attempts
