@@ -2,9 +2,12 @@ package core
 
 import (
 	"context"
+	"path/filepath"
+	"strings"
 	"testing"
 	"time"
 
+	"ahmelia/interaction"
 	"ahmelia/interrupt"
 	"ahmelia/production"
 )
@@ -146,5 +149,62 @@ func TestCriticalEventWhileBackgroundJobRuns(t *testing.T) {
 	}
 	if !notice.Complete() {
 		t.Fatalf("notice is incomplete: %+v", notice)
+	}
+}
+
+func TestRecoverInterruptedWorkBlocksAndAnnounces(t *testing.T) {
+	e := buildTestEngine(t)
+	req := interaction.Analyze("crear un proyecto interrumpido", interaction.Context{})
+	work, err := e.workStore.Begin(req)
+	if err != nil {
+		t.Fatalf("begin work: %v", err)
+	}
+	if _, err := e.workStore.BeginAttempt(work.ID, "programming.create_file", "produce", "programming"); err != nil {
+		t.Fatalf("begin attempt: %v", err)
+	}
+
+	if recovered := e.RecoverInterruptedWork(); recovered != 1 {
+		t.Fatalf("recovered = %d, quería 1", recovered)
+	}
+	persisted, ok := e.workStore.Get(work.ID)
+	if !ok || persisted.Status != production.WorkBlocked {
+		t.Fatalf("interrupted work was not blocked: ok=%t work=%+v", ok, persisted)
+	}
+
+	var responses []string
+	e.SetResponseCallback(func(response string) { responses = append(responses, response) })
+	e.Process("hola")
+	joined := strings.Join(responses, " ")
+	if !strings.Contains(joined, "interrumpido por un reinicio") {
+		t.Fatalf("interrupted work was not announced: %q", joined)
+	}
+
+	// A second startup must not enqueue the same interrupted work again.
+	if recovered := e.RecoverInterruptedWork(); recovered != 0 {
+		t.Fatalf("second recovery = %d, quería 0", recovered)
+	}
+}
+
+func TestRecoverInterruptedWorkSurvivesRestart(t *testing.T) {
+	path := filepath.Join(t.TempDir(), "production_work.json")
+	e := buildTestEngine(t)
+	e.workStore = NewPersistentWorkStore(production.NewWorkStore(path))
+	req := interaction.Analyze("crear un proyecto que sobreviva al reinicio", interaction.Context{})
+	work, err := e.workStore.Begin(req)
+	if err != nil {
+		t.Fatalf("begin work: %v", err)
+	}
+	if _, err := e.workStore.BeginAttempt(work.ID, "programming.create_file", "produce", "programming"); err != nil {
+		t.Fatalf("begin attempt: %v", err)
+	}
+
+	restarted := buildTestEngine(t)
+	restarted.workStore = NewPersistentWorkStore(production.NewWorkStore(path))
+	if recovered := restarted.RecoverInterruptedWork(); recovered != 1 {
+		t.Fatalf("recovered after restart = %d, quería 1", recovered)
+	}
+	persisted, ok := restarted.workStore.Get(work.ID)
+	if !ok || persisted.Status != production.WorkBlocked {
+		t.Fatalf("restarted work was not blocked: ok=%t work=%+v", ok, persisted)
 	}
 }

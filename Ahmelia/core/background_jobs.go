@@ -2,6 +2,7 @@ package core
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"strings"
 	"sync"
@@ -11,6 +12,8 @@ import (
 	"ahmelia/interaction"
 	"ahmelia/production"
 )
+
+var errInterruptedWork = errors.New("work interrupted by process restart; reconciliation required")
 
 // BackgroundJobStatus is the lifecycle of one background execution.
 type BackgroundJobStatus string
@@ -206,6 +209,9 @@ func (e *Engine) deliverBackgroundResults(input string, channel interaction.Inpu
 }
 
 func backgroundResultText(item backgroundResult) string {
+	if errors.Is(item.Err, errInterruptedWork) {
+		return "El trabajo en segundo plano quedó interrumpido por un reinicio. No lo repetiré sin reconciliar antes el estado del proyecto."
+	}
 	if item.Err != nil {
 		return "El trabajo en segundo plano falló: " + item.Err.Error()
 	}
@@ -264,4 +270,48 @@ func (e *Engine) CancelBackgroundJob(id string) bool {
 		return false
 	}
 	return e.backgroundJobs.cancel(id)
+}
+
+// RecoverInterruptedWork reconciles the durable WorkStore after a restart.
+// Any attempt left running or unverified is blocked and announced; it is never
+// silently repeated. A later, explicit reconciliation may resolve it.
+func (e *Engine) RecoverInterruptedWork() int {
+	if e == nil || e.workStore == nil {
+		return 0
+	}
+	recovered := 0
+	for _, work := range e.workStore.List() {
+		already := false
+		for _, event := range work.Events {
+			if strings.Contains(event.Detail, "work interrupted by process restart") {
+				already = true
+				break
+			}
+		}
+		if already {
+			continue
+		}
+		interrupted := false
+		jobID := ""
+		for _, attempt := range work.Attempts {
+			if attempt.Status != "running" && attempt.Status != "unverified" {
+				continue
+			}
+			interrupted = true
+			if jobID == "" {
+				jobID = attempt.JobID
+			}
+			break
+		}
+		if !interrupted {
+			continue
+		}
+		_ = e.workStore.Block(work.ID, "work interrupted by process restart; reconcile before retry")
+		e.backgroundResults.enqueue(backgroundResult{
+			JobID: jobID, WorkID: work.ID,
+			Err: fmt.Errorf("%w: %s", errInterruptedWork, work.ID),
+		})
+		recovered++
+	}
+	return recovered
 }

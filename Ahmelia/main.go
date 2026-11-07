@@ -117,6 +117,11 @@ func main() {
 
 	// ─── Engine: toda la lógica de decisión ───────────────────────
 	engine := core.NewEngine(sess, longMem, &shortMem, history, selfQuery)
+	// Persistencia/reconciliación: un intento que quedó running/unverified por
+	// un cierre del proceso se bloquea y se anuncia; nunca se repite a ciegas.
+	if recovered := engine.RecoverInterruptedWork(); recovered > 0 {
+		fmt.Printf("⚠️ [reconciliación] %d trabajo(s) interrumpido(s) por reinicio; bloqueados hasta reconciliar\n", recovered)
+	}
 	// Hito "van juntos" (2026-10-17) — comprensión abierta EN VIVO: el oído
 	// lingüístico pasa del contrato cerrado al significado abierto (directiva
 	// del propietario 16:04). Suites y fixtures conservan el contrato cerrado.
