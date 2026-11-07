@@ -41,6 +41,9 @@ type ExecutionOptions struct {
 	ExpectedRouteKind    capability.IntentKind
 	// ExperimentalBypassCognition is ONLY for the direct-LLM diagnostic path.
 	ExperimentalBypassCognition bool
+	// Async starts a production provider call in the Engine's background job
+	// registry and returns before it completes. The default is synchronous.
+	Async bool
 }
 
 // ExecutionPreflight is the provider-neutral decision produced immediately

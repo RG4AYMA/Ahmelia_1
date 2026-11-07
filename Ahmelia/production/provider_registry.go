@@ -170,6 +170,7 @@ type AuthorityExecutionResult struct {
 	AuthorizationReason       string                  `json:"authorization_reason,omitempty"`
 	WorkID                    string                  `json:"work_id,omitempty"`
 	AttemptNumber             int                     `json:"attempt_number,omitempty"`
+	BackgroundJobID           string                  `json:"background_job_id,omitempty"`
 	OutcomeCode               string                  `json:"outcome_code,omitempty"`
 	FailureReason             string                  `json:"failure_reason,omitempty"`
 	Recovery                  *tools.RecoveryDecision `json:"recovery,omitempty"`

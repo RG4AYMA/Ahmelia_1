@@ -4076,17 +4076,39 @@ func (e *Engine) authorityExecuteWithOptions(decision interaction.CapabilityInte
 	if options.ApprovalResolver == nil {
 		options.ApprovalResolver = e.capabilityApprovalResolver
 	}
+	workID := strings.TrimSpace(options.WorkID)
 	if route.Kind == capability.IntentProduction {
-		workID, err := e.ensureWorkSessionForProductionContext(ctx, semanticReq[0], route, options.WorkID)
+		resolvedWorkID, err := e.ensureWorkSessionForProductionContext(ctx, semanticReq[0], route, options.WorkID)
 		if err != nil {
 			if e.flowTrace != nil {
 				e.flowTrace.Mark("WORK SESSION", "creation/recovery failed: "+err.Error())
 			}
 			return production.AuthorityExecutionResult{}
 		}
+		workID = resolvedWorkID
 		options = workSessionExecutionOptions(options, workID)
 		if e.flowTrace != nil && workID != "" {
 			e.flowTrace.Mark("WORK SESSION", "persistent owner="+workID)
+		}
+	}
+	if options.Async && route.Kind == capability.IntentProduction && len(semanticReq) > 0 {
+		request := semanticReq[0]
+		routeSnapshot := route
+		jobOptions := options
+		jobID := e.StartBackgroundJob(ctx, "production:"+workID, func(jobCtx context.Context) (production.ActionResult, error) {
+			jobOptions.Context = jobCtx
+			return e.productionRuntime.ExecuteFromAuthority(jobCtx, request, routeSnapshot, jobOptions), nil
+		})
+		if jobID == "" {
+			return production.AuthorityExecutionResult{}
+		}
+		if e.flowTrace != nil {
+			e.flowTrace.Mark("BACKGROUND JOB", "production started job="+jobID+" work="+workID)
+		}
+		return production.AuthorityExecutionResult{
+			Handled: true, OutcomeStatus: production.OutcomeUnknown,
+			WorkID: workID, BackgroundJobID: jobID,
+			OutcomeCode: "working", Summary: "trabajo en curso",
 		}
 	}
 	result := e.productionRuntime.ExecuteFromAuthority(ctx, semanticReq[0], route, options)
