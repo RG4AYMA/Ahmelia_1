@@ -4094,13 +4094,26 @@ func (e *Engine) authorityExecuteWithOptions(decision interaction.CapabilityInte
 			e.flowTrace.Mark("WORK SESSION", "persistent owner="+workID)
 		}
 	}
+	capabilityID := ""
+	if len(route.Candidates) > 0 {
+		capabilityID = string(route.Candidates[0].ID)
+	}
 	if options.Async && route.Kind == capability.IntentProduction && len(semanticReq) > 0 && e.asyncProductionAllowed(route, options) {
 		request := semanticReq[0]
 		routeSnapshot := route
 		jobOptions := options
 		jobID := e.StartBackgroundJobWithCompletion(ctx, "production:"+workID, func(jobCtx context.Context) (production.ActionResult, error) {
 			jobOptions.Context = jobCtx
-			return e.productionRuntime.ExecuteFromAuthority(jobCtx, request, routeSnapshot, jobOptions), nil
+			result := e.productionRuntime.ExecuteFromAuthority(jobCtx, request, routeSnapshot, jobOptions)
+			if jobCtx.Err() == nil {
+				e.autonomyRuntimeMu.Lock()
+				if jobCtx.Err() == nil {
+					e.recordCapabilityExperience(decision, request, result, jobOptions.TaskID, capabilityID)
+					e.convergeActionOutcome(request, result)
+				}
+				e.autonomyRuntimeMu.Unlock()
+			}
+			return result, nil
 		}, func(job BackgroundJob) {
 			if job.Status != BackgroundJobCompleted && job.Status != BackgroundJobFailed {
 				return
@@ -4122,10 +4135,6 @@ func (e *Engine) authorityExecuteWithOptions(decision interaction.CapabilityInte
 		}
 	}
 	result := e.productionRuntime.ExecuteFromAuthority(ctx, semanticReq[0], route, options)
-	capabilityID := ""
-	if len(route.Candidates) > 0 {
-		capabilityID = string(route.Candidates[0].ID)
-	}
 	e.recordCapabilityExperience(decision, semanticReq[0], result, options.TaskID, capabilityID)
 	e.convergeActionOutcome(semanticReq[0], result)
 	if e.flowTrace != nil {

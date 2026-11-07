@@ -144,6 +144,10 @@ func TestAsyncProductionCompletesAndPersistsResult(t *testing.T) {
 	if !decision.Executable {
 		t.Fatalf("decision is not executable: %+v", decision)
 	}
+	beforeEvents := 0
+	if e.eventStore != nil {
+		beforeEvents = len(e.eventStore.Snapshot())
+	}
 	res := e.authorityExecuteWithOptions(decision, production.ExecutionOptions{
 		Context: context.Background(), Approval: autonomy.ApprovalGranted,
 		WorkID: workID, ExperimentalBypassCognition: true, Async: true,
@@ -160,6 +164,9 @@ func TestAsyncProductionCompletesAndPersistsResult(t *testing.T) {
 	work, ok := e.workStore.Get(workID)
 	if !ok || work.LastActionResult == nil || !work.LastActionResult.Success {
 		t.Fatalf("work result not persisted: ok=%t work=%+v", ok, work)
+	}
+	if e.eventStore != nil && len(e.eventStore.Snapshot()) <= beforeEvents {
+		t.Fatal("async completion did not record capability experience")
 	}
 }
 
