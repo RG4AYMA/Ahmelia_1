@@ -16,6 +16,7 @@ import (
 	"ahmelia/interaction"
 	"ahmelia/linguistics"
 	"ahmelia/production"
+	"ahmelia/programming"
 	"ahmelia/tools"
 )
 
@@ -54,6 +55,18 @@ func runGoTest(root string) (string, error) {
 	return string(out), err
 }
 
+func runGoAcceptance(t *testing.T, contract programming.GoAcceptanceContract, root, stage string) programming.AcceptanceResult {
+	t.Helper()
+	result, err := contract.Verify(context.Background(), root)
+	if err != nil {
+		t.Fatalf("aceptación %s: %v", stage, err)
+	}
+	for _, check := range result.Checks {
+		t.Logf("aceptación %s: %s success=%t detail=%s", stage, check.Name, check.Success, check.Detail)
+	}
+	return result
+}
+
 type loggingSynthesisClient struct {
 	inner *linguistics.OllamaClient
 	t     *testing.T
@@ -90,6 +103,7 @@ func TestLiveProgrammingCreateAndRepair(t *testing.T) {
 	client := &loggingSynthesisClient{inner: inner, t: t}
 	experienceStore, _ := experience.Open(experiencePath)
 	t.Logf("modelo de código: %s; experiencia=%s", inner.ModelName(), experiencePath)
+	acceptance := programming.NewGoSumadorAcceptance()
 	synthesizer := NewStructuredCodeObjectiveSynthesizerWithClient(client)
 	synthesizer.Experience = experienceStore
 	world := environment.NewManager()
@@ -128,6 +142,10 @@ func TestLiveProgrammingCreateAndRepair(t *testing.T) {
 	if testErr != nil {
 		t.Fatalf("el código creado no pasa sus pruebas: %v\n%s", testErr, out)
 	}
+	initialAcceptance := runGoAcceptance(t, acceptance, root, "creación")
+	if !initialAcceptance.Success {
+		t.Fatalf("la aceptación independiente falló tras la creación: %+v", initialAcceptance.Checks)
+	}
 
 	content, err := os.ReadFile(mainPath)
 	if err != nil {
@@ -144,6 +162,10 @@ func TestLiveProgrammingCreateAndRepair(t *testing.T) {
 	t.Logf("go test dañado: err=%v\n%s", brokenErr, brokenOut)
 	if brokenErr == nil {
 		t.Fatal("el daño no hizo fallar las pruebas")
+	}
+	brokenAcceptance := runGoAcceptance(t, acceptance, root, "daño")
+	if brokenAcceptance.Success {
+		t.Fatal("la aceptación independiente no detectó el daño")
 	}
 
 	recovery := &tools.RecoveryContext{
@@ -174,6 +196,10 @@ func TestLiveProgrammingCreateAndRepair(t *testing.T) {
 	t.Logf("go test reparado: err=%v\n%s", finalErr, finalOut)
 	if finalErr != nil {
 		t.Fatalf("la reparación no pasó las pruebas: %v\n%s", finalErr, finalOut)
+	}
+	finalAcceptance := runGoAcceptance(t, acceptance, root, "reparación")
+	if !finalAcceptance.Success {
+		t.Fatalf("la aceptación independiente falló tras la reparación: %+v", finalAcceptance.Checks)
 	}
 
 	records, err := experienceStore.Records("programming")
