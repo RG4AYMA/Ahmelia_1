@@ -128,6 +128,23 @@ func TestAsyncProductionReturnsBeforeProviderCompletes(t *testing.T) {
 	if job.Result.Success || job.Result.Verified {
 		t.Fatalf("late production result was applied after cancel: %+v", job.Result)
 	}
+	deadline := time.Now().Add(2 * time.Second)
+	for {
+		work, ok := e.workStore.Get(workID)
+		if ok && work.Status == production.WorkBlocked {
+			break
+		}
+		if time.Now().After(deadline) {
+			t.Fatalf("canceled work was not blocked: ok=%t work=%+v", ok, work)
+		}
+		time.Sleep(5 * time.Millisecond)
+	}
+	var responses []string
+	e.SetResponseCallback(func(response string) { responses = append(responses, response) })
+	e.Process("hola")
+	if joined := strings.Join(responses, " "); !strings.Contains(joined, "Cancelé el trabajo en segundo plano") {
+		t.Fatalf("cancel was not announced: %q", joined)
+	}
 }
 
 func TestAsyncProductionCompletesAndPersistsResult(t *testing.T) {

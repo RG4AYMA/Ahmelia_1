@@ -4102,7 +4102,7 @@ func (e *Engine) authorityExecuteWithOptions(decision interaction.CapabilityInte
 		request := semanticReq[0]
 		routeSnapshot := route
 		jobOptions := options
-		jobID := e.StartBackgroundJobWithCompletion(ctx, "production:"+workID, func(jobCtx context.Context) (production.ActionResult, error) {
+		jobID := e.StartBackgroundJobForWork(ctx, "production:"+workID, workID, func(jobCtx context.Context) (production.ActionResult, error) {
 			jobOptions.Context = jobCtx
 			result := e.productionRuntime.ExecuteFromAuthority(jobCtx, request, routeSnapshot, jobOptions)
 			if jobCtx.Err() == nil {
@@ -4115,6 +4115,15 @@ func (e *Engine) authorityExecuteWithOptions(decision interaction.CapabilityInte
 			}
 			return result, nil
 		}, func(job BackgroundJob) {
+			if job.Status == BackgroundJobCanceled {
+				if workID != "" {
+					_ = e.workStore.Block(workID, "background job canceled; reconcile before retry")
+				}
+				e.backgroundResults.enqueue(backgroundResult{
+					JobID: job.ID, WorkID: workID, Err: errBackgroundJobCanceled, Canceled: true,
+				})
+				return
+			}
 			if job.Status != BackgroundJobCompleted && job.Status != BackgroundJobFailed {
 				return
 			}

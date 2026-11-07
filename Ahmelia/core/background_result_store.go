@@ -27,6 +27,7 @@ type backgroundResultRecord struct {
 	Error       string                  `json:"error,omitempty"`
 	Recovered   bool                    `json:"recovered,omitempty"`
 	Interrupted bool                    `json:"interrupted,omitempty"`
+	Canceled    bool                    `json:"canceled,omitempty"`
 }
 
 func OpenBackgroundResultStore(path string) *backgroundResultStore {
@@ -70,7 +71,7 @@ func (s *backgroundResultStore) Load() ([]backgroundResult, error) {
 		record := records[key]
 		item := backgroundResult{
 			JobID: record.JobID, WorkID: record.WorkID, Result: record.Result,
-			Recovered: record.Recovered, Interrupted: record.Interrupted,
+			Recovered: record.Recovered, Interrupted: record.Interrupted, Canceled: record.Canceled,
 		}
 		if record.Error != "" {
 			item.Err = errors.New(record.Error)
@@ -90,7 +91,7 @@ func (s *backgroundResultStore) Save(items []backgroundResult) error {
 	for _, item := range items {
 		record := backgroundResultRecord{
 			JobID: item.JobID, WorkID: item.WorkID, Result: item.Result,
-			Recovered: item.Recovered, Interrupted: item.Interrupted,
+			Recovered: item.Recovered, Interrupted: item.Interrupted, Canceled: item.Canceled,
 		}
 		if item.Err != nil {
 			record.Error = item.Err.Error()

@@ -222,6 +222,9 @@ func TestBackgroundResultsSurviveRestart(t *testing.T) {
 		JobID: "job-persisted", WorkID: "work-persisted", Recovered: true,
 		Result: production.ActionResult{Success: true, Verified: true, Summary: "resultado persistido"},
 	})
+	first.backgroundResults.enqueue(backgroundResult{
+		JobID: "job-canceled", WorkID: "work-canceled", Err: errBackgroundJobCanceled, Canceled: true,
+	})
 
 	restarted := buildTestEngine(t)
 	if err := restarted.EnableBackgroundResultPersistence(path); err != nil {
@@ -232,6 +235,9 @@ func TestBackgroundResultsSurviveRestart(t *testing.T) {
 	restarted.Process("hola")
 	if joined := strings.Join(responses, " "); !strings.Contains(joined, "Reconcilié el trabajo interrumpido: resultado persistido") {
 		t.Fatalf("persisted result was not announced: %q", joined)
+	}
+	if joined := strings.Join(responses, " "); !strings.Contains(joined, "Cancelé el trabajo en segundo plano") {
+		t.Fatalf("persisted cancellation was not announced: %q", joined)
 	}
 
 	again := buildTestEngine(t)

@@ -16,6 +16,7 @@ import (
 )
 
 var errInterruptedWork = errors.New("work interrupted by process restart; reconciliation required")
+var errBackgroundJobCanceled = errors.New("background job canceled by owner")
 
 // BackgroundJobStatus is the lifecycle of one background execution.
 type BackgroundJobStatus string
@@ -32,6 +33,7 @@ const (
 type BackgroundJob struct {
 	ID         string
 	Name       string
+	WorkID     string
 	Status     BackgroundJobStatus
 	StartedAt  time.Time
 	FinishedAt time.Time
@@ -51,6 +53,7 @@ type backgroundResult struct {
 	Err         error
 	Recovered   bool
 	Interrupted bool
+	Canceled    bool
 }
 
 type backgroundResultQueue struct {
@@ -103,7 +106,7 @@ type backgroundJobRegistry struct {
 	seq  atomic.Uint64
 }
 
-func (r *backgroundJobRegistry) start(ctx context.Context, name string, work func(context.Context) (production.ActionResult, error), onComplete func(BackgroundJob)) string {
+func (r *backgroundJobRegistry) start(ctx context.Context, name, workID string, work func(context.Context) (production.ActionResult, error), onComplete func(BackgroundJob)) string {
 	if ctx == nil {
 		ctx = context.Background()
 	}
@@ -113,6 +116,7 @@ func (r *backgroundJobRegistry) start(ctx context.Context, name string, work fun
 		BackgroundJob: BackgroundJob{
 			ID:        id,
 			Name:      name,
+			WorkID:    workID,
 			Status:    BackgroundJobRunning,
 			StartedAt: time.Now().UTC(),
 		},
@@ -202,7 +206,7 @@ func (e *Engine) StartBackgroundJob(ctx context.Context, name string, work func(
 	if e == nil || work == nil {
 		return ""
 	}
-	return e.backgroundJobs.start(ctx, name, work, nil)
+	return e.backgroundJobs.start(ctx, name, "", work, nil)
 }
 
 // StartBackgroundJobWithCompletion is the same as StartBackgroundJob but
@@ -211,7 +215,16 @@ func (e *Engine) StartBackgroundJobWithCompletion(ctx context.Context, name stri
 	if e == nil || work == nil {
 		return ""
 	}
-	return e.backgroundJobs.start(ctx, name, work, onComplete)
+	return e.backgroundJobs.start(ctx, name, "", work, onComplete)
+}
+
+// StartBackgroundJobForWork is the production variant: it binds the job to the
+// durable WorkSession so cancellation and recovery can find its owner.
+func (e *Engine) StartBackgroundJobForWork(ctx context.Context, name, workID string, work func(context.Context) (production.ActionResult, error), onComplete func(BackgroundJob)) string {
+	if e == nil || work == nil {
+		return ""
+	}
+	return e.backgroundJobs.start(ctx, name, workID, work, onComplete)
 }
 
 // deliverBackgroundResults announces completed background work at the start
@@ -235,6 +248,9 @@ func (e *Engine) deliverBackgroundResults(input string, channel interaction.Inpu
 }
 
 func backgroundResultText(item backgroundResult) string {
+	if item.Canceled || errors.Is(item.Err, errBackgroundJobCanceled) {
+		return "Cancelé el trabajo en segundo plano. No aplicaré un resultado tardío; el trabajo queda bloqueado para reconciliar."
+	}
 	if item.Interrupted || errors.Is(item.Err, errInterruptedWork) {
 		return "El trabajo en segundo plano quedó interrumpido por un reinicio. No lo repetiré sin reconciliar antes el estado del proyecto."
 	}
