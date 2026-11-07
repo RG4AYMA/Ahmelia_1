@@ -456,6 +456,7 @@ type Engine struct {
 	lastInputChannel             interaction.InputChannel      // canal real de la última interacción; el árbitro lo exige para hablar sin turno del usuario
 	autonomyRuntimeMu            sync.Mutex
 	autonomySupervisor           *GoroutineSupervisor
+	backgroundJobs               backgroundJobRegistry
 	autonomyDecisionConsumerHook func(autonomy.ConversationDecision) // test/diagnostic seam; never an authority                    // B93.4 — ownership común entre Process() y un tick autónomo completo
 
 	// HUD — callback hacia la interfaz Wails
