@@ -2,6 +2,8 @@ package core
 
 import (
 	"context"
+	"encoding/json"
+	"os"
 	"path/filepath"
 	"strings"
 	"testing"
@@ -10,6 +12,7 @@ import (
 	"ahmelia/interaction"
 	"ahmelia/interrupt"
 	"ahmelia/production"
+	"ahmelia/programming"
 )
 
 func waitForBackgroundJob(t *testing.T, e *Engine, id string, want BackgroundJobStatus) BackgroundJob {
@@ -206,5 +209,71 @@ func TestRecoverInterruptedWorkSurvivesRestart(t *testing.T) {
 	persisted, ok := restarted.workStore.Get(work.ID)
 	if !ok || persisted.Status != production.WorkBlocked {
 		t.Fatalf("restarted work was not blocked: ok=%t work=%+v", ok, persisted)
+	}
+}
+
+func TestReconcileInterruptedProgrammingWorkResolvesFromDurablePlan(t *testing.T) {
+	root := t.TempDir()
+	mainContent := "package main\n\nfunc Add(a, b int) int { return a + b }\n\nfunc main() {}\n"
+	testContent := "package main\n\nimport \"testing\"\n\nfunc TestAdd(t *testing.T) { if Add(2, 3) != 5 { t.Fatal(\"bad sum\") } }\n"
+	for name, content := range map[string]string{
+		"go.mod":       "module reconcile\n\ngo 1.20\n",
+		"main.go":      mainContent,
+		"main_test.go": testContent,
+	} {
+		if err := os.WriteFile(filepath.Join(root, name), []byte(content), 0o600); err != nil {
+			t.Fatalf("write %s: %v", name, err)
+		}
+	}
+	plan := programming.MultiFilePlan{
+		ID: "plan-reconcile",
+		Project: programming.CodeProject{
+			ID: "reconcile", Name: "reconcile", Root: root, Language: "Go",
+			BuildCommand: "go build ./...", TestCommand: "go test ./...",
+		},
+		Changes: []programming.MultiFileChange{
+			{ID: "main", Operation: programming.SourceCreate, File: programming.SourceFile{Path: "main.go", Language: "Go", Role: programming.RoleSource, ProjectID: "reconcile"}, Content: mainContent},
+			{ID: "test", Operation: programming.SourceCreate, File: programming.SourceFile{Path: "main_test.go", Language: "Go", Role: programming.RoleTest, ProjectID: "reconcile"}, Content: testContent},
+		},
+	}
+	spec, err := json.Marshal(plan)
+	if err != nil {
+		t.Fatalf("marshal plan: %v", err)
+	}
+
+	path := filepath.Join(t.TempDir(), "production_work.json")
+	e := buildTestEngine(t)
+	e.workStore = NewPersistentWorkStore(production.NewWorkStore(path))
+	req := interaction.Analyze("crear un proyecto que será reconciliado", interaction.Context{})
+	work, err := e.workStore.Begin(req)
+	if err != nil {
+		t.Fatalf("begin work: %v", err)
+	}
+	attempt, err := e.workStore.BeginAttempt(work.ID, "programming.create_file", "produce", "programming")
+	if err != nil {
+		t.Fatalf("begin attempt: %v", err)
+	}
+	if err := e.workStore.SetAttemptEffectSpecification(work.ID, attempt, spec); err != nil {
+		t.Fatalf("set effect spec: %v", err)
+	}
+
+	restarted := buildTestEngine(t)
+	restarted.workStore = NewPersistentWorkStore(production.NewWorkStore(path))
+	if reconciled := restarted.ReconcileInterruptedProgrammingWork(context.Background()); reconciled != 1 {
+		t.Fatalf("reconciled = %d, quería 1", reconciled)
+	}
+	persisted, ok := restarted.workStore.Get(work.ID)
+	if !ok || persisted.Status != production.WorkCompleted || persisted.LastActionResult == nil || !persisted.LastActionResult.Success {
+		t.Fatalf("reconciled work is not completed: ok=%t work=%+v", ok, persisted)
+	}
+	if len(persisted.Attempts) != 1 || persisted.Attempts[0].Status != "succeeded" {
+		t.Fatalf("reconciled attempt is not succeeded: %+v", persisted.Attempts)
+	}
+
+	var responses []string
+	restarted.SetResponseCallback(func(response string) { responses = append(responses, response) })
+	restarted.Process("hola")
+	if joined := strings.Join(responses, " "); !strings.Contains(joined, "Reconcilié el trabajo interrumpido") {
+		t.Fatalf("reconciled work was not announced: %q", joined)
 	}
 }

@@ -118,7 +118,14 @@ func main() {
 	// ─── Engine: toda la lógica de decisión ───────────────────────
 	engine := core.NewEngine(sess, longMem, &shortMem, history, selfQuery)
 	// Persistencia/reconciliación: un intento que quedó running/unverified por
-	// un cierre del proceso se bloquea y se anuncia; nunca se repite a ciegas.
+	// un cierre del proceso se intenta resolver observando el efecto durable
+	// (archivos + build/tests). Lo que no se pueda observar se bloquea y se
+	// anuncia; nunca se repite a ciegas.
+	reconcileCtx, cancelReconcile := context.WithTimeout(context.Background(), 5*time.Minute)
+	if reconciled := engine.ReconcileInterruptedProgrammingWork(reconcileCtx); reconciled > 0 {
+		fmt.Printf("✅ [reconciliación] %d trabajo(s) de programación reconciliado(s) desde evidencia durable\n", reconciled)
+	}
+	cancelReconcile()
 	if recovered := engine.RecoverInterruptedWork(); recovered > 0 {
 		fmt.Printf("⚠️ [reconciliación] %d trabajo(s) interrumpido(s) por reinicio; bloqueados hasta reconciliar\n", recovered)
 	}

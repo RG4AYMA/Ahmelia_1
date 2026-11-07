@@ -2,6 +2,7 @@ package core
 
 import (
 	"context"
+	"encoding/json"
 	"errors"
 	"fmt"
 	"strings"
@@ -11,6 +12,7 @@ import (
 
 	"ahmelia/interaction"
 	"ahmelia/production"
+	"ahmelia/programming"
 )
 
 var errInterruptedWork = errors.New("work interrupted by process restart; reconciliation required")
@@ -43,10 +45,11 @@ type backgroundJob struct {
 }
 
 type backgroundResult struct {
-	JobID  string
-	WorkID string
-	Result production.ActionResult
-	Err    error
+	JobID     string
+	WorkID    string
+	Result    production.ActionResult
+	Err       error
+	Recovered bool
 }
 
 type backgroundResultQueue struct {
@@ -215,6 +218,20 @@ func backgroundResultText(item backgroundResult) string {
 	if item.Err != nil {
 		return "El trabajo en segundo plano falló: " + item.Err.Error()
 	}
+	if item.Recovered {
+		summary := strings.TrimSpace(item.Result.Summary)
+		if item.Result.Success && item.Result.Verified {
+			if summary == "" {
+				summary = "archivos y pruebas verificados"
+			}
+			return "Reconcilié el trabajo interrumpido: " + summary
+		}
+		reason := strings.TrimSpace(item.Result.FailureReason)
+		if reason == "" {
+			reason = "el efecto no se pudo verificar"
+		}
+		return "El trabajo interrumpido no se pudo reconciliar: " + reason
+	}
 	summary := strings.TrimSpace(item.Result.Summary)
 	if item.Result.Success && item.Result.Verified {
 		if summary == "" {
@@ -270,6 +287,51 @@ func (e *Engine) CancelBackgroundJob(id string) bool {
 		return false
 	}
 	return e.backgroundJobs.cancel(id)
+}
+
+// ReconcileInterruptedProgrammingWork resolves durable programming attempts
+// whose effect specification survived a restart. It verifies the expected
+// files and runs build/tests, then marks the attempt succeeded or failed.
+// Attempts it cannot observe remain blocked for the conservative path.
+func (e *Engine) ReconcileInterruptedProgrammingWork(ctx context.Context) int {
+	if e == nil || e.workStore == nil {
+		return 0
+	}
+	if ctx == nil {
+		ctx = context.Background()
+	}
+	reconciled := 0
+	for _, work := range e.workStore.List() {
+		for _, attempt := range work.Attempts {
+			if attempt.Status != "unverified" || len(attempt.EffectSpecification) == 0 {
+				continue
+			}
+			var plan programming.MultiFilePlan
+			if err := json.Unmarshal(attempt.EffectSpecification, &plan); err != nil {
+				continue
+			}
+			result, err := programming.ReconcileMultiFilePlan(ctx, plan)
+			if err != nil {
+				continue
+			}
+			result.WorkID = work.ID
+			result.AttemptNumber = attempt.Number
+			if err := e.workStore.ReconcileUnknownAttempt(work.ID, attempt.Number, result); err != nil {
+				continue
+			}
+			if result.Success {
+				_ = e.workStore.Complete(work.ID, true, "reconciled after restart")
+			} else {
+				_ = e.workStore.Complete(work.ID, false, result.FailureReason)
+			}
+			e.backgroundResults.enqueue(backgroundResult{
+				WorkID: work.ID, Result: result, Recovered: true,
+			})
+			reconciled++
+			break
+		}
+	}
+	return reconciled
 }
 
 // RecoverInterruptedWork reconciles the durable WorkStore after a restart.
