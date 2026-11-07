@@ -131,6 +131,12 @@ func main() {
 	// arnés solo admite una restricción provisional con fuente
 	// confirmed_inference; nunca cambia el turno ni ejecuta.
 	engine.EnableModelConsultation()
+	// Opt-in: long programming production runs in the background and its
+	// result is announced at the start of the next turn. Default stays
+	// synchronous until the notification/reconciliation contract is complete.
+	if os.Getenv("AHMELIA_ASYNC_PRODUCTION") == "1" {
+		engine.EnableAsyncProduction()
+	}
 	engine.EnableAgentGoals()
 	engine.EnableSelfTastes()
 	// Paso 3.4 (2026-11-02) — la postura durable del propietario se lee al
