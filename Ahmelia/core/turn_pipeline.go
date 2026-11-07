@@ -951,6 +951,26 @@ func (e *Engine) cancelBackgroundWorkPhase(t *processTurn) bool {
 	return true
 }
 
+func (e *Engine) productionJobInProgress(req interaction.SemanticRequest) bool {
+	if req.Kind != interaction.KindProduction && !strings.EqualFold(strings.TrimSpace(req.Action.Name), "produce") {
+		return false
+	}
+	activeWork := ""
+	if e.conversationState != nil {
+		activeWork = strings.TrimSpace(e.conversationState.ActiveWork())
+	}
+	for _, job := range e.BackgroundJobs() {
+		if job.Status != BackgroundJobRunning {
+			continue
+		}
+		if activeWork != "" && job.WorkID != "" && job.WorkID != activeWork {
+			continue
+		}
+		return true
+	}
+	return false
+}
+
 func (e *Engine) preExecutionPhase(t *processTurn) bool {
 	if e.flowTrace != nil {
 		e.flowTrace.Mark("RUNTIME", fmt.Sprintf("action=%s", t.semanticReq.Action.Name))
@@ -1007,6 +1027,17 @@ func (e *Engine) preExecutionPhase(t *processTurn) bool {
 	if e.flowTrace != nil {
 		acts := interaction.CanonicalActs(t.semanticReq)
 		e.flowTrace.Mark("CAPABILITY", fmt.Sprintf("kind=%s act=%s action=%s operation=%s executable=%t reason=%s", t.semanticReq.Kind, acts.Primary, t.semanticReq.Action.Name, capabilityDecision.Request.Operation, capabilityDecision.Executable, capabilityDecision.Reason))
+	}
+	if capabilityDecision.Executable && e.productionJobInProgress(t.semanticReq) {
+		e.renderCanonicalSystemResponse(
+			t.semanticReq,
+			"background_job_in_progress",
+			"Hay un trabajo de programación en segundo plano en curso. Si quieres cambiar el objetivo, primero cancélalo; si no, espera a que termine.",
+			interaction.MoveClarify,
+			interaction.ResponseIntentClarify,
+			true,
+		)
+		return true
 	}
 	if capabilityDecision.Executable {
 		if !capabilityHandoffReady(e.lastConversationalCognition) {

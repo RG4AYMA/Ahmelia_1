@@ -269,9 +269,43 @@ func TestConversationalCancelStopsRunningJob(t *testing.T) {
 	}
 }
 
-func TestAsyncProductionDoesNotHideAuthorization(t *testing.T) {
+func TestNewProductionObjectiveDuringJobIsRejected(t *testing.T) {
 	provider := &slowProductionProvider{
 		started: make(chan struct{}),
+		release: make(chan struct{}),
+		result: production.ProviderResult{
+			Success: true, Observed: true, Verified: true,
+			OutcomeStatus: production.OutcomeSucceeded, Producer: "slow-provider",
+		},
+	}
+	e, req, workID := newAsyncProductionEngine(t, provider)
+	decision := interaction.ResolveCapabilityInteraction(req)
+	res := e.authorityExecuteWithOptions(decision, production.ExecutionOptions{
+		Context: context.Background(), Approval: autonomy.ApprovalGranted,
+		WorkID: workID, ExperimentalBypassCognition: true, Async: true,
+	}, req)
+	if res.BackgroundJobID == "" {
+		t.Fatalf("async production job missing: %+v", res)
+	}
+	<-provider.started
+
+	var responses []string
+	e.SetResponseCallback(func(response string) { responses = append(responses, response) })
+	e.Process("Crea otro programa Go que reste dos números")
+	if joined := strings.Join(responses, " "); !strings.Contains(joined, "trabajo de programación en segundo plano en curso") {
+		t.Fatalf("new objective was not rejected: %q", joined)
+	}
+	if jobs := e.BackgroundJobs(); len(jobs) != 1 {
+		t.Fatalf("a second production job was started: %+v", jobs)
+	}
+
+	_ = e.CancelBackgroundJob(res.BackgroundJobID)
+	close(provider.release)
+	_ = waitForBackgroundJob(t, e, res.BackgroundJobID, BackgroundJobCanceled)
+}
+
+func TestAsyncProductionDoesNotHideAuthorization(t *testing.T) {
+	provider := &slowProductionProvider{started: make(chan struct{}),
 		release: make(chan struct{}),
 		result: production.ProviderResult{
 			Success: true, Observed: true, Verified: true,
