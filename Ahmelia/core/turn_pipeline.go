@@ -968,7 +968,19 @@ func (e *Engine) preExecutionPhase(t *processTurn) bool {
 				e.flowTrace.Mark("LINGUISTIC", "optional deferred inference cancelled for executable work")
 			}
 		}
-		_ = e.authorityExecute(capabilityDecision, t.semanticReq)
+		authority := e.authorityExecuteWithOptions(capabilityDecision, production.ExecutionOptions{
+			Approval: autonomy.ApprovalNone, RecoveryAttempt: 1, Async: e.asyncProduction,
+		}, t.semanticReq)
+		if authority.Handled && authority.BackgroundJobID != "" {
+			e.renderCanonicalSystemResponse(
+				t.semanticReq,
+				"production_async_started",
+				"Lo estoy trabajando en segundo plano. Te aviso cuando termine.",
+				interaction.MoveAcknowledge,
+				interaction.ResponseIntentAcknowledge,
+				false,
+			)
+		}
 		// Once the completed objective crosses the canonical execution
 		// authority, the conversational draft has served its purpose. Work is
 		// now the durable operational owner; leaving the draft alive would make

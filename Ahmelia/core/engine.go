@@ -457,6 +457,8 @@ type Engine struct {
 	autonomyRuntimeMu            sync.Mutex
 	autonomySupervisor           *GoroutineSupervisor
 	backgroundJobs               backgroundJobRegistry
+	backgroundResults            backgroundResultQueue
+	asyncProduction              bool
 	autonomyDecisionConsumerHook func(autonomy.ConversationDecision) // test/diagnostic seam; never an authority                    // B93.4 — ownership común entre Process() y un tick autónomo completo
 
 	// HUD — callback hacia la interfaz Wails
@@ -3840,6 +3842,7 @@ func (e *Engine) ProcessWithChannel(input string, channel interaction.InputChann
 	}
 
 	tts.WaitUntilIdle()
+	e.deliverBackgroundResults(input, channel)
 	if flowTraceEnabled() {
 		e.flowTrace = NewTurnFlowTrace(input)
 		e.flowTrace.Mark("INPUT", input)
@@ -4091,13 +4094,20 @@ func (e *Engine) authorityExecuteWithOptions(decision interaction.CapabilityInte
 			e.flowTrace.Mark("WORK SESSION", "persistent owner="+workID)
 		}
 	}
-	if options.Async && route.Kind == capability.IntentProduction && len(semanticReq) > 0 {
+	if options.Async && route.Kind == capability.IntentProduction && len(semanticReq) > 0 && e.asyncProductionAllowed(route, options) {
 		request := semanticReq[0]
 		routeSnapshot := route
 		jobOptions := options
-		jobID := e.StartBackgroundJob(ctx, "production:"+workID, func(jobCtx context.Context) (production.ActionResult, error) {
+		jobID := e.StartBackgroundJobWithCompletion(ctx, "production:"+workID, func(jobCtx context.Context) (production.ActionResult, error) {
 			jobOptions.Context = jobCtx
 			return e.productionRuntime.ExecuteFromAuthority(jobCtx, request, routeSnapshot, jobOptions), nil
+		}, func(job BackgroundJob) {
+			if job.Status != BackgroundJobCompleted && job.Status != BackgroundJobFailed {
+				return
+			}
+			e.backgroundResults.enqueue(backgroundResult{
+				JobID: job.ID, WorkID: workID, Result: job.Result, Err: job.Err,
+			})
 		})
 		if jobID == "" {
 			return production.AuthorityExecutionResult{}
@@ -4176,6 +4186,27 @@ func (e *Engine) authorityExecuteWithOptions(decision interaction.CapabilityInte
 	out.Handled = true
 	return out
 
+}
+
+// asyncProductionAllowed keeps a suspended authorization request on the
+// synchronous path. Async is only safe when the capability is automatic or
+// the approval owner already granted it; otherwise the turn must ask.
+func (e *Engine) asyncProductionAllowed(route capability.Route, options production.ExecutionOptions) bool {
+	if len(route.Candidates) == 0 {
+		return false
+	}
+	candidate := route.Candidates[0]
+	if !strings.HasPrefix(string(candidate.ID), "programming.") {
+		return false
+	}
+	if candidate.Permission == capability.PermissionAutomatic {
+		return true
+	}
+	approval := options.Approval
+	if options.ApprovalResolver != nil {
+		approval = options.ApprovalResolver(candidate.ID)
+	}
+	return approval == autonomy.ApprovalGranted
 }
 
 // recordCapabilityExperience is the shared consequence-to-learning seam for

@@ -2,6 +2,7 @@ package core
 
 import (
 	"context"
+	"strings"
 	"sync/atomic"
 	"testing"
 	"time"
@@ -37,13 +38,17 @@ func (p *slowProductionProvider) Execute(ctx context.Context, _ production.Provi
 }
 
 func newAsyncProductionEngine(t *testing.T, provider production.Provider) (*Engine, interaction.SemanticRequest, string) {
+	return newAsyncProductionEngineWithPermission(t, provider, capability.PermissionAutomatic)
+}
+
+func newAsyncProductionEngineWithPermission(t *testing.T, provider production.Provider, permission capability.PermissionLevel) (*Engine, interaction.SemanticRequest, string) {
 	t.Helper()
 	e := buildTestEngine(t)
 	registry := capability.NewRegistry()
 	c := capability.Capability{
-		ID: "demo.slow", Domain: capability.DomainLocal, Action: "slow_action",
+		ID: "programming.slow", Domain: capability.DomainLocal, Action: "slow_action",
 		Description: "slow production operation", Lane: capability.LaneProduction,
-		Permission: capability.PermissionAutomatic,
+		Permission: permission,
 	}
 	if err := registry.Register(c); err != nil {
 		t.Fatalf("register capability: %v", err)
@@ -155,5 +160,64 @@ func TestAsyncProductionCompletesAndPersistsResult(t *testing.T) {
 	work, ok := e.workStore.Get(workID)
 	if !ok || work.LastActionResult == nil || !work.LastActionResult.Success {
 		t.Fatalf("work result not persisted: ok=%t work=%+v", ok, work)
+	}
+}
+
+func TestAsyncProductionResultIsAnnouncedOnNextTurn(t *testing.T) {
+	provider := &slowProductionProvider{
+		started: make(chan struct{}),
+		release: make(chan struct{}),
+		result: production.ProviderResult{
+			Success: true, Observed: true, Verified: true,
+			OutcomeStatus: production.OutcomeSucceeded, Producer: "slow-provider",
+			Summary: "proyecto sumador verificado",
+		},
+	}
+	e, req, workID := newAsyncProductionEngine(t, provider)
+	decision := interaction.ResolveCapabilityInteraction(req)
+	res := e.authorityExecuteWithOptions(decision, production.ExecutionOptions{
+		Context: context.Background(), Approval: autonomy.ApprovalGranted,
+		WorkID: workID, ExperimentalBypassCognition: true, Async: true,
+	}, req)
+	if res.BackgroundJobID == "" {
+		t.Fatalf("async production job missing: %+v", res)
+	}
+	<-provider.started
+	close(provider.release)
+	_ = waitForBackgroundJob(t, e, res.BackgroundJobID, BackgroundJobCompleted)
+
+	var responses []string
+	e.SetResponseCallback(func(response string) { responses = append(responses, response) })
+	e.Process("hola")
+	joined := strings.Join(responses, " ")
+	if !strings.Contains(joined, "Terminé el trabajo en segundo plano") {
+		t.Fatalf("background result was not announced: %q", joined)
+	}
+}
+
+func TestAsyncProductionDoesNotHideAuthorization(t *testing.T) {
+	provider := &slowProductionProvider{
+		started: make(chan struct{}),
+		release: make(chan struct{}),
+		result: production.ProviderResult{
+			Success: true, Observed: true, Verified: true,
+			OutcomeStatus: production.OutcomeSucceeded, Producer: "slow-provider",
+		},
+	}
+	e, req, workID := newAsyncProductionEngineWithPermission(t, provider, capability.PermissionAskFirst)
+	e.capabilityApprovalResolver = nil
+	decision := interaction.ResolveCapabilityInteraction(req)
+	res := e.authorityExecuteWithOptions(decision, production.ExecutionOptions{
+		Context: context.Background(), Approval: autonomy.ApprovalNone,
+		WorkID: workID, ExperimentalBypassCognition: true, Async: true,
+	}, req)
+	if !res.Handled || !res.AuthorizationRequired {
+		t.Fatalf("authorization-required production did not stay synchronous: %+v", res)
+	}
+	if res.BackgroundJobID != "" {
+		t.Fatalf("authorization-required production was hidden in a background job: %+v", res)
+	}
+	if provider.calls.Load() != 0 {
+		t.Fatalf("provider executed before authorization: %d", provider.calls.Load())
 	}
 }

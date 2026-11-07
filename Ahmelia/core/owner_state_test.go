@@ -141,6 +141,7 @@ func TestScene1OwnerContinuityAcrossRestart(t *testing.T) {
 
 func TestOwnerStateDoesNotBlockAuthorizedAction(t *testing.T) {
 	e := buildTestEngine(t)
+	e.EnableAsyncProduction()
 	loc := time.FixedZone("COT", -5*3600)
 	now := time.Date(2026, 11, 5, 10, 0, 0, 0, loc)
 	e.sceneNow = func() time.Time { return now }
@@ -155,6 +156,10 @@ func TestOwnerStateDoesNotBlockAuthorizedAction(t *testing.T) {
 	e.SetResponseCallback(func(string) {})
 
 	e.Process("Crea un programa Go que sume dos números y guárdalo en el proyecto")
+	job := waitForAnyBackgroundJobCompletion(t, e)
+	if job.Status != BackgroundJobCompleted {
+		t.Fatalf("la producción autorizada no terminó correctamente: %+v", job)
+	}
 
 	if _, ok := e.OwnerStateActive(now); !ok {
 		t.Fatal("el estado sensible debía seguir activo")

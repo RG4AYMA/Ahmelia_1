@@ -24,6 +24,21 @@ func waitForBackgroundJob(t *testing.T, e *Engine, id string, want BackgroundJob
 	return BackgroundJob{}
 }
 
+func waitForAnyBackgroundJobCompletion(t *testing.T, e *Engine) BackgroundJob {
+	t.Helper()
+	deadline := time.Now().Add(5 * time.Second)
+	for time.Now().Before(deadline) {
+		for _, job := range e.BackgroundJobs() {
+			if job.Status == BackgroundJobCompleted || job.Status == BackgroundJobFailed || job.Status == BackgroundJobCanceled {
+				return job
+			}
+		}
+		time.Sleep(5 * time.Millisecond)
+	}
+	t.Fatalf("no background job reached a terminal state: %+v", e.BackgroundJobs())
+	return BackgroundJob{}
+}
+
 func TestBackgroundJobKeepsProcessResponsive(t *testing.T) {
 	e := buildTestEngine(t)
 	started := make(chan struct{})

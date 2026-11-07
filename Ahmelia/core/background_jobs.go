@@ -3,10 +3,12 @@ package core
 import (
 	"context"
 	"fmt"
+	"strings"
 	"sync"
 	"sync/atomic"
 	"time"
 
+	"ahmelia/interaction"
 	"ahmelia/production"
 )
 
@@ -37,13 +39,42 @@ type backgroundJob struct {
 	cancel context.CancelFunc
 }
 
+type backgroundResult struct {
+	JobID  string
+	WorkID string
+	Result production.ActionResult
+	Err    error
+}
+
+type backgroundResultQueue struct {
+	mu    sync.Mutex
+	items []backgroundResult
+}
+
+func (q *backgroundResultQueue) enqueue(item backgroundResult) {
+	q.mu.Lock()
+	q.items = append(q.items, item)
+	q.mu.Unlock()
+}
+
+func (q *backgroundResultQueue) take() []backgroundResult {
+	q.mu.Lock()
+	defer q.mu.Unlock()
+	if len(q.items) == 0 {
+		return nil
+	}
+	out := q.items
+	q.items = nil
+	return out
+}
+
 type backgroundJobRegistry struct {
 	mu   sync.Mutex
 	jobs map[string]*backgroundJob
 	seq  atomic.Uint64
 }
 
-func (r *backgroundJobRegistry) start(ctx context.Context, name string, work func(context.Context) (production.ActionResult, error)) string {
+func (r *backgroundJobRegistry) start(ctx context.Context, name string, work func(context.Context) (production.ActionResult, error), onComplete func(BackgroundJob)) string {
 	if ctx == nil {
 		ctx = context.Background()
 	}
@@ -69,9 +100,9 @@ func (r *backgroundJobRegistry) start(ctx context.Context, name string, work fun
 	go func() {
 		result, err := work(jobCtx)
 		r.mu.Lock()
-		defer r.mu.Unlock()
 		current, ok := r.jobs[id]
 		if !ok {
+			r.mu.Unlock()
 			return
 		}
 		current.FinishedAt = time.Now().UTC()
@@ -80,15 +111,18 @@ func (r *backgroundJobRegistry) start(ctx context.Context, name string, work fun
 			current.Err = jobCtx.Err()
 			// A late provider result is never applied as if the job were still current.
 			current.Result = production.ActionResult{}
-			return
-		}
-		if err != nil {
+		} else if err != nil {
 			current.Status = BackgroundJobFailed
 			current.Err = err
-			return
+		} else {
+			current.Status = BackgroundJobCompleted
+			current.Result = result
 		}
-		current.Status = BackgroundJobCompleted
-		current.Result = result
+		snapshot := current.BackgroundJob
+		r.mu.Unlock()
+		if onComplete != nil {
+			onComplete(snapshot)
+		}
 	}()
 
 	return id
@@ -139,7 +173,73 @@ func (e *Engine) StartBackgroundJob(ctx context.Context, name string, work func(
 	if e == nil || work == nil {
 		return ""
 	}
-	return e.backgroundJobs.start(ctx, name, work)
+	return e.backgroundJobs.start(ctx, name, work, nil)
+}
+
+// StartBackgroundJobWithCompletion is the same as StartBackgroundJob but
+// invokes onComplete with the final snapshot after the job leaves running.
+func (e *Engine) StartBackgroundJobWithCompletion(ctx context.Context, name string, work func(context.Context) (production.ActionResult, error), onComplete func(BackgroundJob)) string {
+	if e == nil || work == nil {
+		return ""
+	}
+	return e.backgroundJobs.start(ctx, name, work, onComplete)
+}
+
+// deliverBackgroundResults announces completed background work at the start
+// of the next turn. It never applies a canceled or failed job's result.
+func (e *Engine) deliverBackgroundResults(input string, channel interaction.InputChannel) {
+	if e == nil {
+		return
+	}
+	results := e.backgroundResults.take()
+	if len(results) == 0 {
+		return
+	}
+	req := interaction.Parse(input, channel)
+	for _, item := range results {
+		text := backgroundResultText(item)
+		if strings.TrimSpace(text) == "" {
+			continue
+		}
+		_ = e.renderCanonicalSystemResponse(req, "background_result", text, interaction.MoveAcknowledge, interaction.ResponseIntentAcknowledge, false)
+	}
+}
+
+func backgroundResultText(item backgroundResult) string {
+	if item.Err != nil {
+		return "El trabajo en segundo plano falló: " + item.Err.Error()
+	}
+	summary := strings.TrimSpace(item.Result.Summary)
+	if item.Result.Success && item.Result.Verified {
+		if summary == "" {
+			summary = "terminado y verificado"
+		}
+		return "Terminé el trabajo en segundo plano: " + summary
+	}
+	reason := strings.TrimSpace(item.Result.FailureReason)
+	if reason == "" {
+		reason = strings.TrimSpace(item.Result.OutcomeCode)
+	}
+	if reason == "" {
+		reason = "sin detalle"
+	}
+	return "El trabajo en segundo plano terminó con un problema: " + reason
+}
+
+// EnableAsyncProduction opts this Engine into background execution for
+// programming production. It is explicit because notification and
+// reconciliation are not yet complete for every production family.
+func (e *Engine) EnableAsyncProduction() {
+	if e != nil {
+		e.asyncProduction = true
+	}
+}
+
+// DisableAsyncProduction returns the Engine to synchronous production.
+func (e *Engine) DisableAsyncProduction() {
+	if e != nil {
+		e.asyncProduction = false
+	}
 }
 
 // BackgroundJob returns a snapshot of one job.
