@@ -264,6 +264,27 @@ type generateRequest struct {
 type generateOptions struct {
 	Temperature float64 `json:"temperature"`
 	NumPredict  int     `json:"num_predict"`
+	NumCtx      int     `json:"num_ctx,omitempty"`
+	NumGPU      int     `json:"num_gpu,omitempty"`
+}
+
+func ollamaGenerationOptions(numPredict int) generateOptions {
+	options := generateOptions{Temperature: 0, NumPredict: numPredict}
+	if value := ollamaEnvInt("AHMELIA_OLLAMA_NUM_CTX"); value > 0 {
+		options.NumCtx = value
+	}
+	if value := ollamaEnvInt("AHMELIA_OLLAMA_NUM_GPU"); value > 0 {
+		options.NumGPU = value
+	}
+	return options
+}
+
+func ollamaEnvInt(name string) int {
+	value, err := strconv.Atoi(strings.TrimSpace(os.Getenv(name)))
+	if err != nil || value < 0 {
+		return 0
+	}
+	return value
 }
 
 // generateResponse representa la parte de la respuesta de Ollama
@@ -465,7 +486,7 @@ func (c *OllamaClient) waitReady(ctx context.Context) error {
 }
 
 func (c *OllamaClient) warmupContext(ctx context.Context) error {
-	requestBody := generateRequest{Model: c.Model, Prompt: "Responde únicamente: OK", Stream: false, Options: generateOptions{Temperature: 0, NumPredict: 1}, KeepAlive: ollamaKeepAlive()}
+	requestBody := generateRequest{Model: c.Model, Prompt: "Responde únicamente: OK", Stream: false, Options: ollamaGenerationOptions(1), KeepAlive: ollamaKeepAlive()}
 	data, err := json.Marshal(requestBody)
 	if err != nil {
 		return fmt.Errorf("ollama warmup: error creando petición JSON: %w", err)
@@ -640,7 +661,7 @@ func (c *OllamaClient) generateStructured(ctx context.Context, prompt string, sc
 		}
 		return "", fmt.Errorf("ollama: modelo no listo: %w", err)
 	}
-	requestBody := generateRequest{Model: c.Model, Prompt: prompt, Stream: stream, Format: schema, Options: generateOptions{Temperature: 0, NumPredict: numPredict}, KeepAlive: ollamaKeepAlive()}
+	requestBody := generateRequest{Model: c.Model, Prompt: prompt, Stream: stream, Format: schema, Options: ollamaGenerationOptions(numPredict), KeepAlive: ollamaKeepAlive()}
 	data, err := json.Marshal(requestBody)
 	if err != nil {
 		return "", fmt.Errorf("ollama: error creando JSON: %w", err)
