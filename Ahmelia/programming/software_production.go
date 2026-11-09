@@ -281,6 +281,21 @@ func buildFailureReason(build Build, analysis *ErrorAnalysis) string {
 	if analysis != nil && len(analysis.Diagnostics) > 0 {
 		return formatDiagnosticFailure("build failed", analysis.Diagnostics)
 	}
+	// Go prefixes compiler output with a package header ("# module/path").
+	// Using only Errors[0] preserved that header and dropped the actual
+	// diagnostic, e.g. "function main is undeclared in the main package".
+	// Keep every meaningful line so the next synthesis can repair the cause.
+	lines := make([]string, 0, len(build.Errors))
+	for _, line := range build.Errors {
+		trimmed := strings.TrimSpace(line)
+		if trimmed == "" || strings.HasPrefix(trimmed, "# ") {
+			continue
+		}
+		lines = append(lines, trimmed)
+	}
+	if len(lines) > 0 {
+		return "build failed: " + strings.Join(lines, "; ")
+	}
 	if len(build.Errors) > 0 {
 		return "build failed: " + build.Errors[0]
 	}
