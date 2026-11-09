@@ -40,6 +40,10 @@ type BackgroundJob struct {
 	Result         production.ActionResult
 	Err            error
 	SuppressNotice bool
+	// noticeEnqueued marks that the canceling caller already owns durable
+	// delivery of the cancellation notice. It prevents a duplicate proactive
+	// notice when the provider later returns its discarded result.
+	noticeEnqueued bool
 }
 
 type backgroundJob struct {
@@ -172,15 +176,15 @@ func (r *backgroundJobRegistry) snapshot(id string) (BackgroundJob, bool) {
 	return job.BackgroundJob, true
 }
 
-func (r *backgroundJobRegistry) cancel(id string, suppressNotice bool) bool {
+func (r *backgroundJobRegistry) cancel(id string, suppressNotice bool) (BackgroundJob, bool) {
 	r.mu.Lock()
 	defer r.mu.Unlock()
 	job, ok := r.jobs[id]
 	if !ok {
-		return false
+		return BackgroundJob{}, false
 	}
 	if job.Status != BackgroundJobRunning {
-		return false
+		return BackgroundJob{}, false
 	}
 	job.cancel()
 	job.Status = BackgroundJobCanceled
@@ -188,7 +192,8 @@ func (r *backgroundJobRegistry) cancel(id string, suppressNotice bool) bool {
 	job.Err = context.Canceled
 	job.Result = production.ActionResult{}
 	job.SuppressNotice = suppressNotice
-	return true
+	job.noticeEnqueued = !suppressNotice
+	return job.BackgroundJob, true
 }
 
 func (r *backgroundJobRegistry) all() []BackgroundJob {
@@ -383,11 +388,22 @@ func (e *Engine) RecoverPendingWork(ctx context.Context) (reconciled, blocked in
 }
 
 // CancelBackgroundJob cancels a running job. A late result is discarded.
+// The Work is blocked and the cancellation notice is queued before this
+// method returns, so a crash immediately after cancellation cannot leave the
+// job looking like an interrupted success.
 func (e *Engine) CancelBackgroundJob(id string) bool {
 	if e == nil {
 		return false
 	}
-	return e.backgroundJobs.cancel(id, false)
+	job, ok := e.backgroundJobs.cancel(id, false)
+	if !ok {
+		return false
+	}
+	e.blockCanceledWork(job.WorkID)
+	e.enqueueBackgroundResult(backgroundResult{
+		JobID: job.ID, WorkID: job.WorkID, Err: errBackgroundJobCanceled, Canceled: true,
+	})
+	return true
 }
 
 // ReconcileInterruptedProgrammingWork resolves durable programming attempts
