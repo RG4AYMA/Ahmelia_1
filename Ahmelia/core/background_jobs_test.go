@@ -317,3 +317,61 @@ func TestReconcileInterruptedProgrammingWorkResolvesFromDurablePlan(t *testing.T
 		t.Fatalf("reconciled work was not announced: %q", joined)
 	}
 }
+
+func TestEngineRestartReconcilesPendingProgrammingWork(t *testing.T) {
+	root := t.TempDir()
+	mainContent := "package main\n\nfunc Add(a, b int) int { return a + b }\n\nfunc main() {}\n"
+	testContent := "package main\n\nimport \"testing\"\n\nfunc TestAdd(t *testing.T) { if Add(2, 3) != 5 { t.Fatal(\"bad sum\") } }\n"
+	for name, content := range map[string]string{
+		"go.mod":       "module restart\n\ngo 1.20\n",
+		"main.go":      mainContent,
+		"main_test.go": testContent,
+	} {
+		if err := os.WriteFile(filepath.Join(root, name), []byte(content), 0o600); err != nil {
+			t.Fatalf("write %s: %v", name, err)
+		}
+	}
+	plan := programming.MultiFilePlan{
+		ID: "plan-restart",
+		Project: programming.CodeProject{
+			ID: "restart", Name: "restart", Root: root, Language: "Go",
+			BuildCommand: "go build ./...", TestCommand: "go test ./...",
+		},
+		Changes: []programming.MultiFileChange{
+			{ID: "main", Operation: programming.SourceCreate, File: programming.SourceFile{Path: "main.go", Language: "Go", Role: programming.RoleSource, ProjectID: "restart"}, Content: mainContent},
+			{ID: "test", Operation: programming.SourceCreate, File: programming.SourceFile{Path: "main_test.go", Language: "Go", Role: programming.RoleTest, ProjectID: "restart"}, Content: testContent},
+		},
+	}
+	spec, err := json.Marshal(plan)
+	if err != nil {
+		t.Fatalf("marshal plan: %v", err)
+	}
+
+	first := buildTestEngine(t)
+	req := interaction.Analyze("crear un proyecto antes del reinicio", interaction.Context{})
+	work, err := first.workStore.Begin(req)
+	if err != nil {
+		t.Fatalf("begin work: %v", err)
+	}
+	attempt, err := first.workStore.BeginAttempt(work.ID, "programming.create_file", "produce", "programming")
+	if err != nil {
+		t.Fatalf("begin attempt: %v", err)
+	}
+	if err := first.workStore.SetAttemptEffectSpecification(work.ID, attempt, spec); err != nil {
+		t.Fatalf("set effect spec: %v", err)
+	}
+
+	// New Engine instance, same persistent stores: this is the restart boundary.
+	restarted := buildTestEngine(t)
+	reconciled, blocked := restarted.RecoverPendingWork(context.Background())
+	if reconciled != 1 || blocked != 0 {
+		t.Fatalf("recovery after restart: reconciled=%d blocked=%d", reconciled, blocked)
+	}
+	persisted, ok := restarted.workStore.Get(work.ID)
+	if !ok || persisted.Status != production.WorkCompleted || persisted.LastActionResult == nil || !persisted.LastActionResult.Success {
+		t.Fatalf("work was not completed after Engine restart: ok=%t work=%+v", ok, persisted)
+	}
+	if len(persisted.Attempts) != 1 || persisted.Attempts[0].Status != "succeeded" {
+		t.Fatalf("attempt was not reconciled: %+v", persisted.Attempts)
+	}
+}

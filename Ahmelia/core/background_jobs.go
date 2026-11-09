@@ -373,6 +373,15 @@ func (e *Engine) enqueueBackgroundResult(item backgroundResult) {
 	e.backgroundResults.enqueue(item)
 }
 
+func (e *Engine) RecoverPendingWork(ctx context.Context) (reconciled, blocked int) {
+	if e == nil {
+		return 0, 0
+	}
+	reconciled = e.ReconcileInterruptedProgrammingWork(ctx)
+	blocked = e.RecoverInterruptedWork()
+	return reconciled, blocked
+}
+
 // CancelBackgroundJob cancels a running job. A late result is discarded.
 func (e *Engine) CancelBackgroundJob(id string) bool {
 	if e == nil {

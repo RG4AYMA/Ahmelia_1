@@ -131,12 +131,13 @@ func main() {
 	// (archivos + build/tests). Lo que no se pueda observar se bloquea y se
 	// anuncia; nunca se repite a ciegas.
 	reconcileCtx, cancelReconcile := context.WithTimeout(context.Background(), 5*time.Minute)
-	if reconciled := engine.ReconcileInterruptedProgrammingWork(reconcileCtx); reconciled > 0 {
+	reconciled, blocked := engine.RecoverPendingWork(reconcileCtx)
+	if reconciled > 0 {
 		fmt.Printf("✅ [reconciliación] %d trabajo(s) de programación reconciliado(s) desde evidencia durable\n", reconciled)
 	}
 	cancelReconcile()
-	if recovered := engine.RecoverInterruptedWork(); recovered > 0 {
-		fmt.Printf("⚠️ [reconciliación] %d trabajo(s) interrumpido(s) por reinicio; bloqueados hasta reconciliar\n", recovered)
+	if blocked > 0 {
+		fmt.Printf("⚠️ [reconciliación] %d trabajo(s) interrumpido(s) por reinicio; bloqueados hasta reconciliar\n", blocked)
 	}
 	// Hito "van juntos" (2026-10-17) — comprensión abierta EN VIVO: el oído
 	// lingüístico pasa del contrato cerrado al significado abierto (directiva
