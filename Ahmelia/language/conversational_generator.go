@@ -26,7 +26,12 @@ type ConversationalClient interface {
 
 var ErrConversationalGenerationTimeout = errors.New("conversational generation deadline exceeded")
 
-const defaultConversationalGenerationBudget = 15 * time.Second
+// Local CPU models can exceed 15 s in open comprehension before the language
+// renderer produces its first word. The budget is a hard cap, not a target: a
+// fast model still answers as soon as it finishes. 120 s keeps the LLM as the
+// language owner on CPU instead of silently degrading to the harness fallback.
+// Override with AHMELIA_CONVERSATIONAL_GENERATION_BUDGET_MS.
+const defaultConversationalGenerationBudget = 120 * time.Second
 const conversationalGenerationBudgetEnv = "AHMELIA_CONVERSATIONAL_GENERATION_BUDGET_MS"
 
 type ConversationalGenerator struct {

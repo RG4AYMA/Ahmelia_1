@@ -9,7 +9,7 @@ import (
 
 func TestConversationalGenerationDefaultAllowsLocalModelLatency(t *testing.T) {
 	t.Setenv(conversationalGenerationBudgetEnv, "")
-	if got, want := ConversationalGenerationBudget(), 15*time.Second; got != want {
+	if got, want := ConversationalGenerationBudget(), 120*time.Second; got != want {
 		t.Fatalf("default conversational budget=%s, want %s", got, want)
 	}
 }
