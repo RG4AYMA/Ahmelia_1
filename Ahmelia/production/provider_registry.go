@@ -117,6 +117,7 @@ func (s OutcomeStatus) Valid() bool {
 // populate Summary/FailureReason, verification status, and generic artifacts
 // without teaching the Engine about their internal object model.
 type ProviderResult struct {
+	ProgressChecks        []ProgressCheck // observed by the provider harness, never model prose
 	Success               bool
 	GenerationSource      string
 	VerificationProfile   string
@@ -220,6 +221,8 @@ type ObservedPostconditionFact struct {
 // operational facts only; it does not contain a conversational sentence or
 // language-generation decision. The caller decides how to communicate it.
 type ActionResult struct {
+	RetryState     *RetryState     `json:"retry_state,omitempty"`
+	ProgressChecks []ProgressCheck `json:"progress_checks,omitempty"`
 	// Executed means the provider crossed the physical execution boundary.
 	// It is distinct from Success (business outcome) and Verified (behavioral evidence).
 	Executed              bool                        `json:"executed,omitempty"`

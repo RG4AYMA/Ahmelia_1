@@ -1036,6 +1036,11 @@ func (s *WorkStore) RecentResult() (string, bool) {
 }
 
 func cloneActionResult(r ActionResult) ActionResult {
+	if r.RetryState != nil {
+		state := r.RetryState.Clone()
+		r.RetryState = &state
+	}
+	r.ProgressChecks = append([]ProgressCheck(nil), r.ProgressChecks...)
 	r.Artifacts = cloneArtifacts(r.Artifacts)
 	if r.RecoveryContext != nil {
 		r.RecoveryContext = r.RecoveryContext.Clone()

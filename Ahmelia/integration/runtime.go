@@ -226,6 +226,22 @@ func (p *ProgrammingProvider) providerResultFromProduction(ctx context.Context, 
 		Project:               production.ProductionProject{ID: result.ProjectID, Name: result.ProjectID, Path: projectPath},
 	}
 
+	// Stable harness checks describe partial progress even when the production
+	// loop exits before final verification. Generated tests are a technical
+	// milestone only; they do not imply semantic acceptance of the objective.
+	if build := result.Production.Build; build != nil {
+		pr.ProgressChecks = append(pr.ProgressChecks, production.ProgressCheck{ID: "programming/build", Passed: build.Status == programming.BuildSuccess && build.ExitCode == 0})
+	}
+	if tests := result.Production.Tests; tests != nil {
+		pr.ProgressChecks = append(pr.ProgressChecks, production.ProgressCheck{ID: "programming/tests", Passed: tests.Status == programming.TestPassed && tests.ExitCode == 0})
+	}
+	for _, check := range result.Production.Verification.Checks {
+		if check.Name == "build_succeeds" || check.Name == "tests_pass" {
+			continue
+		}
+		pr.ProgressChecks = append(pr.ProgressChecks, production.ProgressCheck{ID: "programming/verification/" + check.Name, Passed: check.Success})
+	}
+
 	if !pr.Success && result.Production.FailureReason != "" {
 		payload, _ := json.Marshal(struct {
 			FailedStage   string                               `json:"failed_stage,omitempty"`

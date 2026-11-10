@@ -1266,11 +1266,11 @@
   "work_1792523543860816700_1": {
     "id": "work_1792523543860816700_1",
     "objective": {
-      "Text": "quiero crear un proyecto para prueba V1 real 2026-10-20\ncrea carpeta C:\\Users\\User\\AppData\\Local\\Temp\\ahmelia-paso4-normal-1\ncrea carpeta PruebaPaso4",
+      "Text": "quiero crear un proyecto para prueba V1 real 2026-10-20\ncrea carpeta C:\\Users\\User\\AppData\\Local\\Temp\\ahmelia-paso4-normal-1\ncrea carpeta PruebaPaso4\nCrea un programa Go que sume dos numeros y guardalo en el proyecto",
       "Constraints": null,
       "OpenEnded": true
     },
-    "status": "blocked",
+    "status": "cancelled",
     "goal_id": "20261020141135-1-goal",
     "plan_id": "plan-1792523498853311800-1",
     "provider": "programming",
@@ -1334,6 +1334,21 @@
         "time": "2026-11-04T23:28:50.9294928Z",
         "type": "execution_awaiting_authorization",
         "detail": "attempt=1 capability=programming.create_file provider=programming"
+      },
+      {
+        "time": "2026-11-09T21:12:33.3650829Z",
+        "type": "objective_repaired",
+        "detail": "objective specification continued from conversation"
+      },
+      {
+        "time": "2026-11-09T21:12:33.3955608Z",
+        "type": "execution_awaiting_authorization",
+        "detail": "attempt=1 capability=programming.create_file provider=programming"
+      },
+      {
+        "time": "2026-11-09T21:15:17.826261Z",
+        "type": "execution_authorization_denied",
+        "detail": "usuario rechazó la autorización pendiente"
       }
     ],
     "attempts": [
@@ -1343,131 +1358,1606 @@
         "capability_id": "programming.create_file",
         "operation": "create_file",
         "provider": "programming",
-        "status": "awaiting_authorization",
+        "status": "authorization_denied",
         "started_at": "2026-10-20T19:12:23.8724054Z",
-        "finished_at": "0001-01-01T00:00:00Z"
+        "finished_at": "2026-11-09T21:15:17.826261Z"
       }
     ],
-    "pending_execution": {
-      "request": {
-        "Raw": "quiero crear un proyecto para prueba V1 real 2026-10-20\nquien eres\n�Qu� puedes hacer?\nque puedes hacer\nhola, como estas?\nquiero crear un proyecto para prueba V1 real 2026-10-20\ncrea carpeta C:\\Users\\User\\AppData\\Local\\Temp\\ahmelia-paso4-normal-1\nquiero crear un proyecto para prueba V1 real 2026-10-20\ncrea carpeta C:\\Users\\User\\AppData\\Local\\Temp\\ahmelia-paso4-normal-1\ncrea carpeta PruebaPaso4",
-        "Normalized": "quiero crear un proyecto para prueba v1 real 2026-10-20\nquien eres\n�qu� puedes hacer\nque puedes hacer\nhola como estas\nquiero crear un proyecto para prueba v1 real 2026-10-20\ncrea carpeta c\\users\\user\\appdata\\local\\temp\\ahmelia-paso4-normal-1\nquiero crear un proyecto para prueba v1 real 2026-10-20\ncrea carpeta c\\users\\user\\appdata\\local\\temp\\ahmelia-paso4-normal-1\ncrea carpeta pruebapaso4",
-        "Channel": "text",
-        "Kind": "production",
-        "Objective": {
-          "Text": "quiero crear un proyecto para prueba V1 real 2026-10-20\nquien eres\n�Qu� puedes hacer?\nque puedes hacer\nhola, como estas?\nquiero crear un proyecto para prueba V1 real 2026-10-20\ncrea carpeta C:\\Users\\User\\AppData\\Local\\Temp\\ahmelia-paso4-normal-1\nquiero crear un proyecto para prueba V1 real 2026-10-20\ncrea carpeta C:\\Users\\User\\AppData\\Local\\Temp\\ahmelia-paso4-normal-1\ncrea carpeta PruebaPaso4",
-          "Constraints": null,
-          "OpenEnded": true
+    "created_at": "2026-10-20T19:12:23.8608167Z",
+    "updated_at": "2026-11-09T21:15:17.826261Z"
+  },
+  "work_1794259043908012400_1": {
+    "id": "work_1794259043908012400_1",
+    "objective": {
+      "Text": "Crea un programa Go nuevo llamado sumador_real con una funcion Add(a, b int) int y una prueba TestAdd que verifique Add(2, 3) == 5. Guardalo en el proyecto. Sin dependencias externas.",
+      "Constraints": null,
+      "OpenEnded": true
+    },
+    "status": "failed",
+    "goal_id": "20261109161623-1-goal",
+    "plan_id": "plan-1794258998897828400-1",
+    "provider": "programming",
+    "artifacts": [
+      {
+        "ID": "sumador_real.go",
+        "Name": "sumador_real.go",
+        "Path": "C:\\Users\\User\\Desktop\\Ahmelia_Real_2026-11-09\\sumador_real.go",
+        "Type": "source",
+        "Producer": "programming",
+        "ProjectID": "ahmelia_real_2026-11-09",
+        "CreatedAt": "0001-01-01T00:00:00Z",
+        "Metadata": null,
+        "version": 1,
+        "checksum_sha256": "73720cc82daf5bf558b06e4bcdc73e0625d924c02d959d28cef2aa73dd691617",
+        "size_bytes": 98,
+        "integrity_verified": true,
+        "integrity_reason": "file exists and SHA-256 was computed from current bytes"
+      },
+      {
+        "ID": "sumador_real_test.go",
+        "Name": "sumador_real_test.go",
+        "Path": "C:\\Users\\User\\Desktop\\Ahmelia_Real_2026-11-09\\sumador_real_test.go",
+        "Type": "test",
+        "Producer": "programming",
+        "ProjectID": "ahmelia_real_2026-11-09",
+        "CreatedAt": "0001-01-01T00:00:00Z",
+        "Metadata": null,
+        "version": 1,
+        "checksum_sha256": "469be055d989f536a8669e3e32471d6161acc4b789dc039d0b887ad2590389f4",
+        "size_bytes": 164,
+        "integrity_verified": true,
+        "integrity_reason": "file exists and SHA-256 was computed from current bytes"
+      },
+      {
+        "ID": "go.mod",
+        "Name": "go.mod",
+        "Path": "C:\\Users\\User\\Desktop\\Ahmelia_Real_2026-11-09\\go.mod",
+        "Type": "config",
+        "Producer": "programming",
+        "ProjectID": "ahmelia_real_2026-11-09",
+        "CreatedAt": "0001-01-01T00:00:00Z",
+        "Metadata": null,
+        "version": 1,
+        "checksum_sha256": "204810b4f444defcd7472fdeb50741095be1a58856d3a2db06f8e91e6421870a",
+        "size_bytes": 62,
+        "integrity_verified": true,
+        "integrity_reason": "file exists and SHA-256 was computed from current bytes"
+      }
+    ],
+    "events": [
+      {
+        "time": "2026-11-09T21:17:24.0396985Z",
+        "type": "planned",
+        "detail": "goal and plan attached"
+      },
+      {
+        "time": "2026-11-09T21:17:24.5905834Z",
+        "type": "started",
+        "detail": "production started"
+      },
+      {
+        "time": "2026-11-09T21:17:24.7397347Z",
+        "type": "attempt_started",
+        "detail": "attempt=1 operation=create_file provider=programming"
+      },
+      {
+        "time": "2026-11-09T21:17:24.7428521Z",
+        "type": "execution_awaiting_authorization",
+        "detail": "attempt=1 capability=programming.create_file provider=programming"
+      },
+      {
+        "time": "2026-11-09T21:21:12.5980041Z",
+        "type": "started",
+        "detail": "production started"
+      },
+      {
+        "time": "2026-11-09T21:21:12.6026431Z",
+        "type": "authorization_consumed_attempt_started",
+        "detail": "attempt=1 capability=programming.create_file"
+      },
+      {
+        "time": "2026-11-09T21:21:12.6102278Z",
+        "type": "attempt_execution_identity",
+        "detail": "attempt=1 job=work_1794259043908012400_1-attempt-1 execution=work_1794259043908012400_1-attempt-1-execution"
+      },
+      {
+        "time": "2026-11-09T21:22:38.0040705Z",
+        "type": "attempt_effect_specification_persisted",
+        "detail": "attempt=1"
+      },
+      {
+        "time": "2026-11-09T21:22:38.0087119Z",
+        "type": "attempt_effect_evaluation_recorded",
+        "detail": "attempt=1"
+      },
+      {
+        "time": "2026-11-09T21:22:38.0108462Z",
+        "type": "attempt_effect_evaluation_recorded",
+        "detail": "attempt=1"
+      },
+      {
+        "time": "2026-11-09T21:22:38.0134582Z",
+        "type": "attempt_effect_evaluation_recorded",
+        "detail": "attempt=1"
+      },
+      {
+        "time": "2026-11-09T21:22:40.1270537Z",
+        "type": "attempt_completed",
+        "detail": "attempt=1 status=failed detail=build failed: sumador_real.go:9:17: undefined: testing recovery=retry"
+      },
+      {
+        "time": "2026-11-09T21:22:40.1515197Z",
+        "type": "started",
+        "detail": "production started"
+      },
+      {
+        "time": "2026-11-09T21:22:40.1597141Z",
+        "type": "attempt_started",
+        "detail": "attempt=2 operation=create_file provider=programming"
+      },
+      {
+        "time": "2026-11-09T21:22:40.1667103Z",
+        "type": "attempt_execution_identity",
+        "detail": "attempt=2 job=work_1794259043908012400_1-attempt-2 execution=work_1794259043908012400_1-attempt-2-execution"
+      },
+      {
+        "time": "2026-11-09T21:24:44.7591189Z",
+        "type": "attempt_effect_specification_persisted",
+        "detail": "attempt=2"
+      },
+      {
+        "time": "2026-11-09T21:24:44.763766Z",
+        "type": "attempt_effect_evaluation_recorded",
+        "detail": "attempt=2"
+      },
+      {
+        "time": "2026-11-09T21:24:44.7663175Z",
+        "type": "attempt_effect_evaluation_recorded",
+        "detail": "attempt=2"
+      },
+      {
+        "time": "2026-11-09T21:24:46.0065123Z",
+        "type": "attempt_completed",
+        "detail": "attempt=2 status=failed detail=build failed: # ahmelia.local/project-ahmelia_real_2026-11-09 recovery=replan"
+      },
+      {
+        "time": "2026-11-09T21:24:46.0197717Z",
+        "type": "failed",
+        "detail": "build failed: # ahmelia.local/project-ahmelia_real_2026-11-09"
+      }
+    ],
+    "last_action_result": {
+      "executed": true,
+      "generation_source": "ollama:qwen3:4b-instruct-2507-q4_K_M",
+      "verification_profile": "build[go build ./...]=failed;tests=not_run",
+      "objective_contract_json": "{\"PrimaryGoal\":\"\",\"PrimaryOperation\":\"\",\"Subject\":\"\",\"Workspace\":\"\",\"Constraints\":null,\"RequiredActions\":null,\"Verification\":null,\"Recovery\":null,\"Confidence\":0,\"Provenance\":\"\"}",
+      "success": false,
+      "outcome_status": "failed",
+      "verified": false,
+      "observation_details": "el proveedor de programación confirmó el estado de producción mediante su evidencia de construcción/pruebas disponible",
+      "observation_captured_at": "0001-01-01T00:00:00Z",
+      "verification_reason": "resultado de producción evaluado por el proveedor de programación",
+      "verification_source": "programming",
+      "outcome_code": "production_result",
+      "work_id": "work_1794259043908012400_1",
+      "attempt_number": 2,
+      "production_id": "ahmelia_real_2026-11-09",
+      "producer": "programming",
+      "project": {
+        "ID": "ahmelia_real_2026-11-09",
+        "Name": "ahmelia_real_2026-11-09",
+        "Path": "C:\\Users\\User\\Desktop\\Ahmelia_Real_2026-11-09"
+      },
+      "artifacts": [
+        {
+          "ID": "sumador_real.go",
+          "Name": "sumador_real.go",
+          "Path": "C:\\Users\\User\\Desktop\\Ahmelia_Real_2026-11-09\\sumador_real.go",
+          "Type": "source",
+          "Producer": "programming",
+          "ProjectID": "ahmelia_real_2026-11-09",
+          "CreatedAt": "0001-01-01T00:00:00Z",
+          "Metadata": null
         },
-        "Frame": {
-          "PrimaryGoal": "quiero crear un proyecto para prueba V1 real 2026-10-20",
-          "PrimaryOperation": "create",
-          "Subject": "",
-          "Workspace": "",
-          "Constraints": null,
-          "RequiredActions": null,
-          "Verification": null,
-          "Recovery": null,
-          "Confidence": 0.9,
-          "Provenance": "interaction.semantic_objective_frame"
-        },
-        "FollowUp": false,
-        "Continues": false,
-        "Language": "es",
-        "Confidence": 0.9,
-        "Subject": "user",
-        "SubjectConfidence": 0.8,
-        "SubjectEvidence": [
+        {
+          "ID": "sumador_real_test.go",
+          "Name": "sumador_real_test.go",
+          "Path": "C:\\Users\\User\\Desktop\\Ahmelia_Real_2026-11-09\\sumador_real_test.go",
+          "Type": "test",
+          "Producer": "programming",
+          "ProjectID": "ahmelia_real_2026-11-09",
+          "CreatedAt": "0001-01-01T00:00:00Z",
+          "Metadata": null
+        }
+      ],
+      "failed_stage": "build",
+      "failure_reason": "build failed: # ahmelia.local/project-ahmelia_real_2026-11-09",
+      "recovery": {
+        "Action": "replan",
+        "Reason": "build failed: # ahmelia.local/project-ahmelia_real_2026-11-09"
+      },
+      "recovery_context": {
+        "attempt_number": 2,
+        "failure_reason": "build failed: # ahmelia.local/project-ahmelia_real_2026-11-09",
+        "evidence": [
           {
-            "Signal": "first_person_verb",
-            "Token": "quiero",
-            "Confidence": 0.8,
-            "Provenance": "ownership.grammar"
+            "kind": "programming.production",
+            "source": "programming",
+            "stage": "build",
+            "summary": "build failed: # ahmelia.local/project-ahmelia_real_2026-11-09",
+            "payload": {
+              "failed_stage": "build",
+              "failure_reason": "build failed: # ahmelia.local/project-ahmelia_real_2026-11-09",
+              "error_analysis": {
+                "ProjectID": "ahmelia_real_2026-11-09",
+                "Diagnostics": null
+              },
+              "verification": {
+                "ProjectID": "",
+                "Objective": {
+                  "PrimaryGoal": "",
+                  "PrimaryOperation": "",
+                  "Subject": "",
+                  "Workspace": "",
+                  "Constraints": null,
+                  "RequiredActions": null,
+                  "Verification": null,
+                  "Recovery": null,
+                  "Confidence": 0,
+                  "Provenance": ""
+                },
+                "ObjectiveStatus": "",
+                "Checks": null,
+                "Success": false
+              }
+            }
+          }
+        ]
+      }
+    },
+    "attempts": [
+      {
+        "number": 1,
+        "skill_id": "software.development",
+        "capability_id": "programming.create_file",
+        "operation": "create_file",
+        "provider": "programming",
+        "job_id": "work_1794259043908012400_1-attempt-1",
+        "execution_attempt_id": "work_1794259043908012400_1-attempt-1-execution",
+        "effect_specification": {
+          "ID": "synthesis-ahmelia_real_2026-11-09",
+          "Project": {
+            "ID": "ahmelia_real_2026-11-09",
+            "Name": "ahmelia_real_2026-11-09",
+            "Root": "C:\\Users\\User\\Desktop\\Ahmelia_Real_2026-11-09",
+            "Language": "Go",
+            "SourceRoots": [
+              "."
+            ],
+            "TestRoots": [
+              "."
+            ],
+            "BuildCommand": "go build ./...",
+            "TestCommand": "go test ./...",
+            "RuntimeCommand": "go run ."
+          },
+          "Changes": [
+            {
+              "ID": "synth-001",
+              "Operation": "create",
+              "File": {
+                "Path": "sumador_real.go",
+                "Language": "Go",
+                "Role": "source",
+                "ProjectID": "ahmelia_real_2026-11-09"
+              },
+              "NewPath": "",
+              "Content": "package main\n\n// Add returns the sum of two integers.\nfunc Add(a, b int) int {\n    return a + b\n}\n\n// TestAdd verifies that Add(2, 3) returns 5.\nfunc TestAdd(t *testing.T) {\n    result := Add(2, 3)\n    if result != 5 {\n        t.Errorf(\"Add(2, 3) = %d; want 5\", result)\n    }\n}",
+              "OldText": "",
+              "NewText": ""
+            },
+            {
+              "ID": "synth-002",
+              "Operation": "create",
+              "File": {
+                "Path": "sumador_real_test.go",
+                "Language": "Go",
+                "Role": "test",
+                "ProjectID": "ahmelia_real_2026-11-09"
+              },
+              "NewPath": "",
+              "Content": "package main\n\nimport \"testing\"\n\nfunc TestAdd(t *testing.T) {\n    result := Add(2, 3)\n    if result != 5 {\n        t.Errorf(\"Add(2, 3) = %d; want 5\", result)\n    }\n}",
+              "OldText": "",
+              "NewText": ""
+            },
+            {
+              "ID": "synth-go-mod",
+              "Operation": "create",
+              "File": {
+                "Path": "go.mod",
+                "Language": "Go",
+                "Role": "config",
+                "ProjectID": "ahmelia_real_2026-11-09"
+              },
+              "NewPath": "",
+              "Content": "module ahmelia.local/project-ahmelia_real_2026-11-09\n\ngo 1.20\n",
+              "OldText": "",
+              "NewText": ""
+            }
+          ],
+          "CreatedAt": "0001-01-01T00:00:00Z"
+        },
+        "effect_evaluations": [
+          {
+            "id": "effect-eval-work_1794259043908012400_1-1-synth-001",
+            "work_id": "work_1794259043908012400_1",
+            "attempt_number": 1,
+            "expected_change_id": "synth-001",
+            "observed": {
+              "Source": "filesystem",
+              "Path": "sumador_real.go",
+              "Exists": true,
+              "SHA256": "a7075aa5ef3f23906565979a08f43eb09e2760a68a8c86f46081c1cdeb518a24",
+              "ObservedAt": "2026-11-09T21:22:38.0087119Z"
+            },
+            "judgment": {
+              "compatible": true
+            },
+            "evaluated_at": "2026-11-09T21:22:38.0087119Z"
+          },
+          {
+            "id": "effect-eval-work_1794259043908012400_1-1-synth-002",
+            "work_id": "work_1794259043908012400_1",
+            "attempt_number": 1,
+            "expected_change_id": "synth-002",
+            "observed": {
+              "Source": "filesystem",
+              "Path": "sumador_real_test.go",
+              "Exists": true,
+              "SHA256": "469be055d989f536a8669e3e32471d6161acc4b789dc039d0b887ad2590389f4",
+              "ObservedAt": "2026-11-09T21:22:38.0108462Z"
+            },
+            "judgment": {
+              "compatible": true
+            },
+            "evaluated_at": "2026-11-09T21:22:38.0108462Z"
+          },
+          {
+            "id": "effect-eval-work_1794259043908012400_1-1-synth-go-mod",
+            "work_id": "work_1794259043908012400_1",
+            "attempt_number": 1,
+            "expected_change_id": "synth-go-mod",
+            "observed": {
+              "Source": "filesystem",
+              "Path": "go.mod",
+              "Exists": true,
+              "SHA256": "204810b4f444defcd7472fdeb50741095be1a58856d3a2db06f8e91e6421870a",
+              "ObservedAt": "2026-11-09T21:22:38.0129279Z"
+            },
+            "judgment": {
+              "compatible": true
+            },
+            "evaluated_at": "2026-11-09T21:22:38.0134582Z"
           }
         ],
-        "References": null,
-        "NeedsClarification": false,
-        "AddressesCurrent": false,
-        "BreaksContinuity": false,
-        "ExplicitDomain": "",
-        "Action": {
-          "Name": "",
-          "Target": "",
-          "Parameters": null,
-          "Confidence": 0
-        },
-        "Entities": [
-          "proyecto",
-          "prueba"
-        ],
-        "Relations": null,
-        "Urgency": "",
-        "RequestedAction": "create",
-        "ExpectedResponse": "result",
-        "SpeechAct": "command",
-        "Topic": "proyecto",
-        "QuestionType": "",
-        "Directness": "direct_command",
-        "UserSignals": {
-          "frustration": 0,
-          "positive": 0,
-          "fatigue": 0,
-          "urgency": 0,
-          "confidence": 0.5
-        },
-        "CorrectionTarget": "",
-        "Correction": {
-          "IsCorrection": false,
-          "IsNegation": false,
-          "Target": "",
-          "Replacement": "",
-          "Reason": "",
-          "Confidence": 0
-        },
-        "Meaning": {
-          "Concepts": [
-            "command"
-          ],
-          "Primary": "command",
-          "Language": "es",
-          "Confidence": 0.9,
-          "Ambiguous": false,
-          "Evidence": [
-            "communicative_act"
-          ],
-          "SourceText": "quiero crear un proyecto para prueba V1 real 2026-10-20",
-          "NormalizedText": "quiero crear un proyecto para prueba v1 real 2026-10-20",
-          "Query": "",
-          "Attribute": ""
-        },
-        "Temporal": {
-          "From": "0001-01-01T00:00:00Z",
-          "To": "0001-01-01T00:00:00Z",
-          "Label": "",
-          "Known": false
-        },
-        "CommunicativeActs": {
-          "Primary": "command",
-          "Secondary": null,
-          "Confidence": 0.94,
-          "Ambiguous": false,
-          "Evidence": [
+        "status": "failed",
+        "started_at": "2026-11-09T21:17:24.7397347Z",
+        "finished_at": "2026-11-09T21:22:40.1270537Z",
+        "result": {
+          "executed": true,
+          "generation_source": "ollama:qwen3:4b-instruct-2507-q4_K_M",
+          "verification_profile": "build[go build ./...]=failed;tests=not_run",
+          "objective_contract_json": "{\"PrimaryGoal\":\"\",\"PrimaryOperation\":\"\",\"Subject\":\"\",\"Workspace\":\"\",\"Constraints\":null,\"RequiredActions\":null,\"Verification\":null,\"Recovery\":null,\"Confidence\":0,\"Provenance\":\"\"}",
+          "success": false,
+          "outcome_status": "failed",
+          "verified": false,
+          "summary": "Producción detenida en build. Diagnóstico: sumador_real.go:9:17 undefined: testing. diagnóstico listo para B96.12; se requiere una especificación de edición precisa antes de mutar código.",
+          "observation_details": "programming failure evidence: stage=build diagnostics=1",
+          "observation_captured_at": "0001-01-01T00:00:00Z",
+          "verification_reason": "resultado de producción evaluado por el proveedor de programación",
+          "verification_source": "programming",
+          "outcome_code": "production_result",
+          "work_id": "work_1794259043908012400_1",
+          "attempt_number": 1,
+          "production_id": "ahmelia_real_2026-11-09",
+          "producer": "programming",
+          "project": {
+            "ID": "ahmelia_real_2026-11-09",
+            "Name": "ahmelia_real_2026-11-09",
+            "Path": "C:\\Users\\User\\Desktop\\Ahmelia_Real_2026-11-09"
+          },
+          "artifacts": [
             {
-              "Act": "command",
-              "Confidence": 0.94,
-              "Source": "semantic:production"
+              "ID": "sumador_real.go",
+              "Name": "sumador_real.go",
+              "Path": "C:\\Users\\User\\Desktop\\Ahmelia_Real_2026-11-09\\sumador_real.go",
+              "Type": "source",
+              "Producer": "programming",
+              "ProjectID": "ahmelia_real_2026-11-09",
+              "CreatedAt": "0001-01-01T00:00:00Z",
+              "Metadata": null
+            },
+            {
+              "ID": "sumador_real_test.go",
+              "Name": "sumador_real_test.go",
+              "Path": "C:\\Users\\User\\Desktop\\Ahmelia_Real_2026-11-09\\sumador_real_test.go",
+              "Type": "test",
+              "Producer": "programming",
+              "ProjectID": "ahmelia_real_2026-11-09",
+              "CreatedAt": "0001-01-01T00:00:00Z",
+              "Metadata": null
+            },
+            {
+              "ID": "go.mod",
+              "Name": "go.mod",
+              "Path": "C:\\Users\\User\\Desktop\\Ahmelia_Real_2026-11-09\\go.mod",
+              "Type": "config",
+              "Producer": "programming",
+              "ProjectID": "ahmelia_real_2026-11-09",
+              "CreatedAt": "0001-01-01T00:00:00Z",
+              "Metadata": null
+            }
+          ],
+          "failed_stage": "build",
+          "failure_reason": "build failed: sumador_real.go:9:17: undefined: testing",
+          "recovery": {
+            "Action": "retry",
+            "Reason": "build failed: sumador_real.go:9:17: undefined: testing"
+          },
+          "recovery_context": {
+            "attempt_number": 1,
+            "failure_reason": "build failed: sumador_real.go:9:17: undefined: testing",
+            "evidence": [
+              {
+                "kind": "programming.production",
+                "source": "programming",
+                "stage": "build",
+                "summary": "build failed: sumador_real.go:9:17: undefined: testing",
+                "payload": {
+                  "failed_stage": "build",
+                  "failure_reason": "build failed: sumador_real.go:9:17: undefined: testing",
+                  "error_analysis": {
+                    "ProjectID": "ahmelia_real_2026-11-09",
+                    "Diagnostics": [
+                      {
+                        "ID": "diagnostic-001",
+                        "ProjectID": "ahmelia_real_2026-11-09",
+                        "File": "sumador_real.go",
+                        "Line": 9,
+                        "Column": 17,
+                        "ErrorType": "undefined_symbol",
+                        "Message": "undefined: testing",
+                        "Severity": "error",
+                        "Context": ""
+                      }
+                    ]
+                  },
+                  "verification": {
+                    "ProjectID": "",
+                    "Objective": {
+                      "PrimaryGoal": "",
+                      "PrimaryOperation": "",
+                      "Subject": "",
+                      "Workspace": "",
+                      "Constraints": null,
+                      "RequiredActions": null,
+                      "Verification": null,
+                      "Recovery": null,
+                      "Confidence": 0,
+                      "Provenance": ""
+                    },
+                    "ObjectiveStatus": "",
+                    "Checks": null,
+                    "Success": false
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "recovery_action": "retry",
+        "recovery_reason": "build failed: sumador_real.go:9:17: undefined: testing"
+      },
+      {
+        "number": 2,
+        "skill_id": "software.development",
+        "capability_id": "programming.create_file",
+        "operation": "create_file",
+        "provider": "programming",
+        "job_id": "work_1794259043908012400_1-attempt-2",
+        "execution_attempt_id": "work_1794259043908012400_1-attempt-2-execution",
+        "effect_specification": {
+          "ID": "synthesis-ahmelia_real_2026-11-09",
+          "Project": {
+            "ID": "ahmelia_real_2026-11-09",
+            "Name": "ahmelia_real_2026-11-09",
+            "Root": "C:\\Users\\User\\Desktop\\Ahmelia_Real_2026-11-09",
+            "Language": "Go",
+            "SourceRoots": [
+              "."
+            ],
+            "TestRoots": [
+              "."
+            ],
+            "BuildCommand": "go build ./...",
+            "TestCommand": "go test ./...",
+            "RuntimeCommand": "go run ."
+          },
+          "Changes": [
+            {
+              "ID": "synth-001",
+              "Operation": "write",
+              "File": {
+                "Path": "sumador_real.go",
+                "Language": "Go",
+                "Role": "source",
+                "ProjectID": "ahmelia_real_2026-11-09"
+              },
+              "NewPath": "",
+              "Content": "package main\n\n// Add returns the sum of two integers.\nfunc Add(a, b int) int {\n    return a + b\n}\n",
+              "OldText": "",
+              "NewText": ""
+            },
+            {
+              "ID": "synth-002",
+              "Operation": "write",
+              "File": {
+                "Path": "sumador_real_test.go",
+                "Language": "Go",
+                "Role": "test",
+                "ProjectID": "ahmelia_real_2026-11-09"
+              },
+              "NewPath": "",
+              "Content": "package main\n\nimport \"testing\"\n\nfunc TestAdd(t *testing.T) {\n    result := Add(2, 3)\n    if result != 5 {\n        t.Errorf(\"Add(2, 3) = %d; want 5\", result)\n    }\n}",
+              "OldText": "",
+              "NewText": ""
+            }
+          ],
+          "CreatedAt": "0001-01-01T00:00:00Z"
+        },
+        "effect_evaluations": [
+          {
+            "id": "effect-eval-work_1794259043908012400_1-2-synth-001",
+            "work_id": "work_1794259043908012400_1",
+            "attempt_number": 2,
+            "expected_change_id": "synth-001",
+            "observed": {
+              "Source": "filesystem",
+              "Path": "sumador_real.go",
+              "Exists": true,
+              "SHA256": "73720cc82daf5bf558b06e4bcdc73e0625d924c02d959d28cef2aa73dd691617",
+              "ObservedAt": "2026-11-09T21:24:44.763766Z"
+            },
+            "judgment": {
+              "compatible": true
+            },
+            "evaluated_at": "2026-11-09T21:24:44.763766Z"
+          },
+          {
+            "id": "effect-eval-work_1794259043908012400_1-2-synth-002",
+            "work_id": "work_1794259043908012400_1",
+            "attempt_number": 2,
+            "expected_change_id": "synth-002",
+            "observed": {
+              "Source": "filesystem",
+              "Path": "sumador_real_test.go",
+              "Exists": true,
+              "SHA256": "469be055d989f536a8669e3e32471d6161acc4b789dc039d0b887ad2590389f4",
+              "ObservedAt": "2026-11-09T21:24:44.7663175Z"
+            },
+            "judgment": {
+              "compatible": true
+            },
+            "evaluated_at": "2026-11-09T21:24:44.7663175Z"
+          }
+        ],
+        "status": "failed",
+        "started_at": "2026-11-09T21:22:40.1597141Z",
+        "finished_at": "2026-11-09T21:24:46.0065123Z",
+        "result": {
+          "executed": true,
+          "generation_source": "ollama:qwen3:4b-instruct-2507-q4_K_M",
+          "verification_profile": "build[go build ./...]=failed;tests=not_run",
+          "objective_contract_json": "{\"PrimaryGoal\":\"\",\"PrimaryOperation\":\"\",\"Subject\":\"\",\"Workspace\":\"\",\"Constraints\":null,\"RequiredActions\":null,\"Verification\":null,\"Recovery\":null,\"Confidence\":0,\"Provenance\":\"\"}",
+          "success": false,
+          "outcome_status": "failed",
+          "verified": false,
+          "observation_details": "el proveedor de programación confirmó el estado de producción mediante su evidencia de construcción/pruebas disponible",
+          "observation_captured_at": "0001-01-01T00:00:00Z",
+          "verification_reason": "resultado de producción evaluado por el proveedor de programación",
+          "verification_source": "programming",
+          "outcome_code": "production_result",
+          "work_id": "work_1794259043908012400_1",
+          "attempt_number": 2,
+          "production_id": "ahmelia_real_2026-11-09",
+          "producer": "programming",
+          "project": {
+            "ID": "ahmelia_real_2026-11-09",
+            "Name": "ahmelia_real_2026-11-09",
+            "Path": "C:\\Users\\User\\Desktop\\Ahmelia_Real_2026-11-09"
+          },
+          "artifacts": [
+            {
+              "ID": "sumador_real.go",
+              "Name": "sumador_real.go",
+              "Path": "C:\\Users\\User\\Desktop\\Ahmelia_Real_2026-11-09\\sumador_real.go",
+              "Type": "source",
+              "Producer": "programming",
+              "ProjectID": "ahmelia_real_2026-11-09",
+              "CreatedAt": "0001-01-01T00:00:00Z",
+              "Metadata": null
+            },
+            {
+              "ID": "sumador_real_test.go",
+              "Name": "sumador_real_test.go",
+              "Path": "C:\\Users\\User\\Desktop\\Ahmelia_Real_2026-11-09\\sumador_real_test.go",
+              "Type": "test",
+              "Producer": "programming",
+              "ProjectID": "ahmelia_real_2026-11-09",
+              "CreatedAt": "0001-01-01T00:00:00Z",
+              "Metadata": null
+            }
+          ],
+          "failed_stage": "build",
+          "failure_reason": "build failed: # ahmelia.local/project-ahmelia_real_2026-11-09",
+          "recovery": {
+            "Action": "replan",
+            "Reason": "build failed: # ahmelia.local/project-ahmelia_real_2026-11-09"
+          },
+          "recovery_context": {
+            "attempt_number": 2,
+            "failure_reason": "build failed: # ahmelia.local/project-ahmelia_real_2026-11-09",
+            "evidence": [
+              {
+                "kind": "programming.production",
+                "source": "programming",
+                "stage": "build",
+                "summary": "build failed: # ahmelia.local/project-ahmelia_real_2026-11-09",
+                "payload": {
+                  "failed_stage": "build",
+                  "failure_reason": "build failed: # ahmelia.local/project-ahmelia_real_2026-11-09",
+                  "error_analysis": {
+                    "ProjectID": "ahmelia_real_2026-11-09",
+                    "Diagnostics": null
+                  },
+                  "verification": {
+                    "ProjectID": "",
+                    "Objective": {
+                      "PrimaryGoal": "",
+                      "PrimaryOperation": "",
+                      "Subject": "",
+                      "Workspace": "",
+                      "Constraints": null,
+                      "RequiredActions": null,
+                      "Verification": null,
+                      "Recovery": null,
+                      "Confidence": 0,
+                      "Provenance": ""
+                    },
+                    "ObjectiveStatus": "",
+                    "Checks": null,
+                    "Success": false
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "recovery_action": "replan",
+        "recovery_reason": "build failed: # ahmelia.local/project-ahmelia_real_2026-11-09"
+      }
+    ],
+    "created_at": "2026-11-09T21:17:23.9080124Z",
+    "updated_at": "2026-11-09T21:24:46.0197717Z"
+  },
+  "work_1794260016464948400_1": {
+    "id": "work_1794260016464948400_1",
+    "objective": {
+      "Text": "Crea un programa Go nuevo llamado sumador_b con una funcion Add(a, b int) int y una prueba TestAdd que verifique Add(2, 3) == 5. Guardalo en el proyecto. Sin dependencias externas.",
+      "Constraints": null,
+      "OpenEnded": true
+    },
+    "status": "completed",
+    "goal_id": "20261109163237-1-goal",
+    "plan_id": "plan-1794259971422163700-1",
+    "provider": "programming",
+    "artifacts": [
+      {
+        "ID": "sumador_b/main.go",
+        "Name": "main.go",
+        "Path": "C:\\Users\\User\\Desktop\\Ahmelia_Real_B_2026-11-09\\sumador_b\\main.go",
+        "Type": "source",
+        "Producer": "programming",
+        "ProjectID": "ahmelia_real_b_2026-11-09",
+        "CreatedAt": "0001-01-01T00:00:00Z",
+        "Metadata": null,
+        "version": 1,
+        "checksum_sha256": "b7ce5fa4d7bcc50ea345c7843dd4d9ecd825ed92bcaaece265dfc8b6b76ab297",
+        "size_bytes": 242,
+        "integrity_verified": true,
+        "integrity_reason": "file exists and SHA-256 was computed from current bytes"
+      },
+      {
+        "ID": "sumador_b/sumador_b_test.go",
+        "Name": "sumador_b_test.go",
+        "Path": "C:\\Users\\User\\Desktop\\Ahmelia_Real_B_2026-11-09\\sumador_b\\sumador_b_test.go",
+        "Type": "test",
+        "Producer": "programming",
+        "ProjectID": "ahmelia_real_b_2026-11-09",
+        "CreatedAt": "0001-01-01T00:00:00Z",
+        "Metadata": null,
+        "version": 1,
+        "checksum_sha256": "8769ebf256c0f2b878d38648ea478f0c2036f1407fb0f97521d5028ca8449e85",
+        "size_bytes": 223,
+        "integrity_verified": true,
+        "integrity_reason": "file exists and SHA-256 was computed from current bytes"
+      },
+      {
+        "ID": "go.mod",
+        "Name": "go.mod",
+        "Path": "C:\\Users\\User\\Desktop\\Ahmelia_Real_B_2026-11-09\\go.mod",
+        "Type": "config",
+        "Producer": "programming",
+        "ProjectID": "ahmelia_real_b_2026-11-09",
+        "CreatedAt": "0001-01-01T00:00:00Z",
+        "Metadata": null,
+        "version": 1,
+        "checksum_sha256": "15b91f55869399bd4a5d93a9d8d82ec36af2ff03c5dc3079162f1467d5932769",
+        "size_bytes": 64,
+        "integrity_verified": true,
+        "integrity_reason": "file exists and SHA-256 was computed from current bytes"
+      },
+      {
+        "ID": "build",
+        "Name": "build",
+        "Path": "C:\\Users\\User\\Desktop\\Ahmelia_Real_B_2026-11-09",
+        "Type": "build",
+        "Producer": "programming",
+        "ProjectID": "ahmelia_real_b_2026-11-09",
+        "CreatedAt": "0001-01-01T00:00:00Z",
+        "Metadata": null
+      }
+    ],
+    "events": [
+      {
+        "time": "2026-11-09T21:33:36.4701602Z",
+        "type": "planned",
+        "detail": "goal and plan attached"
+      },
+      {
+        "time": "2026-11-09T21:33:36.7179457Z",
+        "type": "started",
+        "detail": "production started"
+      },
+      {
+        "time": "2026-11-09T21:33:36.7437775Z",
+        "type": "attempt_started",
+        "detail": "attempt=1 operation=create_file provider=programming"
+      },
+      {
+        "time": "2026-11-09T21:33:36.9001622Z",
+        "type": "execution_awaiting_authorization",
+        "detail": "attempt=1 capability=programming.create_file provider=programming"
+      },
+      {
+        "time": "2026-11-09T21:34:50.5831017Z",
+        "type": "started",
+        "detail": "production started"
+      },
+      {
+        "time": "2026-11-09T21:34:50.7563483Z",
+        "type": "authorization_consumed_attempt_started",
+        "detail": "attempt=1 capability=programming.create_file"
+      },
+      {
+        "time": "2026-11-09T21:34:50.7594291Z",
+        "type": "attempt_execution_identity",
+        "detail": "attempt=1 job=work_1794260016464948400_1-attempt-1 execution=work_1794260016464948400_1-attempt-1-execution"
+      },
+      {
+        "time": "2026-11-09T21:35:57.6863773Z",
+        "type": "attempt_effect_specification_persisted",
+        "detail": "attempt=1"
+      },
+      {
+        "time": "2026-11-09T21:35:57.6940391Z",
+        "type": "attempt_effect_evaluation_recorded",
+        "detail": "attempt=1"
+      },
+      {
+        "time": "2026-11-09T21:35:57.6965903Z",
+        "type": "attempt_effect_evaluation_recorded",
+        "detail": "attempt=1"
+      },
+      {
+        "time": "2026-11-09T21:35:57.6996913Z",
+        "type": "attempt_effect_evaluation_recorded",
+        "detail": "attempt=1"
+      },
+      {
+        "time": "2026-11-09T21:36:03.7125615Z",
+        "type": "attempt_completed",
+        "detail": "attempt=1 status=succeeded detail=Producción completada: proyecto ahmelia_real_b_2026-11-09 creado y verificado en C:\\Users\\User\\Desktop\\Ahmelia_Real_B_2026-11-09."
+      },
+      {
+        "time": "2026-11-09T21:36:03.7125615Z",
+        "type": "completed",
+        "detail": "Producción completada: proyecto ahmelia_real_b_2026-11-09 creado y verificado en C:\\Users\\User\\Desktop\\Ahmelia_Real_B_2026-11-09."
+      }
+    ],
+    "last_action_result": {
+      "executed": true,
+      "generation_source": "ollama:qwen3:4b-instruct-2507-q4_K_M",
+      "verification_profile": "build[go build ./...]=success;tests[go test ./...]=passed",
+      "objective_status": "unassessed",
+      "objective_contract_json": "{\"PrimaryGoal\":\"Crea un programa Go nuevo llamado sumador_b con una funcion Add(a, b int) int y una prueba TestAdd que verifique Add(2, 3) == 5. Guardalo en el proyecto. Sin dependencias externas.\",\"PrimaryOperation\":\"create\",\"Subject\":\"\",\"Workspace\":\"\",\"Constraints\":null,\"RequiredActions\":null,\"Verification\":null,\"Recovery\":null,\"Confidence\":0.9,\"Provenance\":\"interaction.semantic_objective_frame\"}",
+      "success": true,
+      "outcome_status": "succeeded",
+      "verified": true,
+      "observed": true,
+      "summary": "Producción completada: proyecto ahmelia_real_b_2026-11-09 creado y verificado en C:\\Users\\User\\Desktop\\Ahmelia_Real_B_2026-11-09.",
+      "observation_details": "el proveedor de programación confirmó el estado de producción mediante su evidencia de construcción/pruebas disponible",
+      "observation_captured_at": "0001-01-01T00:00:00Z",
+      "verification_reason": "resultado de producción evaluado por el proveedor de programación",
+      "verification_source": "programming",
+      "outcome_code": "production_result",
+      "work_id": "work_1794260016464948400_1",
+      "attempt_number": 1,
+      "production_id": "ahmelia_real_b_2026-11-09",
+      "producer": "programming",
+      "project": {
+        "ID": "ahmelia_real_b_2026-11-09",
+        "Name": "ahmelia_real_b_2026-11-09",
+        "Path": "C:\\Users\\User\\Desktop\\Ahmelia_Real_B_2026-11-09"
+      },
+      "artifacts": [
+        {
+          "ID": "sumador_b/main.go",
+          "Name": "main.go",
+          "Path": "C:\\Users\\User\\Desktop\\Ahmelia_Real_B_2026-11-09\\sumador_b\\main.go",
+          "Type": "source",
+          "Producer": "programming",
+          "ProjectID": "ahmelia_real_b_2026-11-09",
+          "CreatedAt": "0001-01-01T00:00:00Z",
+          "Metadata": null
+        },
+        {
+          "ID": "sumador_b/sumador_b_test.go",
+          "Name": "sumador_b_test.go",
+          "Path": "C:\\Users\\User\\Desktop\\Ahmelia_Real_B_2026-11-09\\sumador_b\\sumador_b_test.go",
+          "Type": "test",
+          "Producer": "programming",
+          "ProjectID": "ahmelia_real_b_2026-11-09",
+          "CreatedAt": "0001-01-01T00:00:00Z",
+          "Metadata": null
+        },
+        {
+          "ID": "go.mod",
+          "Name": "go.mod",
+          "Path": "C:\\Users\\User\\Desktop\\Ahmelia_Real_B_2026-11-09\\go.mod",
+          "Type": "config",
+          "Producer": "programming",
+          "ProjectID": "ahmelia_real_b_2026-11-09",
+          "CreatedAt": "0001-01-01T00:00:00Z",
+          "Metadata": null
+        },
+        {
+          "ID": "build",
+          "Name": "build",
+          "Path": "C:\\Users\\User\\Desktop\\Ahmelia_Real_B_2026-11-09",
+          "Type": "build",
+          "Producer": "programming",
+          "ProjectID": "ahmelia_real_b_2026-11-09",
+          "CreatedAt": "0001-01-01T00:00:00Z",
+          "Metadata": null
+        }
+      ]
+    },
+    "attempts": [
+      {
+        "number": 1,
+        "skill_id": "software.development",
+        "capability_id": "programming.create_file",
+        "operation": "create_file",
+        "provider": "programming",
+        "job_id": "work_1794260016464948400_1-attempt-1",
+        "execution_attempt_id": "work_1794260016464948400_1-attempt-1-execution",
+        "effect_specification": {
+          "ID": "synthesis-ahmelia_real_b_2026-11-09",
+          "Project": {
+            "ID": "ahmelia_real_b_2026-11-09",
+            "Name": "ahmelia_real_b_2026-11-09",
+            "Root": "C:\\Users\\User\\Desktop\\Ahmelia_Real_B_2026-11-09",
+            "Language": "Go",
+            "SourceRoots": [
+              "."
+            ],
+            "TestRoots": [
+              "."
+            ],
+            "BuildCommand": "go build ./...",
+            "TestCommand": "go test ./...",
+            "RuntimeCommand": "go run ."
+          },
+          "Changes": [
+            {
+              "ID": "synth-001",
+              "Operation": "create",
+              "File": {
+                "Path": "sumador_b/main.go",
+                "Language": "Go",
+                "Role": "source",
+                "ProjectID": "ahmelia_real_b_2026-11-09"
+              },
+              "NewPath": "",
+              "Content": "package main\n\n// Add returns the sum of two integers.\nfunc Add(a, b int) int {\n    return a + b\n}\n\n// main is the entry point of the executable.\nfunc main() {\n    // Example usage of Add function.\n    result := Add(2, 3)\n    println(result)\n}",
+              "OldText": "",
+              "NewText": ""
+            },
+            {
+              "ID": "synth-002",
+              "Operation": "create",
+              "File": {
+                "Path": "sumador_b/sumador_b_test.go",
+                "Language": "Go",
+                "Role": "test",
+                "ProjectID": "ahmelia_real_b_2026-11-09"
+              },
+              "NewPath": "",
+              "Content": "package main\n\nimport (\n    \"testing\"\n)\n\n// TestAdd verifies that Add(2, 3) returns 5.\nfunc TestAdd(t *testing.T) {\n    result := Add(2, 3)\n    if result != 5 {\n        t.Errorf(\"Add(2, +3) = %d, expected 5\", result)\n    }\n}",
+              "OldText": "",
+              "NewText": ""
+            },
+            {
+              "ID": "synth-go-mod",
+              "Operation": "create",
+              "File": {
+                "Path": "go.mod",
+                "Language": "Go",
+                "Role": "config",
+                "ProjectID": "ahmelia_real_b_2026-11-09"
+              },
+              "NewPath": "",
+              "Content": "module ahmelia.local/project-ahmelia_real_b_2026-11-09\n\ngo 1.20\n",
+              "OldText": "",
+              "NewText": ""
+            }
+          ],
+          "CreatedAt": "0001-01-01T00:00:00Z"
+        },
+        "effect_evaluations": [
+          {
+            "id": "effect-eval-work_1794260016464948400_1-1-synth-001",
+            "work_id": "work_1794260016464948400_1",
+            "attempt_number": 1,
+            "expected_change_id": "synth-001",
+            "observed": {
+              "Source": "filesystem",
+              "Path": "sumador_b/main.go",
+              "Exists": true,
+              "SHA256": "b7ce5fa4d7bcc50ea345c7843dd4d9ecd825ed92bcaaece265dfc8b6b76ab297",
+              "ObservedAt": "2026-11-09T21:35:57.6930139Z"
+            },
+            "judgment": {
+              "compatible": true
+            },
+            "evaluated_at": "2026-11-09T21:35:57.6935261Z"
+          },
+          {
+            "id": "effect-eval-work_1794260016464948400_1-1-synth-002",
+            "work_id": "work_1794260016464948400_1",
+            "attempt_number": 1,
+            "expected_change_id": "synth-002",
+            "observed": {
+              "Source": "filesystem",
+              "Path": "sumador_b/sumador_b_test.go",
+              "Exists": true,
+              "SHA256": "8769ebf256c0f2b878d38648ea478f0c2036f1407fb0f97521d5028ca8449e85",
+              "ObservedAt": "2026-11-09T21:35:57.6965903Z"
+            },
+            "judgment": {
+              "compatible": true
+            },
+            "evaluated_at": "2026-11-09T21:35:57.6965903Z"
+          },
+          {
+            "id": "effect-eval-work_1794260016464948400_1-1-synth-go-mod",
+            "work_id": "work_1794260016464948400_1",
+            "attempt_number": 1,
+            "expected_change_id": "synth-go-mod",
+            "observed": {
+              "Source": "filesystem",
+              "Path": "go.mod",
+              "Exists": true,
+              "SHA256": "15b91f55869399bd4a5d93a9d8d82ec36af2ff03c5dc3079162f1467d5932769",
+              "ObservedAt": "2026-11-09T21:35:57.6996913Z"
+            },
+            "judgment": {
+              "compatible": true
+            },
+            "evaluated_at": "2026-11-09T21:35:57.6996913Z"
+          }
+        ],
+        "status": "succeeded",
+        "started_at": "2026-11-09T21:33:36.7437775Z",
+        "finished_at": "2026-11-09T21:36:03.7125615Z",
+        "result": {
+          "executed": true,
+          "generation_source": "ollama:qwen3:4b-instruct-2507-q4_K_M",
+          "verification_profile": "build[go build ./...]=success;tests[go test ./...]=passed",
+          "objective_status": "unassessed",
+          "objective_contract_json": "{\"PrimaryGoal\":\"Crea un programa Go nuevo llamado sumador_b con una funcion Add(a, b int) int y una prueba TestAdd que verifique Add(2, 3) == 5. Guardalo en el proyecto. Sin dependencias externas.\",\"PrimaryOperation\":\"create\",\"Subject\":\"\",\"Workspace\":\"\",\"Constraints\":null,\"RequiredActions\":null,\"Verification\":null,\"Recovery\":null,\"Confidence\":0.9,\"Provenance\":\"interaction.semantic_objective_frame\"}",
+          "success": true,
+          "outcome_status": "succeeded",
+          "verified": true,
+          "observed": true,
+          "summary": "Producción completada: proyecto ahmelia_real_b_2026-11-09 creado y verificado en C:\\Users\\User\\Desktop\\Ahmelia_Real_B_2026-11-09.",
+          "observation_details": "el proveedor de programación confirmó el estado de producción mediante su evidencia de construcción/pruebas disponible",
+          "observation_captured_at": "0001-01-01T00:00:00Z",
+          "verification_reason": "resultado de producción evaluado por el proveedor de programación",
+          "verification_source": "programming",
+          "outcome_code": "production_result",
+          "work_id": "work_1794260016464948400_1",
+          "attempt_number": 1,
+          "production_id": "ahmelia_real_b_2026-11-09",
+          "producer": "programming",
+          "project": {
+            "ID": "ahmelia_real_b_2026-11-09",
+            "Name": "ahmelia_real_b_2026-11-09",
+            "Path": "C:\\Users\\User\\Desktop\\Ahmelia_Real_B_2026-11-09"
+          },
+          "artifacts": [
+            {
+              "ID": "sumador_b/main.go",
+              "Name": "main.go",
+              "Path": "C:\\Users\\User\\Desktop\\Ahmelia_Real_B_2026-11-09\\sumador_b\\main.go",
+              "Type": "source",
+              "Producer": "programming",
+              "ProjectID": "ahmelia_real_b_2026-11-09",
+              "CreatedAt": "0001-01-01T00:00:00Z",
+              "Metadata": null
+            },
+            {
+              "ID": "sumador_b/sumador_b_test.go",
+              "Name": "sumador_b_test.go",
+              "Path": "C:\\Users\\User\\Desktop\\Ahmelia_Real_B_2026-11-09\\sumador_b\\sumador_b_test.go",
+              "Type": "test",
+              "Producer": "programming",
+              "ProjectID": "ahmelia_real_b_2026-11-09",
+              "CreatedAt": "0001-01-01T00:00:00Z",
+              "Metadata": null
+            },
+            {
+              "ID": "go.mod",
+              "Name": "go.mod",
+              "Path": "C:\\Users\\User\\Desktop\\Ahmelia_Real_B_2026-11-09\\go.mod",
+              "Type": "config",
+              "Producer": "programming",
+              "ProjectID": "ahmelia_real_b_2026-11-09",
+              "CreatedAt": "0001-01-01T00:00:00Z",
+              "Metadata": null
+            },
+            {
+              "ID": "build",
+              "Name": "build",
+              "Path": "C:\\Users\\User\\Desktop\\Ahmelia_Real_B_2026-11-09",
+              "Type": "build",
+              "Producer": "programming",
+              "ProjectID": "ahmelia_real_b_2026-11-09",
+              "CreatedAt": "0001-01-01T00:00:00Z",
+              "Metadata": null
             }
           ]
         }
-      },
-      "capability_id": "programming.create_file",
-      "operation": "create_file",
-      "route_kind": "production",
-      "provider_id": "programming",
-      "attempt_number": 1,
-      "reason": "explicit confirmation required before execution"
+      }
+    ],
+    "created_at": "2026-11-09T21:33:36.4649484Z",
+    "updated_at": "2026-11-09T21:36:03.7125615Z"
+  },
+  "work_1794272015850597200_1": {
+    "id": "work_1794272015850597200_1",
+    "objective": {
+      "Text": "Crea un programa Go nuevo llamado async_sum con una funcion Add(a, b int) int, una prueba TestAdd que verifique Add(2, 3) == 5 y una funcion main. Guardalo en el proyecto. Sin dependencias externas.",
+      "Constraints": null,
+      "OpenEnded": true
     },
-    "created_at": "2026-10-20T19:12:23.8608167Z",
-    "updated_at": "2026-11-04T23:28:50.9294928Z"
+    "status": "running",
+    "goal_id": "20261109195225-1-goal",
+    "plan_id": "plan-1794271970119510400-1",
+    "provider": "programming",
+    "artifacts": [
+      {
+        "ID": "async_sum.go",
+        "Name": "async_sum.go",
+        "Path": "C:\\Users\\User\\Desktop\\Ahmelia_Async_2026-11-09\\async_sum.go",
+        "Type": "source",
+        "Producer": "programming",
+        "ProjectID": "ahmelia_async_2026-11-09",
+        "CreatedAt": "0001-01-01T00:00:00Z",
+        "Metadata": null,
+        "version": 1,
+        "checksum_sha256": "363175980daf6cc78bda2322fe6284a71ad9e227803c694acc2b982abf6243e1",
+        "size_bytes": 330,
+        "integrity_verified": true,
+        "integrity_reason": "file exists and SHA-256 was computed from current bytes"
+      },
+      {
+        "ID": "async_sum_test.go",
+        "Name": "async_sum_test.go",
+        "Path": "C:\\Users\\User\\Desktop\\Ahmelia_Async_2026-11-09\\async_sum_test.go",
+        "Type": "test",
+        "Producer": "programming",
+        "ProjectID": "ahmelia_async_2026-11-09",
+        "CreatedAt": "0001-01-01T00:00:00Z",
+        "Metadata": null,
+        "version": 1,
+        "checksum_sha256": "425191842b6e3485c19335abf4ec3fd5887cb53eb30c02c2383a313b546dcfd9",
+        "size_bytes": 186,
+        "integrity_verified": true,
+        "integrity_reason": "file exists and SHA-256 was computed from current bytes"
+      },
+      {
+        "ID": "go.mod",
+        "Name": "go.mod",
+        "Path": "C:\\Users\\User\\Desktop\\Ahmelia_Async_2026-11-09\\go.mod",
+        "Type": "config",
+        "Producer": "programming",
+        "ProjectID": "ahmelia_async_2026-11-09",
+        "CreatedAt": "0001-01-01T00:00:00Z",
+        "Metadata": null,
+        "version": 1,
+        "checksum_sha256": "16446741ce3cbfb1f6c10309eb72a3276855add55c62f7c13103facadd2782a3",
+        "size_bytes": 63,
+        "integrity_verified": true,
+        "integrity_reason": "file exists and SHA-256 was computed from current bytes"
+      }
+    ],
+    "events": [
+      {
+        "time": "2026-11-10T00:53:35.8557327Z",
+        "type": "planned",
+        "detail": "goal and plan attached"
+      },
+      {
+        "time": "2026-11-10T00:53:36.2308798Z",
+        "type": "started",
+        "detail": "production started"
+      },
+      {
+        "time": "2026-11-10T00:53:36.2354016Z",
+        "type": "attempt_started",
+        "detail": "attempt=1 operation=create_file provider=programming"
+      },
+      {
+        "time": "2026-11-10T00:53:36.3083823Z",
+        "type": "execution_awaiting_authorization",
+        "detail": "attempt=1 capability=programming.create_file provider=programming"
+      },
+      {
+        "time": "2026-11-10T00:54:55.1069903Z",
+        "type": "started",
+        "detail": "production started"
+      },
+      {
+        "time": "2026-11-10T00:54:55.1562933Z",
+        "type": "authorization_consumed_attempt_started",
+        "detail": "attempt=1 capability=programming.create_file"
+      },
+      {
+        "time": "2026-11-10T00:54:55.1968716Z",
+        "type": "attempt_execution_identity",
+        "detail": "attempt=1 job=work_1794272015850597200_1-attempt-1 execution=work_1794272015850597200_1-attempt-1-execution"
+      },
+      {
+        "time": "2026-11-10T00:56:55.4326541Z",
+        "type": "attempt_effect_specification_persisted",
+        "detail": "attempt=1"
+      },
+      {
+        "time": "2026-11-10T00:56:55.4396933Z",
+        "type": "attempt_effect_evaluation_recorded",
+        "detail": "attempt=1"
+      },
+      {
+        "time": "2026-11-10T00:56:55.4439638Z",
+        "type": "attempt_effect_evaluation_recorded",
+        "detail": "attempt=1"
+      },
+      {
+        "time": "2026-11-10T00:56:55.4470576Z",
+        "type": "attempt_effect_evaluation_recorded",
+        "detail": "attempt=1"
+      },
+      {
+        "time": "2026-11-10T00:57:05.8159413Z",
+        "type": "attempt_completed",
+        "detail": "attempt=1 status=failed detail=build failed: async_sum.go:15:9: invalid operation: too many arguments for panic(\"Add(2, 3) failed: expected 5, got %d\", result) (expected 1, found 2) recovery=retry"
+      },
+      {
+        "time": "2026-11-10T00:57:05.8357662Z",
+        "type": "started",
+        "detail": "production started"
+      },
+      {
+        "time": "2026-11-10T00:57:05.8432726Z",
+        "type": "attempt_started",
+        "detail": "attempt=2 operation=create_file provider=programming"
+      },
+      {
+        "time": "2026-11-10T00:57:05.8543193Z",
+        "type": "attempt_execution_identity",
+        "detail": "attempt=2 job=work_1794272015850597200_1-attempt-2 execution=work_1794272015850597200_1-attempt-2-execution"
+      }
+    ],
+    "last_action_result": {
+      "executed": true,
+      "generation_source": "ollama:qwen3:4b-instruct-2507-q4_K_M",
+      "verification_profile": "build[go build ./...]=failed;tests=not_run",
+      "objective_contract_json": "{\"PrimaryGoal\":\"\",\"PrimaryOperation\":\"\",\"Subject\":\"\",\"Workspace\":\"\",\"Constraints\":null,\"RequiredActions\":null,\"Verification\":null,\"Recovery\":null,\"Confidence\":0,\"Provenance\":\"\"}",
+      "success": false,
+      "outcome_status": "failed",
+      "verified": false,
+      "summary": "Producción detenida en build. Diagnóstico: async_sum.go:15:9 invalid operation: too many arguments for panic(\"Add(2, 3) failed: expected 5, got %d\", result) (expected 1, found 2). diagnóstico listo para B96.12; se requiere una especificación de edición precisa antes de mutar código.",
+      "observation_details": "programming failure evidence: stage=build diagnostics=1",
+      "observation_captured_at": "0001-01-01T00:00:00Z",
+      "verification_reason": "resultado de producción evaluado por el proveedor de programación",
+      "verification_source": "programming",
+      "outcome_code": "production_result",
+      "work_id": "work_1794272015850597200_1",
+      "attempt_number": 1,
+      "production_id": "ahmelia_async_2026-11-09",
+      "producer": "programming",
+      "project": {
+        "ID": "ahmelia_async_2026-11-09",
+        "Name": "ahmelia_async_2026-11-09",
+        "Path": "C:\\Users\\User\\Desktop\\Ahmelia_Async_2026-11-09"
+      },
+      "artifacts": [
+        {
+          "ID": "async_sum.go",
+          "Name": "async_sum.go",
+          "Path": "C:\\Users\\User\\Desktop\\Ahmelia_Async_2026-11-09\\async_sum.go",
+          "Type": "source",
+          "Producer": "programming",
+          "ProjectID": "ahmelia_async_2026-11-09",
+          "CreatedAt": "0001-01-01T00:00:00Z",
+          "Metadata": null
+        },
+        {
+          "ID": "async_sum_test.go",
+          "Name": "async_sum_test.go",
+          "Path": "C:\\Users\\User\\Desktop\\Ahmelia_Async_2026-11-09\\async_sum_test.go",
+          "Type": "test",
+          "Producer": "programming",
+          "ProjectID": "ahmelia_async_2026-11-09",
+          "CreatedAt": "0001-01-01T00:00:00Z",
+          "Metadata": null
+        },
+        {
+          "ID": "go.mod",
+          "Name": "go.mod",
+          "Path": "C:\\Users\\User\\Desktop\\Ahmelia_Async_2026-11-09\\go.mod",
+          "Type": "config",
+          "Producer": "programming",
+          "ProjectID": "ahmelia_async_2026-11-09",
+          "CreatedAt": "0001-01-01T00:00:00Z",
+          "Metadata": null
+        }
+      ],
+      "failed_stage": "build",
+      "failure_reason": "build failed: async_sum.go:15:9: invalid operation: too many arguments for panic(\"Add(2, 3) failed: expected 5, got %d\", result) (expected 1, found 2)",
+      "recovery": {
+        "Action": "retry",
+        "Reason": "build failed: async_sum.go:15:9: invalid operation: too many arguments for panic(\"Add(2, 3) failed: expected 5, got %d\", result) (expected 1, found 2)"
+      },
+      "recovery_context": {
+        "attempt_number": 1,
+        "failure_reason": "build failed: async_sum.go:15:9: invalid operation: too many arguments for panic(\"Add(2, 3) failed: expected 5, got %d\", result) (expected 1, found 2)",
+        "evidence": [
+          {
+            "kind": "programming.production",
+            "source": "programming",
+            "stage": "build",
+            "summary": "build failed: async_sum.go:15:9: invalid operation: too many arguments for panic(\"Add(2, 3) failed: expected 5, got %d\", result) (expected 1, found 2)",
+            "payload": {
+              "failed_stage": "build",
+              "failure_reason": "build failed: async_sum.go:15:9: invalid operation: too many arguments for panic(\"Add(2, 3) failed: expected 5, got %d\", result) (expected 1, found 2)",
+              "error_analysis": {
+                "ProjectID": "ahmelia_async_2026-11-09",
+                "Diagnostics": [
+                  {
+                    "ID": "diagnostic-001",
+                    "ProjectID": "ahmelia_async_2026-11-09",
+                    "File": "async_sum.go",
+                    "Line": 15,
+                    "Column": 9,
+                    "ErrorType": "syntax_error",
+                    "Message": "invalid operation: too many arguments for panic(\"Add(2, 3) failed: expected 5, got %d\", result) (expected 1, found 2)",
+                    "Severity": "error",
+                    "Context": ""
+                  }
+                ]
+              },
+              "verification": {
+                "ProjectID": "",
+                "Objective": {
+                  "PrimaryGoal": "",
+                  "PrimaryOperation": "",
+                  "Subject": "",
+                  "Workspace": "",
+                  "Constraints": null,
+                  "RequiredActions": null,
+                  "Verification": null,
+                  "Recovery": null,
+                  "Confidence": 0,
+                  "Provenance": ""
+                },
+                "ObjectiveStatus": "",
+                "Checks": null,
+                "Success": false
+              }
+            }
+          }
+        ]
+      }
+    },
+    "attempts": [
+      {
+        "number": 1,
+        "skill_id": "software.development",
+        "capability_id": "programming.create_file",
+        "operation": "create_file",
+        "provider": "programming",
+        "job_id": "work_1794272015850597200_1-attempt-1",
+        "execution_attempt_id": "work_1794272015850597200_1-attempt-1-execution",
+        "effect_specification": {
+          "ID": "synthesis-ahmelia_async_2026-11-09",
+          "Project": {
+            "ID": "ahmelia_async_2026-11-09",
+            "Name": "ahmelia_async_2026-11-09",
+            "Root": "C:\\Users\\User\\Desktop\\Ahmelia_Async_2026-11-09",
+            "Language": "Go",
+            "SourceRoots": [
+              "."
+            ],
+            "TestRoots": [
+              "."
+            ],
+            "BuildCommand": "go build ./...",
+            "TestCommand": "go test ./...",
+            "RuntimeCommand": "go run ."
+          },
+          "Changes": [
+            {
+              "ID": "synth-001",
+              "Operation": "create",
+              "File": {
+                "Path": "async_sum.go",
+                "Language": "Go",
+                "Role": "source",
+                "ProjectID": "ahmelia_async_2026-11-09"
+              },
+              "NewPath": "",
+              "Content": "package main\n\nimport \"fmt\"\n\n// Add returns the sum of two integers.\nfunc Add(a, b int) int {\n    return a + b\n}\n\n// main is the entry point of the executable.\nfunc main() {\n    result := Add(2, 3)\n    fmt.Printf(\"Add(2, 3) = %d\\n\", result)\n    if result != 5 {\n        panic(\"Add(2, 3) failed: expected 5, got %d\", result)\n    }\n}",
+              "OldText": "",
+              "NewText": ""
+            },
+            {
+              "ID": "synth-002",
+              "Operation": "create",
+              "File": {
+                "Path": "async_sum_test.go",
+                "Language": "Go",
+                "Role": "test",
+                "ProjectID": "ahmelia_async_2026-11-09"
+              },
+              "NewPath": "",
+              "Content": "package main\n\nimport (\n    \"testing\"\n)\n\nfunc TestAdd(t *testing.T) {\n    result := Add(2, 3)\n    if result != 5 {\n        t.Errorf(\"Add(2, 3) failed: expected 5, got %d\", result)\n    }\n}",
+              "OldText": "",
+              "NewText": ""
+            },
+            {
+              "ID": "synth-go-mod",
+              "Operation": "create",
+              "File": {
+                "Path": "go.mod",
+                "Language": "Go",
+                "Role": "config",
+                "ProjectID": "ahmelia_async_2026-11-09"
+              },
+              "NewPath": "",
+              "Content": "module ahmelia.local/project-ahmelia_async_2026-11-09\n\ngo 1.20\n",
+              "OldText": "",
+              "NewText": ""
+            }
+          ],
+          "CreatedAt": "0001-01-01T00:00:00Z"
+        },
+        "effect_evaluations": [
+          {
+            "id": "effect-eval-work_1794272015850597200_1-1-synth-001",
+            "work_id": "work_1794272015850597200_1",
+            "attempt_number": 1,
+            "expected_change_id": "synth-001",
+            "observed": {
+              "Source": "filesystem",
+              "Path": "async_sum.go",
+              "Exists": true,
+              "SHA256": "363175980daf6cc78bda2322fe6284a71ad9e227803c694acc2b982abf6243e1",
+              "ObservedAt": "2026-11-10T00:56:55.438638Z"
+            },
+            "judgment": {
+              "compatible": true
+            },
+            "evaluated_at": "2026-11-10T00:56:55.438638Z"
+          },
+          {
+            "id": "effect-eval-work_1794272015850597200_1-1-synth-002",
+            "work_id": "work_1794272015850597200_1",
+            "attempt_number": 1,
+            "expected_change_id": "synth-002",
+            "observed": {
+              "Source": "filesystem",
+              "Path": "async_sum_test.go",
+              "Exists": true,
+              "SHA256": "425191842b6e3485c19335abf4ec3fd5887cb53eb30c02c2383a313b546dcfd9",
+              "ObservedAt": "2026-11-10T00:56:55.4434613Z"
+            },
+            "judgment": {
+              "compatible": true
+            },
+            "evaluated_at": "2026-11-10T00:56:55.4434613Z"
+          },
+          {
+            "id": "effect-eval-work_1794272015850597200_1-1-synth-go-mod",
+            "work_id": "work_1794272015850597200_1",
+            "attempt_number": 1,
+            "expected_change_id": "synth-go-mod",
+            "observed": {
+              "Source": "filesystem",
+              "Path": "go.mod",
+              "Exists": true,
+              "SHA256": "16446741ce3cbfb1f6c10309eb72a3276855add55c62f7c13103facadd2782a3",
+              "ObservedAt": "2026-11-10T00:56:55.4465548Z"
+            },
+            "judgment": {
+              "compatible": true
+            },
+            "evaluated_at": "2026-11-10T00:56:55.4465548Z"
+          }
+        ],
+        "status": "failed",
+        "started_at": "2026-11-10T00:53:36.2354016Z",
+        "finished_at": "2026-11-10T00:57:05.8159413Z",
+        "result": {
+          "executed": true,
+          "generation_source": "ollama:qwen3:4b-instruct-2507-q4_K_M",
+          "verification_profile": "build[go build ./...]=failed;tests=not_run",
+          "objective_contract_json": "{\"PrimaryGoal\":\"\",\"PrimaryOperation\":\"\",\"Subject\":\"\",\"Workspace\":\"\",\"Constraints\":null,\"RequiredActions\":null,\"Verification\":null,\"Recovery\":null,\"Confidence\":0,\"Provenance\":\"\"}",
+          "success": false,
+          "outcome_status": "failed",
+          "verified": false,
+          "summary": "Producción detenida en build. Diagnóstico: async_sum.go:15:9 invalid operation: too many arguments for panic(\"Add(2, 3) failed: expected 5, got %d\", result) (expected 1, found 2). diagnóstico listo para B96.12; se requiere una especificación de edición precisa antes de mutar código.",
+          "observation_details": "programming failure evidence: stage=build diagnostics=1",
+          "observation_captured_at": "0001-01-01T00:00:00Z",
+          "verification_reason": "resultado de producción evaluado por el proveedor de programación",
+          "verification_source": "programming",
+          "outcome_code": "production_result",
+          "work_id": "work_1794272015850597200_1",
+          "attempt_number": 1,
+          "production_id": "ahmelia_async_2026-11-09",
+          "producer": "programming",
+          "project": {
+            "ID": "ahmelia_async_2026-11-09",
+            "Name": "ahmelia_async_2026-11-09",
+            "Path": "C:\\Users\\User\\Desktop\\Ahmelia_Async_2026-11-09"
+          },
+          "artifacts": [
+            {
+              "ID": "async_sum.go",
+              "Name": "async_sum.go",
+              "Path": "C:\\Users\\User\\Desktop\\Ahmelia_Async_2026-11-09\\async_sum.go",
+              "Type": "source",
+              "Producer": "programming",
+              "ProjectID": "ahmelia_async_2026-11-09",
+              "CreatedAt": "0001-01-01T00:00:00Z",
+              "Metadata": null
+            },
+            {
+              "ID": "async_sum_test.go",
+              "Name": "async_sum_test.go",
+              "Path": "C:\\Users\\User\\Desktop\\Ahmelia_Async_2026-11-09\\async_sum_test.go",
+              "Type": "test",
+              "Producer": "programming",
+              "ProjectID": "ahmelia_async_2026-11-09",
+              "CreatedAt": "0001-01-01T00:00:00Z",
+              "Metadata": null
+            },
+            {
+              "ID": "go.mod",
+              "Name": "go.mod",
+              "Path": "C:\\Users\\User\\Desktop\\Ahmelia_Async_2026-11-09\\go.mod",
+              "Type": "config",
+              "Producer": "programming",
+              "ProjectID": "ahmelia_async_2026-11-09",
+              "CreatedAt": "0001-01-01T00:00:00Z",
+              "Metadata": null
+            }
+          ],
+          "failed_stage": "build",
+          "failure_reason": "build failed: async_sum.go:15:9: invalid operation: too many arguments for panic(\"Add(2, 3) failed: expected 5, got %d\", result) (expected 1, found 2)",
+          "recovery": {
+            "Action": "retry",
+            "Reason": "build failed: async_sum.go:15:9: invalid operation: too many arguments for panic(\"Add(2, 3) failed: expected 5, got %d\", result) (expected 1, found 2)"
+          },
+          "recovery_context": {
+            "attempt_number": 1,
+            "failure_reason": "build failed: async_sum.go:15:9: invalid operation: too many arguments for panic(\"Add(2, 3) failed: expected 5, got %d\", result) (expected 1, found 2)",
+            "evidence": [
+              {
+                "kind": "programming.production",
+                "source": "programming",
+                "stage": "build",
+                "summary": "build failed: async_sum.go:15:9: invalid operation: too many arguments for panic(\"Add(2, 3) failed: expected 5, got %d\", result) (expected 1, found 2)",
+                "payload": {
+                  "failed_stage": "build",
+                  "failure_reason": "build failed: async_sum.go:15:9: invalid operation: too many arguments for panic(\"Add(2, 3) failed: expected 5, got %d\", result) (expected 1, found 2)",
+                  "error_analysis": {
+                    "ProjectID": "ahmelia_async_2026-11-09",
+                    "Diagnostics": [
+                      {
+                        "ID": "diagnostic-001",
+                        "ProjectID": "ahmelia_async_2026-11-09",
+                        "File": "async_sum.go",
+                        "Line": 15,
+                        "Column": 9,
+                        "ErrorType": "syntax_error",
+                        "Message": "invalid operation: too many arguments for panic(\"Add(2, 3) failed: expected 5, got %d\", result) (expected 1, found 2)",
+                        "Severity": "error",
+                        "Context": ""
+                      }
+                    ]
+                  },
+                  "verification": {
+                    "ProjectID": "",
+                    "Objective": {
+                      "PrimaryGoal": "",
+                      "PrimaryOperation": "",
+                      "Subject": "",
+                      "Workspace": "",
+                      "Constraints": null,
+                      "RequiredActions": null,
+                      "Verification": null,
+                      "Recovery": null,
+                      "Confidence": 0,
+                      "Provenance": ""
+                    },
+                    "ObjectiveStatus": "",
+                    "Checks": null,
+                    "Success": false
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "recovery_action": "retry",
+        "recovery_reason": "build failed: async_sum.go:15:9: invalid operation: too many arguments for panic(\"Add(2, 3) failed: expected 5, got %d\", result) (expected 1, found 2)"
+      },
+      {
+        "number": 2,
+        "skill_id": "software.development",
+        "capability_id": "programming.create_file",
+        "operation": "create_file",
+        "provider": "programming",
+        "job_id": "work_1794272015850597200_1-attempt-2",
+        "execution_attempt_id": "work_1794272015850597200_1-attempt-2-execution",
+        "status": "running",
+        "started_at": "2026-11-10T00:57:05.8432726Z",
+        "finished_at": "0001-01-01T00:00:00Z"
+      }
+    ],
+    "created_at": "2026-11-10T00:53:35.8505972Z",
+    "updated_at": "2026-11-10T00:57:05.8543193Z"
   }
 }

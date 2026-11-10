@@ -2,6 +2,29 @@
   "version": 1,
   "goals": [
     {
+      "ID": "20261109195225-1-goal",
+      "Name": "Crea un programa Go nuevo llamado async_sum con una funcion Add(a, b int) int, una prueba TestAdd que verifique Add(2, 3) == 5 y una funcion main. Guardalo en el proyecto. Sin dependencias externas.",
+      "Description": "Work Session creada desde la intención del usuario",
+      "Status": "active",
+      "Priority": 2,
+      "Confidence": 0.9,
+      "Owner": "user",
+      "CreatedAt": "2026-11-09T19:52:25.8478751-05:00",
+      "Deadline": "0001-01-01T00:00:00Z",
+      "EstimatedHours": 0,
+      "CompletedAt": "0001-01-01T00:00:00Z",
+      "Dependencies": [],
+      "DependentOn": [],
+      "Progress": 0,
+      "TasksCompleted": 0,
+      "TasksTotal": 0,
+      "Blockers": [],
+      "BlockedAt": "0001-01-01T00:00:00Z",
+      "TimeInvested": 0,
+      "LastUpdated": "2026-11-09T19:52:25.8478751-05:00",
+      "Notes": []
+    },
+    {
       "ID": "20261020141135-1-goal",
       "Name": "quiero crear un proyecto para prueba V1 real 2026-10-20",
       "Description": "Work Session creada desde la intención del usuario",
@@ -119,12 +142,58 @@
       "TimeInvested": 0,
       "LastUpdated": "2026-10-20T14:36:39.5918567-05:00",
       "Notes": []
+    },
+    {
+      "ID": "20261109161623-1-goal",
+      "Name": "Crea un programa Go nuevo llamado sumador_real con una funcion Add(a, b int) int y una prueba TestAdd que verifique Add(2, 3) == 5. Guardalo en el proyecto. Sin dependencias externas.",
+      "Description": "Work Session creada desde la intención del usuario",
+      "Status": "active",
+      "Priority": 2,
+      "Confidence": 0.9,
+      "Owner": "user",
+      "CreatedAt": "2026-11-09T16:16:23.5405543-05:00",
+      "Deadline": "0001-01-01T00:00:00Z",
+      "EstimatedHours": 0,
+      "CompletedAt": "0001-01-01T00:00:00Z",
+      "Dependencies": [],
+      "DependentOn": [],
+      "Progress": 0,
+      "TasksCompleted": 0,
+      "TasksTotal": 0,
+      "Blockers": [],
+      "BlockedAt": "0001-01-01T00:00:00Z",
+      "TimeInvested": 0,
+      "LastUpdated": "2026-11-09T16:16:23.5405543-05:00",
+      "Notes": []
+    },
+    {
+      "ID": "20261109163237-1-goal",
+      "Name": "Crea un programa Go nuevo llamado sumador_b con una funcion Add(a, b int) int y una prueba TestAdd que verifique Add(2, 3) == 5. Guardalo en el proyecto. Sin dependencias externas.",
+      "Description": "Work Session creada desde la intención del usuario",
+      "Status": "active",
+      "Priority": 2,
+      "Confidence": 0.9,
+      "Owner": "user",
+      "CreatedAt": "2026-11-09T16:32:37.1762854-05:00",
+      "Deadline": "0001-01-01T00:00:00Z",
+      "EstimatedHours": 0,
+      "CompletedAt": "0001-01-01T00:00:00Z",
+      "Dependencies": [],
+      "DependentOn": [],
+      "Progress": 0,
+      "TasksCompleted": 0,
+      "TasksTotal": 0,
+      "Blockers": [],
+      "BlockedAt": "0001-01-01T00:00:00Z",
+      "TimeInvested": 0,
+      "LastUpdated": "2026-11-09T16:32:37.1762854-05:00",
+      "Notes": []
     }
   ],
   "tasks": [
     {
-      "ID": "1792519626735159400-3-task",
-      "GoalID": "20261020130618-1-goal",
+      "ID": "1794260016464445300-3-task",
+      "GoalID": "20261109163237-1-goal",
       "Title": "Implementación",
       "Description": "Ejecutar el plan",
       "Order": 3,
@@ -134,133 +203,9 @@
       "TimeInvested": 0,
       "StartedAt": "0001-01-01T00:00:00Z",
       "CompletedAt": "0001-01-01T00:00:00Z",
-      "CreatedAt": "2026-10-20T13:07:06.7351594-05:00",
+      "CreatedAt": "2026-11-09T16:33:36.4644453-05:00",
       "Dependencies": [
-        "1792519626735159400-2-task"
-      ],
-      "Success": false,
-      "Errors": 0,
-      "Attempts": 0,
-      "BlockReason": ""
-    },
-    {
-      "ID": "1792519626735159400-4-task",
-      "GoalID": "20261020130618-1-goal",
-      "Title": "Testing",
-      "Description": "Validar resultados",
-      "Order": 4,
-      "Status": "pending",
-      "Priority": 2,
-      "TimeEstimate": 7200000000000,
-      "TimeInvested": 0,
-      "StartedAt": "0001-01-01T00:00:00Z",
-      "CompletedAt": "0001-01-01T00:00:00Z",
-      "CreatedAt": "2026-10-20T13:07:06.7351594-05:00",
-      "Dependencies": [
-        "1792519626735159400-3-task"
-      ],
-      "Success": false,
-      "Errors": 0,
-      "Attempts": 0,
-      "BlockReason": ""
-    },
-    {
-      "ID": "1792525045069327700-4-task",
-      "GoalID": "20261020143639-1-goal",
-      "Title": "Testing",
-      "Description": "Validar resultados",
-      "Order": 4,
-      "Status": "pending",
-      "Priority": 2,
-      "TimeEstimate": 7200000000000,
-      "TimeInvested": 0,
-      "StartedAt": "0001-01-01T00:00:00Z",
-      "CompletedAt": "0001-01-01T00:00:00Z",
-      "CreatedAt": "2026-10-20T14:37:25.0693277-05:00",
-      "Dependencies": [
-        "1792525045069327700-3-task"
-      ],
-      "Success": false,
-      "Errors": 0,
-      "Attempts": 0,
-      "BlockReason": ""
-    },
-    {
-      "ID": "1792523543854026300-4-task",
-      "GoalID": "20261020141135-1-goal",
-      "Title": "Testing",
-      "Description": "Validar resultados",
-      "Order": 4,
-      "Status": "pending",
-      "Priority": 2,
-      "TimeEstimate": 7200000000000,
-      "TimeInvested": 0,
-      "StartedAt": "0001-01-01T00:00:00Z",
-      "CompletedAt": "0001-01-01T00:00:00Z",
-      "CreatedAt": "2026-10-20T14:12:23.8540263-05:00",
-      "Dependencies": [
-        "1792523543854026300-3-task"
-      ],
-      "Success": false,
-      "Errors": 0,
-      "Attempts": 0,
-      "BlockReason": ""
-    },
-    {
-      "ID": "1792525045069327700-1-task",
-      "GoalID": "20261020143639-1-goal",
-      "Title": "Análisis",
-      "Description": "Entender el objetivo completamente",
-      "Order": 1,
-      "Status": "pending",
-      "Priority": 2,
-      "TimeEstimate": 7200000000000,
-      "TimeInvested": 0,
-      "StartedAt": "0001-01-01T00:00:00Z",
-      "CompletedAt": "0001-01-01T00:00:00Z",
-      "CreatedAt": "2026-10-20T14:37:25.0693277-05:00",
-      "Dependencies": [],
-      "Success": false,
-      "Errors": 0,
-      "Attempts": 0,
-      "BlockReason": ""
-    },
-    {
-      "ID": "1792517261911417800-4-task",
-      "GoalID": "20261020122651-1-goal",
-      "Title": "Testing",
-      "Description": "Validar resultados",
-      "Order": 4,
-      "Status": "pending",
-      "Priority": 2,
-      "TimeEstimate": 7200000000000,
-      "TimeInvested": 0,
-      "StartedAt": "0001-01-01T00:00:00Z",
-      "CompletedAt": "0001-01-01T00:00:00Z",
-      "CreatedAt": "2026-10-20T12:27:41.9114178-05:00",
-      "Dependencies": [
-        "1792517261911417800-3-task"
-      ],
-      "Success": false,
-      "Errors": 0,
-      "Attempts": 0,
-      "BlockReason": ""
-    },
-    {
-      "ID": "1792517261911417800-2-task",
-      "GoalID": "20261020122651-1-goal",
-      "Title": "Diseño",
-      "Description": "Planificar la solución",
-      "Order": 2,
-      "Status": "pending",
-      "Priority": 2,
-      "TimeEstimate": 10800000000000,
-      "TimeInvested": 0,
-      "StartedAt": "0001-01-01T00:00:00Z",
-      "CompletedAt": "0001-01-01T00:00:00Z",
-      "CreatedAt": "2026-10-20T12:27:41.9114178-05:00",
-      "Dependencies": [
-        "1792517261911417800-1-task"
+        "1794260016464445300-2-task"
       ],
       "Success": false,
       "Errors": 0,
@@ -289,6 +234,25 @@
       "BlockReason": ""
     },
     {
+      "ID": "1792516680435593600-1-task",
+      "GoalID": "20261020121710-1-goal",
+      "Title": "Análisis",
+      "Description": "Entender el objetivo completamente",
+      "Order": 1,
+      "Status": "pending",
+      "Priority": 2,
+      "TimeEstimate": 7200000000000,
+      "TimeInvested": 0,
+      "StartedAt": "0001-01-01T00:00:00Z",
+      "CompletedAt": "0001-01-01T00:00:00Z",
+      "CreatedAt": "2026-10-20T12:18:00.4355936-05:00",
+      "Dependencies": [],
+      "Success": false,
+      "Errors": 0,
+      "Attempts": 0,
+      "BlockReason": ""
+    },
+    {
       "ID": "1792519626735159400-1-task",
       "GoalID": "20261020130618-1-goal",
       "Title": "Análisis",
@@ -308,29 +272,8 @@
       "BlockReason": ""
     },
     {
-      "ID": "1792519626735159400-2-task",
-      "GoalID": "20261020130618-1-goal",
-      "Title": "Diseño",
-      "Description": "Planificar la solución",
-      "Order": 2,
-      "Status": "pending",
-      "Priority": 2,
-      "TimeEstimate": 10800000000000,
-      "TimeInvested": 0,
-      "StartedAt": "0001-01-01T00:00:00Z",
-      "CompletedAt": "0001-01-01T00:00:00Z",
-      "CreatedAt": "2026-10-20T13:07:06.7351594-05:00",
-      "Dependencies": [
-        "1792519626735159400-1-task"
-      ],
-      "Success": false,
-      "Errors": 0,
-      "Attempts": 0,
-      "BlockReason": ""
-    },
-    {
-      "ID": "1792523543854026300-3-task",
-      "GoalID": "20261020141135-1-goal",
+      "ID": "1794272015834323100-3-task",
+      "GoalID": "20261109195225-1-goal",
       "Title": "Implementación",
       "Description": "Ejecutar el plan",
       "Order": 3,
@@ -340,51 +283,9 @@
       "TimeInvested": 0,
       "StartedAt": "0001-01-01T00:00:00Z",
       "CompletedAt": "0001-01-01T00:00:00Z",
-      "CreatedAt": "2026-10-20T14:12:23.8540263-05:00",
+      "CreatedAt": "2026-11-09T19:53:35.8343231-05:00",
       "Dependencies": [
-        "1792523543854026300-2-task"
-      ],
-      "Success": false,
-      "Errors": 0,
-      "Attempts": 0,
-      "BlockReason": ""
-    },
-    {
-      "ID": "1792523543854026300-2-task",
-      "GoalID": "20261020141135-1-goal",
-      "Title": "Diseño",
-      "Description": "Planificar la solución",
-      "Order": 2,
-      "Status": "pending",
-      "Priority": 2,
-      "TimeEstimate": 10800000000000,
-      "TimeInvested": 0,
-      "StartedAt": "0001-01-01T00:00:00Z",
-      "CompletedAt": "0001-01-01T00:00:00Z",
-      "CreatedAt": "2026-10-20T14:12:23.8540263-05:00",
-      "Dependencies": [
-        "1792523543854026300-1-task"
-      ],
-      "Success": false,
-      "Errors": 0,
-      "Attempts": 0,
-      "BlockReason": ""
-    },
-    {
-      "ID": "1792516680435593600-3-task",
-      "GoalID": "20261020121710-1-goal",
-      "Title": "Implementación",
-      "Description": "Ejecutar el plan",
-      "Order": 3,
-      "Status": "pending",
-      "Priority": 2,
-      "TimeEstimate": 21600000000000,
-      "TimeInvested": 0,
-      "StartedAt": "0001-01-01T00:00:00Z",
-      "CompletedAt": "0001-01-01T00:00:00Z",
-      "CreatedAt": "2026-10-20T12:18:00.4355936-05:00",
-      "Dependencies": [
-        "1792516680435593600-2-task"
+        "1794272015834323100-2-task"
       ],
       "Success": false,
       "Errors": 0,
@@ -413,6 +314,25 @@
       "BlockReason": ""
     },
     {
+      "ID": "1794259043907504900-1-task",
+      "GoalID": "20261109161623-1-goal",
+      "Title": "Análisis",
+      "Description": "Entender el objetivo completamente",
+      "Order": 1,
+      "Status": "pending",
+      "Priority": 2,
+      "TimeEstimate": 7200000000000,
+      "TimeInvested": 0,
+      "StartedAt": "0001-01-01T00:00:00Z",
+      "CompletedAt": "0001-01-01T00:00:00Z",
+      "CreatedAt": "2026-11-09T16:17:23.9075049-05:00",
+      "Dependencies": [],
+      "Success": false,
+      "Errors": 0,
+      "Attempts": 0,
+      "BlockReason": ""
+    },
+    {
       "ID": "1792517261911417800-1-task",
       "GoalID": "20261020122651-1-goal",
       "Title": "Análisis",
@@ -432,8 +352,29 @@
       "BlockReason": ""
     },
     {
-      "ID": "1792516680435593600-1-task",
-      "GoalID": "20261020121710-1-goal",
+      "ID": "1792517261911417800-2-task",
+      "GoalID": "20261020122651-1-goal",
+      "Title": "Diseño",
+      "Description": "Planificar la solución",
+      "Order": 2,
+      "Status": "pending",
+      "Priority": 2,
+      "TimeEstimate": 10800000000000,
+      "TimeInvested": 0,
+      "StartedAt": "0001-01-01T00:00:00Z",
+      "CompletedAt": "0001-01-01T00:00:00Z",
+      "CreatedAt": "2026-10-20T12:27:41.9114178-05:00",
+      "Dependencies": [
+        "1792517261911417800-1-task"
+      ],
+      "Success": false,
+      "Errors": 0,
+      "Attempts": 0,
+      "BlockReason": ""
+    },
+    {
+      "ID": "1792523543854026300-1-task",
+      "GoalID": "20261020141135-1-goal",
       "Title": "Análisis",
       "Description": "Entender el objetivo completamente",
       "Order": 1,
@@ -443,8 +384,50 @@
       "TimeInvested": 0,
       "StartedAt": "0001-01-01T00:00:00Z",
       "CompletedAt": "0001-01-01T00:00:00Z",
-      "CreatedAt": "2026-10-20T12:18:00.4355936-05:00",
+      "CreatedAt": "2026-10-20T14:12:23.8540263-05:00",
       "Dependencies": [],
+      "Success": false,
+      "Errors": 0,
+      "Attempts": 0,
+      "BlockReason": ""
+    },
+    {
+      "ID": "1792519626735159400-3-task",
+      "GoalID": "20261020130618-1-goal",
+      "Title": "Implementación",
+      "Description": "Ejecutar el plan",
+      "Order": 3,
+      "Status": "pending",
+      "Priority": 2,
+      "TimeEstimate": 21600000000000,
+      "TimeInvested": 0,
+      "StartedAt": "0001-01-01T00:00:00Z",
+      "CompletedAt": "0001-01-01T00:00:00Z",
+      "CreatedAt": "2026-10-20T13:07:06.7351594-05:00",
+      "Dependencies": [
+        "1792519626735159400-2-task"
+      ],
+      "Success": false,
+      "Errors": 0,
+      "Attempts": 0,
+      "BlockReason": ""
+    },
+    {
+      "ID": "1792523543854026300-4-task",
+      "GoalID": "20261020141135-1-goal",
+      "Title": "Testing",
+      "Description": "Validar resultados",
+      "Order": 4,
+      "Status": "pending",
+      "Priority": 2,
+      "TimeEstimate": 7200000000000,
+      "TimeInvested": 0,
+      "StartedAt": "0001-01-01T00:00:00Z",
+      "CompletedAt": "0001-01-01T00:00:00Z",
+      "CreatedAt": "2026-10-20T14:12:23.8540263-05:00",
+      "Dependencies": [
+        "1792523543854026300-3-task"
+      ],
       "Success": false,
       "Errors": 0,
       "Attempts": 0,
@@ -465,6 +448,214 @@
       "CreatedAt": "2026-10-20T12:18:00.4355936-05:00",
       "Dependencies": [
         "1792516680435593600-3-task"
+      ],
+      "Success": false,
+      "Errors": 0,
+      "Attempts": 0,
+      "BlockReason": ""
+    },
+    {
+      "ID": "1794260016464445300-1-task",
+      "GoalID": "20261109163237-1-goal",
+      "Title": "Análisis",
+      "Description": "Entender el objetivo completamente",
+      "Order": 1,
+      "Status": "pending",
+      "Priority": 2,
+      "TimeEstimate": 7200000000000,
+      "TimeInvested": 0,
+      "StartedAt": "0001-01-01T00:00:00Z",
+      "CompletedAt": "0001-01-01T00:00:00Z",
+      "CreatedAt": "2026-11-09T16:33:36.4644453-05:00",
+      "Dependencies": [],
+      "Success": false,
+      "Errors": 0,
+      "Attempts": 0,
+      "BlockReason": ""
+    },
+    {
+      "ID": "1794260016464445300-4-task",
+      "GoalID": "20261109163237-1-goal",
+      "Title": "Testing",
+      "Description": "Validar resultados",
+      "Order": 4,
+      "Status": "pending",
+      "Priority": 2,
+      "TimeEstimate": 7200000000000,
+      "TimeInvested": 0,
+      "StartedAt": "0001-01-01T00:00:00Z",
+      "CompletedAt": "0001-01-01T00:00:00Z",
+      "CreatedAt": "2026-11-09T16:33:36.4644453-05:00",
+      "Dependencies": [
+        "1794260016464445300-3-task"
+      ],
+      "Success": false,
+      "Errors": 0,
+      "Attempts": 0,
+      "BlockReason": ""
+    },
+    {
+      "ID": "1794272015834323100-4-task",
+      "GoalID": "20261109195225-1-goal",
+      "Title": "Testing",
+      "Description": "Validar resultados",
+      "Order": 4,
+      "Status": "pending",
+      "Priority": 2,
+      "TimeEstimate": 7200000000000,
+      "TimeInvested": 0,
+      "StartedAt": "0001-01-01T00:00:00Z",
+      "CompletedAt": "0001-01-01T00:00:00Z",
+      "CreatedAt": "2026-11-09T19:53:35.8343231-05:00",
+      "Dependencies": [
+        "1794272015834323100-3-task"
+      ],
+      "Success": false,
+      "Errors": 0,
+      "Attempts": 0,
+      "BlockReason": ""
+    },
+    {
+      "ID": "1792516680435593600-3-task",
+      "GoalID": "20261020121710-1-goal",
+      "Title": "Implementación",
+      "Description": "Ejecutar el plan",
+      "Order": 3,
+      "Status": "pending",
+      "Priority": 2,
+      "TimeEstimate": 21600000000000,
+      "TimeInvested": 0,
+      "StartedAt": "0001-01-01T00:00:00Z",
+      "CompletedAt": "0001-01-01T00:00:00Z",
+      "CreatedAt": "2026-10-20T12:18:00.4355936-05:00",
+      "Dependencies": [
+        "1792516680435593600-2-task"
+      ],
+      "Success": false,
+      "Errors": 0,
+      "Attempts": 0,
+      "BlockReason": ""
+    },
+    {
+      "ID": "1792525045069327700-3-task",
+      "GoalID": "20261020143639-1-goal",
+      "Title": "Implementación",
+      "Description": "Ejecutar el plan",
+      "Order": 3,
+      "Status": "pending",
+      "Priority": 2,
+      "TimeEstimate": 21600000000000,
+      "TimeInvested": 0,
+      "StartedAt": "0001-01-01T00:00:00Z",
+      "CompletedAt": "0001-01-01T00:00:00Z",
+      "CreatedAt": "2026-10-20T14:37:25.0693277-05:00",
+      "Dependencies": [
+        "1792525045069327700-2-task"
+      ],
+      "Success": false,
+      "Errors": 0,
+      "Attempts": 0,
+      "BlockReason": ""
+    },
+    {
+      "ID": "1794259043907504900-4-task",
+      "GoalID": "20261109161623-1-goal",
+      "Title": "Testing",
+      "Description": "Validar resultados",
+      "Order": 4,
+      "Status": "pending",
+      "Priority": 2,
+      "TimeEstimate": 7200000000000,
+      "TimeInvested": 0,
+      "StartedAt": "0001-01-01T00:00:00Z",
+      "CompletedAt": "0001-01-01T00:00:00Z",
+      "CreatedAt": "2026-11-09T16:17:23.9075049-05:00",
+      "Dependencies": [
+        "1794259043907504900-3-task"
+      ],
+      "Success": false,
+      "Errors": 0,
+      "Attempts": 0,
+      "BlockReason": ""
+    },
+    {
+      "ID": "1792523543854026300-2-task",
+      "GoalID": "20261020141135-1-goal",
+      "Title": "Diseño",
+      "Description": "Planificar la solución",
+      "Order": 2,
+      "Status": "pending",
+      "Priority": 2,
+      "TimeEstimate": 10800000000000,
+      "TimeInvested": 0,
+      "StartedAt": "0001-01-01T00:00:00Z",
+      "CompletedAt": "0001-01-01T00:00:00Z",
+      "CreatedAt": "2026-10-20T14:12:23.8540263-05:00",
+      "Dependencies": [
+        "1792523543854026300-1-task"
+      ],
+      "Success": false,
+      "Errors": 0,
+      "Attempts": 0,
+      "BlockReason": ""
+    },
+    {
+      "ID": "1792523543854026300-3-task",
+      "GoalID": "20261020141135-1-goal",
+      "Title": "Implementación",
+      "Description": "Ejecutar el plan",
+      "Order": 3,
+      "Status": "pending",
+      "Priority": 2,
+      "TimeEstimate": 21600000000000,
+      "TimeInvested": 0,
+      "StartedAt": "0001-01-01T00:00:00Z",
+      "CompletedAt": "0001-01-01T00:00:00Z",
+      "CreatedAt": "2026-10-20T14:12:23.8540263-05:00",
+      "Dependencies": [
+        "1792523543854026300-2-task"
+      ],
+      "Success": false,
+      "Errors": 0,
+      "Attempts": 0,
+      "BlockReason": ""
+    },
+    {
+      "ID": "1792525045069327700-4-task",
+      "GoalID": "20261020143639-1-goal",
+      "Title": "Testing",
+      "Description": "Validar resultados",
+      "Order": 4,
+      "Status": "pending",
+      "Priority": 2,
+      "TimeEstimate": 7200000000000,
+      "TimeInvested": 0,
+      "StartedAt": "0001-01-01T00:00:00Z",
+      "CompletedAt": "0001-01-01T00:00:00Z",
+      "CreatedAt": "2026-10-20T14:37:25.0693277-05:00",
+      "Dependencies": [
+        "1792525045069327700-3-task"
+      ],
+      "Success": false,
+      "Errors": 0,
+      "Attempts": 0,
+      "BlockReason": ""
+    },
+    {
+      "ID": "1792517261911417800-4-task",
+      "GoalID": "20261020122651-1-goal",
+      "Title": "Testing",
+      "Description": "Validar resultados",
+      "Order": 4,
+      "Status": "pending",
+      "Priority": 2,
+      "TimeEstimate": 7200000000000,
+      "TimeInvested": 0,
+      "StartedAt": "0001-01-01T00:00:00Z",
+      "CompletedAt": "0001-01-01T00:00:00Z",
+      "CreatedAt": "2026-10-20T12:27:41.9114178-05:00",
+      "Dependencies": [
+        "1792517261911417800-3-task"
       ],
       "Success": false,
       "Errors": 0,
@@ -493,8 +684,29 @@
       "BlockReason": ""
     },
     {
-      "ID": "1792523543854026300-1-task",
-      "GoalID": "20261020141135-1-goal",
+      "ID": "1794259043907504900-2-task",
+      "GoalID": "20261109161623-1-goal",
+      "Title": "Diseño",
+      "Description": "Planificar la solución",
+      "Order": 2,
+      "Status": "pending",
+      "Priority": 2,
+      "TimeEstimate": 10800000000000,
+      "TimeInvested": 0,
+      "StartedAt": "0001-01-01T00:00:00Z",
+      "CompletedAt": "0001-01-01T00:00:00Z",
+      "CreatedAt": "2026-11-09T16:17:23.9075049-05:00",
+      "Dependencies": [
+        "1794259043907504900-1-task"
+      ],
+      "Success": false,
+      "Errors": 0,
+      "Attempts": 0,
+      "BlockReason": ""
+    },
+    {
+      "ID": "1794272015834323100-1-task",
+      "GoalID": "20261109195225-1-goal",
       "Title": "Análisis",
       "Description": "Entender el objetivo completamente",
       "Order": 1,
@@ -504,7 +716,7 @@
       "TimeInvested": 0,
       "StartedAt": "0001-01-01T00:00:00Z",
       "CompletedAt": "0001-01-01T00:00:00Z",
-      "CreatedAt": "2026-10-20T14:12:23.8540263-05:00",
+      "CreatedAt": "2026-11-09T19:53:35.8343231-05:00",
       "Dependencies": [],
       "Success": false,
       "Errors": 0,
@@ -512,8 +724,29 @@
       "BlockReason": ""
     },
     {
-      "ID": "1792525045069327700-3-task",
-      "GoalID": "20261020143639-1-goal",
+      "ID": "1794272015834323100-2-task",
+      "GoalID": "20261109195225-1-goal",
+      "Title": "Diseño",
+      "Description": "Planificar la solución",
+      "Order": 2,
+      "Status": "pending",
+      "Priority": 2,
+      "TimeEstimate": 10800000000000,
+      "TimeInvested": 0,
+      "StartedAt": "0001-01-01T00:00:00Z",
+      "CompletedAt": "0001-01-01T00:00:00Z",
+      "CreatedAt": "2026-11-09T19:53:35.8343231-05:00",
+      "Dependencies": [
+        "1794272015834323100-1-task"
+      ],
+      "Success": false,
+      "Errors": 0,
+      "Attempts": 0,
+      "BlockReason": ""
+    },
+    {
+      "ID": "1794259043907504900-3-task",
+      "GoalID": "20261109161623-1-goal",
       "Title": "Implementación",
       "Description": "Ejecutar el plan",
       "Order": 3,
@@ -523,9 +756,91 @@
       "TimeInvested": 0,
       "StartedAt": "0001-01-01T00:00:00Z",
       "CompletedAt": "0001-01-01T00:00:00Z",
-      "CreatedAt": "2026-10-20T14:37:25.0693277-05:00",
+      "CreatedAt": "2026-11-09T16:17:23.9075049-05:00",
       "Dependencies": [
-        "1792525045069327700-2-task"
+        "1794259043907504900-2-task"
+      ],
+      "Success": false,
+      "Errors": 0,
+      "Attempts": 0,
+      "BlockReason": ""
+    },
+    {
+      "ID": "1792525045069327700-1-task",
+      "GoalID": "20261020143639-1-goal",
+      "Title": "Análisis",
+      "Description": "Entender el objetivo completamente",
+      "Order": 1,
+      "Status": "pending",
+      "Priority": 2,
+      "TimeEstimate": 7200000000000,
+      "TimeInvested": 0,
+      "StartedAt": "0001-01-01T00:00:00Z",
+      "CompletedAt": "0001-01-01T00:00:00Z",
+      "CreatedAt": "2026-10-20T14:37:25.0693277-05:00",
+      "Dependencies": [],
+      "Success": false,
+      "Errors": 0,
+      "Attempts": 0,
+      "BlockReason": ""
+    },
+    {
+      "ID": "1794260016464445300-2-task",
+      "GoalID": "20261109163237-1-goal",
+      "Title": "Diseño",
+      "Description": "Planificar la solución",
+      "Order": 2,
+      "Status": "pending",
+      "Priority": 2,
+      "TimeEstimate": 10800000000000,
+      "TimeInvested": 0,
+      "StartedAt": "0001-01-01T00:00:00Z",
+      "CompletedAt": "0001-01-01T00:00:00Z",
+      "CreatedAt": "2026-11-09T16:33:36.4644453-05:00",
+      "Dependencies": [
+        "1794260016464445300-1-task"
+      ],
+      "Success": false,
+      "Errors": 0,
+      "Attempts": 0,
+      "BlockReason": ""
+    },
+    {
+      "ID": "1792519626735159400-4-task",
+      "GoalID": "20261020130618-1-goal",
+      "Title": "Testing",
+      "Description": "Validar resultados",
+      "Order": 4,
+      "Status": "pending",
+      "Priority": 2,
+      "TimeEstimate": 7200000000000,
+      "TimeInvested": 0,
+      "StartedAt": "0001-01-01T00:00:00Z",
+      "CompletedAt": "0001-01-01T00:00:00Z",
+      "CreatedAt": "2026-10-20T13:07:06.7351594-05:00",
+      "Dependencies": [
+        "1792519626735159400-3-task"
+      ],
+      "Success": false,
+      "Errors": 0,
+      "Attempts": 0,
+      "BlockReason": ""
+    },
+    {
+      "ID": "1792519626735159400-2-task",
+      "GoalID": "20261020130618-1-goal",
+      "Title": "Diseño",
+      "Description": "Planificar la solución",
+      "Order": 2,
+      "Status": "pending",
+      "Priority": 2,
+      "TimeEstimate": 10800000000000,
+      "TimeInvested": 0,
+      "StartedAt": "0001-01-01T00:00:00Z",
+      "CompletedAt": "0001-01-01T00:00:00Z",
+      "CreatedAt": "2026-10-20T13:07:06.7351594-05:00",
+      "Dependencies": [
+        "1792519626735159400-1-task"
       ],
       "Success": false,
       "Errors": 0,
@@ -535,14 +850,14 @@
   ],
   "plans": [
     {
-      "goal_id": "20261020130618-1-goal",
-      "plan_id": "plan-1792519581733975200-1",
-      "created_at": "2026-10-20T13:06:21.7339752-05:00",
+      "goal_id": "20261109163237-1-goal",
+      "plan_id": "plan-1794259971422163700-1",
+      "created_at": "2026-11-09T16:32:51.4221637-05:00",
       "task_ids": [
-        "1792519626735159400-1-task",
-        "1792519626735159400-2-task",
-        "1792519626735159400-3-task",
-        "1792519626735159400-4-task"
+        "1794260016464445300-1-task",
+        "1794260016464445300-2-task",
+        "1794260016464445300-3-task",
+        "1794260016464445300-4-task"
       ],
       "total_estimate": 46800000000000,
       "priority": 2,
@@ -584,12 +899,66 @@
       "issues": [
         "adaptive decomposition unavailable; deterministic fallback used: generate task graph: ollama: no se pudo conectar con Ollama en http://127.0.0.1:11434: Post \"http://127.0.0.1:11434/api/generate\": context deadline exceeded"
       ]
+    },
+    {
+      "goal_id": "20261109161623-1-goal",
+      "plan_id": "plan-1794258998897828400-1",
+      "created_at": "2026-11-09T16:16:38.8978284-05:00",
+      "task_ids": [
+        "1794259043907504900-1-task",
+        "1794259043907504900-2-task",
+        "1794259043907504900-3-task",
+        "1794259043907504900-4-task"
+      ],
+      "total_estimate": 46800000000000,
+      "priority": 2,
+      "feasible": true,
+      "issues": [
+        "adaptive decomposition unavailable; deterministic fallback used: generate task graph: ollama: no se pudo conectar con Ollama en http://127.0.0.1:11434: Post \"http://127.0.0.1:11434/api/generate\": context deadline exceeded"
+      ]
+    },
+    {
+      "goal_id": "20261020130618-1-goal",
+      "plan_id": "plan-1792519581733975200-1",
+      "created_at": "2026-10-20T13:06:21.7339752-05:00",
+      "task_ids": [
+        "1792519626735159400-1-task",
+        "1792519626735159400-2-task",
+        "1792519626735159400-3-task",
+        "1792519626735159400-4-task"
+      ],
+      "total_estimate": 46800000000000,
+      "priority": 2,
+      "feasible": true,
+      "issues": [
+        "adaptive decomposition unavailable; deterministic fallback used: generate task graph: ollama: no se pudo conectar con Ollama en http://127.0.0.1:11434: Post \"http://127.0.0.1:11434/api/generate\": context deadline exceeded"
+      ]
+    },
+    {
+      "goal_id": "20261109195225-1-goal",
+      "plan_id": "plan-1794271970119510400-1",
+      "created_at": "2026-11-09T19:52:50.1195104-05:00",
+      "task_ids": [
+        "1794272015834323100-1-task",
+        "1794272015834323100-2-task",
+        "1794272015834323100-3-task",
+        "1794272015834323100-4-task"
+      ],
+      "total_estimate": 46800000000000,
+      "priority": 2,
+      "feasible": true,
+      "issues": [
+        "adaptive decomposition unavailable; deterministic fallback used: generate task graph: ollama: no se pudo conectar con Ollama en http://127.0.0.1:11434: Post \"http://127.0.0.1:11434/api/generate\": context deadline exceeded"
+      ]
     }
   ],
   "current_goal_id": "20261020141135-1-goal",
   "pending_goal_ids": [
     "20261020130618-1-goal",
-    "20261020143639-1-goal"
+    "20261020143639-1-goal",
+    "20261109161623-1-goal",
+    "20261109163237-1-goal",
+    "20261109195225-1-goal"
   ],
   "replan_regenerations": {}
 }

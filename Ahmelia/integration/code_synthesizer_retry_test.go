@@ -9,6 +9,7 @@ import (
 	"testing"
 
 	"ahmelia/experience"
+	"ahmelia/production"
 	"ahmelia/programming"
 	"ahmelia/tools"
 )
@@ -199,6 +200,7 @@ func TestCodeSynthesizerStopsAfterThreeRejectedAttempts(t *testing.T) {
 	store, _ := experience.Open(filepath.Join(t.TempDir(), "experience.jsonl"))
 	synthesizer := NewStructuredCodeObjectiveSynthesizerWithClient(client)
 	synthesizer.Experience = store
+	synthesizer.RetryPolicy = production.RetryPolicy{MaxAttempts: 3, NoProgressLimit: 4}
 	_, err := synthesizer.Synthesize(context.Background(), programming.CodeObjective{
 		Raw: "Crea un programa Go con Add(a,b int) int y TestAdd.", Language: "Go",
 		ProjectID: "bounded", ProjectRoot: t.TempDir(),

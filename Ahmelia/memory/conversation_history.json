@@ -1363,6 +1363,312 @@
         "salir"
       ],
       "summary": "Sesión con 77 turnos; último tema: prueba"
+    },
+    {
+      "id": "episode_process_1794258621083142400_1794258621083142400",
+      "session_id": "process_1794258621083142400",
+      "start": "2026-11-09T16:10:21.0831424-05:00",
+      "end": "0001-01-01T00:00:00Z",
+      "status": "active",
+      "turns": [
+        {
+          "id": 78,
+          "at": "2026-11-09T16:10:59.3700242-05:00",
+          "user_text": "﻿hola",
+          "assistant": "Necesito un poco más de contexto para responderte bien.",
+          "kind": "conversation",
+          "speech_act": "inform",
+          "topic": "prueba",
+          "objective": "﻿hola",
+          "relation": "continuation",
+          "parent_turn_id": 77
+        },
+        {
+          "id": 79,
+          "at": "2026-11-09T16:12:33.3762561-05:00",
+          "user_text": "Crea un programa Go que sume dos numeros y guardalo en el proyecto",
+          "assistant": "La tarea sigue pendiente de autorización para programming.create_file. La mantengo en el mismo trabajo y no la ejecutaré hasta recibir una autorización explícita.",
+          "kind": "production",
+          "speech_act": "command",
+          "language": "es",
+          "topic": "el proyecto",
+          "objective": "quiero crear un proyecto para prueba V1 real 2026-10-20\ncrea carpeta C:\\Users\\User\\AppData\\Local\\Temp\\ahmelia-paso4-normal-1\ncrea carpeta PruebaPaso4\nCrea un programa Go que sume dos numeros y guardalo en el proyecto",
+          "relation": "new_topic",
+          "parent_turn_id": 78
+        },
+        {
+          "id": 80,
+          "at": "2026-11-09T16:14:08.7328651-05:00",
+          "user_text": "No, rechazo la autorizacion pendiente. No ejecutes esa tarea vieja.",
+          "assistant": "La operación programming.create_file sigue pendiente; preguntar o plantear una condición no la autoriza. Si quieres que continúe, dímelo explícitamente.",
+          "kind": "correction",
+          "speech_act": "correct",
+          "language": "es",
+          "topic": "el proyecto",
+          "objective": "No, rechazo la autorizacion pendiente. No ejecutes esa tarea vieja.",
+          "relation": "correction",
+          "parent_turn_id": 79
+        },
+        {
+          "id": 81,
+          "at": "2026-11-09T16:15:17.8246198-05:00",
+          "user_text": "No.",
+          "assistant": "De acuerdo, no ejecutaré esa operación.",
+          "kind": "continuation",
+          "speech_act": "continue",
+          "language": "es",
+          "topic": "el proyecto",
+          "objective": "No, rechazo la autorizacion pendiente. No ejecutes esa tarea vieja.",
+          "relation": "answer",
+          "parent_turn_id": 80
+        },
+        {
+          "id": 82,
+          "at": "2026-11-09T16:16:17.2081128-05:00",
+          "user_text": "Crea un programa Go nuevo llamado sumador_real con una funcion Add(a, b int) int y una prueba TestAdd que verifique Add(2, 3) == 5. Guardalo en el proyecto. Sin dependencias externas.",
+          "assistant": "La tarea quedó preparada, pero necesito tu autorización explícita para ejecutar programming.create_file. Motivo: explicit confirmation required before execution. Puedes autorizarla explícitamente cuando quieras.",
+          "kind": "production",
+          "speech_act": "command",
+          "language": "es",
+          "topic": "el proyecto. sin dependencias externas",
+          "objective": "Crea un programa Go nuevo llamado sumador_real con una funcion Add(a, b int) int y una prueba TestAdd que verifique Add(2, 3) == 5. Guardalo en el proyecto. Sin dependencias externas.",
+          "relation": "new_topic",
+          "parent_turn_id": 81
+        },
+        {
+          "id": 83,
+          "at": "2026-11-09T16:18:13.3575466-05:00",
+          "user_text": "Si, autorizo la ejecucion pendiente",
+          "assistant": "La operación programming.create_file sigue pendiente; preguntar o plantear una condición no la autoriza. Si quieres que continúe, dímelo explícitamente.",
+          "kind": "conversation",
+          "speech_act": "inform",
+          "language": "es",
+          "topic": "el proyecto. sin dependencias externas",
+          "objective": "Si, autorizo la ejecucion pendiente",
+          "relation": "continuation",
+          "parent_turn_id": 82
+        },
+        {
+          "id": 84,
+          "at": "2026-11-09T16:21:12.5897988-05:00",
+          "user_text": "Sí, autorizo la ejecución pendiente",
+          "assistant": "Recuperación de producción: replan. build failed: # ahmelia.local/project-ahmelia_real_2026-11-09",
+          "kind": "continuation",
+          "speech_act": "continue",
+          "language": "es",
+          "topic": "autorización de ejecución pendiente",
+          "objective": "Si, autorizo la ejecucion pendiente",
+          "relation": "answer",
+          "parent_turn_id": 83
+        },
+        {
+          "id": 85,
+          "at": "2026-11-09T16:27:59.9081849-05:00",
+          "user_text": "salir",
+          "kind": "stop",
+          "speech_act": "stop",
+          "language": "es",
+          "topic": "autorización de ejecución pendiente",
+          "objective": "salir",
+          "relation": "continuation",
+          "parent_turn_id": 84
+        }
+      ],
+      "topics": [
+        "prueba",
+        "el proyecto",
+        "el proyecto. sin dependencias externas",
+        "autorización de ejecución pendiente"
+      ],
+      "objectives": [
+        "﻿hola",
+        "quiero crear un proyecto para prueba V1 real 2026-10-20\ncrea carpeta C:\\Users\\User\\AppData\\Local\\Temp\\ahmelia-paso4-normal-1\ncrea carpeta PruebaPaso4\nCrea un programa Go que sume dos numeros y guardalo en el proyecto",
+        "No, rechazo la autorizacion pendiente. No ejecutes esa tarea vieja.",
+        "Crea un programa Go nuevo llamado sumador_real con una funcion Add(a, b int) int y una prueba TestAdd que verifique Add(2, 3) == 5. Guardalo en el proyecto. Sin dependencias externas.",
+        "Si, autorizo la ejecucion pendiente",
+        "salir"
+      ]
+    },
+    {
+      "id": "episode_process_1794259859236261400_1794259859236261400",
+      "session_id": "process_1794259859236261400",
+      "start": "2026-11-09T16:30:59.2362614-05:00",
+      "end": "2026-11-09T16:38:38.3806194-05:00",
+      "status": "completed",
+      "turns": [
+        {
+          "id": 86,
+          "at": "2026-11-09T16:31:39.2226297-05:00",
+          "user_text": "hola",
+          "assistant": "Entendido.",
+          "kind": "conversation",
+          "speech_act": "social",
+          "topic": "autorización de ejecución pendiente",
+          "objective": "hola",
+          "relation": "continuation",
+          "parent_turn_id": 85
+        },
+        {
+          "id": 87,
+          "at": "2026-11-09T16:32:28.9490389-05:00",
+          "user_text": "Crea un programa Go nuevo llamado sumador_b con una funcion Add(a, b int) int y una prueba TestAdd que verifique Add(2, 3) == 5. Guardalo en el proyecto. Sin dependencias externas.",
+          "assistant": "La tarea quedó preparada, pero necesito tu autorización explícita para ejecutar programming.create_file. Motivo: explicit confirmation required before execution. Puedes autorizarla explícitamente cuando quieras.",
+          "kind": "production",
+          "speech_act": "command",
+          "language": "es",
+          "topic": "el proyecto. sin dependencias externas",
+          "objective": "Crea un programa Go nuevo llamado sumador_b con una funcion Add(a, b int) int y una prueba TestAdd que verifique Add(2, 3) == 5. Guardalo en el proyecto. Sin dependencias externas.",
+          "relation": "new_topic",
+          "parent_turn_id": 86
+        },
+        {
+          "id": 88,
+          "at": "2026-11-09T16:34:50.5790235-05:00",
+          "user_text": "Sí, autorizo la ejecución pendiente",
+          "assistant": "Producción completada: proyecto ahmelia_real_b_2026-11-09 creado y verificado en C:\\Users\\User\\Desktop\\Ahmelia_Real_B_2026-11-09.",
+          "kind": "conversation",
+          "speech_act": "inform",
+          "language": "es",
+          "topic": "el proyecto. sin dependencias externas",
+          "objective": "Sí, autorizo la ejecución pendiente",
+          "relation": "continuation",
+          "parent_turn_id": 87
+        },
+        {
+          "id": 89,
+          "at": "2026-11-09T16:38:11.7393549-05:00",
+          "user_text": "salir",
+          "assistant": "Hasta luego.",
+          "kind": "stop",
+          "speech_act": "stop",
+          "language": "es",
+          "topic": "el proyecto. sin dependencias externas",
+          "objective": "salir",
+          "relation": "continuation",
+          "parent_turn_id": 88
+        }
+      ],
+      "topics": [
+        "autorización de ejecución pendiente",
+        "el proyecto. sin dependencias externas"
+      ],
+      "objectives": [
+        "hola",
+        "Crea un programa Go nuevo llamado sumador_b con una funcion Add(a, b int) int y una prueba TestAdd que verifique Add(2, 3) == 5. Guardalo en el proyecto. Sin dependencias externas.",
+        "Sí, autorizo la ejecución pendiente",
+        "salir"
+      ],
+      "summary": "Sesión con 89 turnos; último tema: el proyecto. sin dependencias externas"
+    },
+    {
+      "id": "episode_process_1794260892437005300_1794260892437005300",
+      "session_id": "process_1794260892437005300",
+      "start": "2026-11-09T16:48:12.4370053-05:00",
+      "end": "2026-11-09T16:52:36.7401788-05:00",
+      "status": "completed",
+      "turns": [
+        {
+          "id": 90,
+          "at": "2026-11-09T16:49:15.944084-05:00",
+          "user_text": "hola",
+          "assistant": "Hola, ¿en qué puedo ayudarte hoy?",
+          "kind": "conversation",
+          "speech_act": "social",
+          "topic": "el proyecto. sin dependencias externas",
+          "objective": "hola",
+          "relation": "continuation",
+          "parent_turn_id": 89
+        },
+        {
+          "id": 92,
+          "at": "2026-11-09T16:51:34.830378-05:00",
+          "user_text": "salir",
+          "assistant": "Hasta luego.",
+          "kind": "stop",
+          "speech_act": "stop",
+          "topic": "el proyecto. sin dependencias externas",
+          "objective": "salir",
+          "relation": "continuation",
+          "parent_turn_id": 91
+        }
+      ],
+      "topics": [
+        "el proyecto. sin dependencias externas"
+      ],
+      "objectives": [
+        "hola",
+        "salir"
+      ],
+      "summary": "Sesión con 92 turnos; último tema: el proyecto. sin dependencias externas"
+    },
+    {
+      "id": "episode_process_1794261285285296000_1794261285285296000",
+      "session_id": "process_1794261285285296000",
+      "start": "2026-11-09T16:54:45.285296-05:00",
+      "end": "2026-11-09T16:58:21.0791788-05:00",
+      "status": "completed",
+      "turns": [
+        {
+          "id": 93,
+          "at": "2026-11-09T16:55:29.0517761-05:00",
+          "user_text": "hola",
+          "assistant": "Hola, ¿en qué puedo ayudarte hoy?",
+          "kind": "conversation",
+          "speech_act": "social",
+          "topic": "el proyecto. sin dependencias externas",
+          "objective": "hola",
+          "relation": "continuation",
+          "parent_turn_id": 92
+        },
+        {
+          "id": 94,
+          "at": "2026-11-09T16:57:42.7942054-05:00",
+          "user_text": "salir",
+          "assistant": "Hasta luego.",
+          "kind": "stop",
+          "speech_act": "stop",
+          "topic": "el proyecto. sin dependencias externas",
+          "objective": "salir",
+          "relation": "continuation",
+          "parent_turn_id": 93
+        }
+      ],
+      "topics": [
+        "el proyecto. sin dependencias externas"
+      ],
+      "objectives": [
+        "hola",
+        "salir"
+      ],
+      "summary": "Sesión con 94 turnos; último tema: el proyecto. sin dependencias externas"
+    },
+    {
+      "id": "episode_process_1794271911186394400_1794271911186394400",
+      "session_id": "process_1794271911186394400",
+      "start": "2026-11-09T19:51:51.1863944-05:00",
+      "end": "0001-01-01T00:00:00Z",
+      "status": "active",
+      "turns": [
+        {
+          "id": 95,
+          "at": "2026-11-09T19:52:19.2826679-05:00",
+          "user_text": "Crea un programa Go nuevo llamado async_sum con una funcion Add(a, b int) int, una prueba TestAdd que verifique Add(2, 3) == 5 y una funcion main. Guardalo en el proyecto. Sin dependencias externas.",
+          "assistant": "La tarea quedó preparada, pero necesito tu autorización explícita para ejecutar programming.create_file. Motivo: explicit confirmation required before execution. Puedes autorizarla explícitamente cuando quieras.",
+          "kind": "production",
+          "speech_act": "command",
+          "language": "es",
+          "topic": "el proyecto. sin dependencias externas",
+          "objective": "Crea un programa Go nuevo llamado async_sum con una funcion Add(a, b int) int, una prueba TestAdd que verifique Add(2, 3) == 5 y una funcion main. Guardalo en el proyecto. Sin dependencias externas.",
+          "relation": "continuation",
+          "parent_turn_id": 94
+        }
+      ],
+      "topics": [
+        "el proyecto. sin dependencias externas"
+      ],
+      "objectives": [
+        "Crea un programa Go nuevo llamado async_sum con una funcion Add(a, b int) int, una prueba TestAdd que verifique Add(2, 3) == 5 y una funcion main. Guardalo en el proyecto. Sin dependencias externas."
+      ]
     }
   ],
   "retention": {

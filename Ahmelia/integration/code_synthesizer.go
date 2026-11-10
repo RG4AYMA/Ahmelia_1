@@ -10,6 +10,7 @@ import (
 	"time"
 
 	"ahmelia/experience"
+	"ahmelia/production"
 	"ahmelia/programming"
 	"ahmelia/tools"
 )
@@ -27,8 +28,9 @@ type StructuredCodeStreamGenerator interface {
 }
 
 type StructuredCodeObjectiveSynthesizer struct {
-	Client     StructuredCodeGenerator
-	Experience *experience.Store
+	Client      StructuredCodeGenerator
+	Experience  *experience.Store
+	RetryPolicy production.RetryPolicy
 }
 
 // GenerationSource reports who proposed the code so downstream experience can
@@ -194,63 +196,73 @@ func (s *StructuredCodeObjectiveSynthesizer) Synthesize(ctx context.Context, obj
 		}
 	}
 
-	const maxAttempts = 3
+	if ctx == nil {
+		ctx = context.Background()
+	}
+	shared := production.RetryBudgetFromContext(ctx)
+	local := production.NewRetryBudget(s.RetryPolicy, "synthesis")
+	ctx, cancel := local.Context(ctx)
+	defer cancel()
 	var response synthesizedProject
 	var lastErr error
-	for attempt := 1; attempt <= maxAttempts; attempt++ {
+	for attempt := 1; ; attempt++ {
+		if err := local.BeginAttempt(ctx, "synthesis"); err != nil {
+			return nil, err
+		}
+		if err := local.UseModelCall(ctx); err != nil {
+			return nil, err
+		}
+		if shared != nil {
+			if err := shared.UseModelCall(ctx); err != nil {
+				return nil, err
+			}
+		}
 		raw, err := s.generate(ctx, prompt)
+		if err == nil {
+			err = ctx.Err()
+		}
 		if err != nil {
 			lastErr = fmt.Errorf("programming synthesis: %w", err)
 			s.recordExperience(objective, attempt, "generate", lastErr.Error(), "failure", "")
 			return nil, lastErr
 		}
 		var candidate synthesizedProject
-		if err := json.Unmarshal([]byte(stripJSONCodeFence(raw)), &candidate); err != nil {
-			lastErr = fmt.Errorf("programming synthesis: invalid structured response: %w", err)
-			lesson := "Return only the requested JSON object with a top-level files array."
-			outcome := "retry"
-			if attempt == maxAttempts {
-				outcome = "failure"
-			}
-			s.recordExperience(objective, attempt, "parse", lastErr.Error(), outcome, lesson)
-			if attempt == maxAttempts {
-				break
-			}
-			prompt = appendSynthesisRetry(prompt, raw, lesson)
-			continue
-		}
-		if len(candidate.Files) == 0 {
+		parseErr := json.Unmarshal([]byte(stripJSONCodeFence(raw)), &candidate)
+		checks := []production.ProgressCheck{{ID: "structured_json", Passed: parseErr == nil}, {ID: "nonempty_files", Passed: parseErr == nil && len(candidate.Files) > 0}}
+		stage, lesson := "synthesis", ""
+		switch {
+		case parseErr != nil:
+			lastErr = fmt.Errorf("programming synthesis: invalid structured response: %w", parseErr)
+			stage, lesson = "parse", "Return only the requested JSON object with a top-level files array."
+		case len(candidate.Files) == 0:
 			lastErr = fmt.Errorf("programming synthesis: model returned no files")
-			lesson := "Return at least one source file in the files array."
-			outcome := "retry"
-			if attempt == maxAttempts {
-				outcome = "failure"
-			}
-			s.recordExperience(objective, attempt, "synthesis", lastErr.Error(), outcome, lesson)
-			if attempt == maxAttempts {
-				break
-			}
-			prompt = appendSynthesisRetry(prompt, raw, lesson)
-			continue
-		}
-		if strings.EqualFold(objective.Language, "Go") && !goProjectHasTest(objective, candidate.Files) {
+			lesson = "Return at least one source file in the files array."
+		case strings.EqualFold(objective.Language, "Go") && !goProjectHasTest(objective, candidate.Files):
 			lastErr = fmt.Errorf("programming synthesis: Go project must include or already contain at least one _test.go")
-			lesson := "For Go, put every Test... function in a separate *_test.go package main file importing \"testing\"; remove Test functions from source files; include func main() in the executable source."
-			outcome := "retry"
-			if attempt == maxAttempts {
-				outcome = "failure"
-			}
-			s.recordExperience(objective, attempt, "synthesis", lastErr.Error(), outcome, lesson)
-			if attempt == maxAttempts {
-				break
-			}
-			prompt = appendSynthesisRetry(prompt, raw, lesson)
-			continue
+			lesson = "For Go, put every Test... function in a separate *_test.go package main file importing \"testing\"; remove Test functions from source files; include func main() in the executable source."
+		default:
+			response = candidate
+			s.recordExperience(objective, attempt, "synthesis", "", "success", "")
 		}
-		response = candidate
-		s.recordExperience(objective, attempt, "synthesis", "", "success", "")
-		break
+		if len(response.Files) > 0 {
+			break
+		}
+		local.Observe(checks)
+		stopErr := local.CanContinue(ctx)
+		if stopErr == nil && shared != nil {
+			stopErr = shared.CanUseModelCall(ctx)
+		}
+		outcome := "retry"
+		if stopErr != nil {
+			outcome = "failure"
+		}
+		s.recordExperience(objective, attempt, stage, lastErr.Error(), outcome, lesson)
+		if stopErr != nil {
+			return nil, fmt.Errorf("%v: %w", lastErr, stopErr)
+		}
+		prompt = appendSynthesisRetry(prompt, raw, lesson)
 	}
+
 	if len(response.Files) == 0 {
 		if lastErr == nil {
 			lastErr = fmt.Errorf("programming synthesis: model returned no files")

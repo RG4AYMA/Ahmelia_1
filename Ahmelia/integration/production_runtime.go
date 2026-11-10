@@ -195,6 +195,23 @@ func (r *ProductionRuntime) ExecuteFromAuthority(ctx context.Context, req intera
 			}
 		}
 
+		var budget *production.RetryBudget
+		if trackWork {
+			budget = r.retryBudgetForWork(workID, req, options)
+			if budgetErr := budget.BeginAttempt(ctx, r.productionRetryContract(workID, req)); budgetErr != nil {
+				state := budget.Snapshot()
+				result := production.ActionResult{
+					WorkID: workID, OutcomeStatus: production.OutcomeFailed, FailureReason: budgetErr.Error(), RetryState: &state, Recovery: &tools.RecoveryDecision{Action: tools.RecoveryBlock, Reason: budgetErr.Error()}}
+				if err := r.work.Block(workID, budgetErr.Error()); err != nil {
+					result.Err = err
+				}
+				return result
+			}
+			var cancel context.CancelFunc
+			ctx, cancel = budget.Context(ctx)
+			defer cancel()
+		}
+
 		attemptNumber := 0
 		if trackWork {
 			attemptNumber = options.AttemptNumber
@@ -303,6 +320,7 @@ func (r *ProductionRuntime) ExecuteFromAuthority(ctx context.Context, req intera
 		}
 
 		result := production.ActionResult{
+			ProgressChecks:        append([]production.ProgressCheck(nil), providerResult.ProgressChecks...),
 			Executed:              executed,
 			GenerationSource:      providerResult.GenerationSource,
 			VerificationProfile:   providerResult.VerificationProfile,
@@ -335,6 +353,15 @@ func (r *ProductionRuntime) ExecuteFromAuthority(ctx context.Context, req intera
 		// Recovery must not be triggered merely because verification is absent.
 		knownOutcomeFailure := providerResult.Err != nil || !providerResult.Success || providerResult.OutcomeStatus == production.OutcomeFailed
 		verificationUnknown := artifactPersistErr != nil || (providerResult.Success && result.OutcomeStatus == production.OutcomeUnknown && (!providerResult.Observed || !result.Verified))
+		var budgetErr error
+		if budget != nil {
+			if knownOutcomeFailure {
+				budget.Observe(providerResult.ProgressChecks)
+				budgetErr = budget.CanContinue(ctx)
+			}
+			state := budget.Snapshot()
+			result.RetryState = &state
+		}
 		if knownOutcomeFailure {
 			result.Success = false
 			result.OutcomeStatus = production.OutcomeFailed
@@ -360,7 +387,10 @@ func (r *ProductionRuntime) ExecuteFromAuthority(ctx context.Context, req intera
 			recoveryAction := ""
 			recoveryReason := ""
 			if trackWork {
-				if recovery, recoverErr := r.recovery.Recover(ctx, string(preflight.Capability.ID), detail, options.RecoveryAttempt); recoverErr == nil {
+				if budgetErr != nil {
+					result.Recovery = &tools.RecoveryDecision{Action: tools.RecoveryBlock, Reason: budgetErr.Error()}
+					recoveryAction, recoveryReason = string(tools.RecoveryBlock), budgetErr.Error()
+				} else if recovery, recoverErr := r.recovery.Recover(ctx, string(preflight.Capability.ID), detail, options.RecoveryAttempt); recoverErr == nil {
 					result.Recovery = &recovery.Decision
 					recoveryAction = string(recovery.Decision.Action)
 					recoveryReason = recovery.Decision.Reason

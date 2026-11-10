@@ -1,6 +1,7 @@
 package core
 
 import (
+	"context"
 	"fmt"
 	"strings"
 
@@ -42,7 +43,34 @@ func dispatchProductionRecovery(decision tools.RecoveryDecision, handlers produc
 	return false
 }
 
-const maxAutomaticProductionRecoveryTransitions = 2
+// Legacy callers without a runtime snapshot retain the same finite policy.
+func productionRecoveryOptions(options production.ExecutionOptions, result production.ActionResult) production.ExecutionOptions {
+	if result.RetryState != nil {
+		state := result.RetryState.Clone()
+		options.RetryState = &state
+	}
+	if result.WorkID != "" {
+		options.WorkID = result.WorkID
+	}
+	return options
+}
+
+func productionRecoveryStop(options production.ExecutionOptions) error {
+	ctx := options.Context
+	if ctx == nil {
+		ctx = context.Background()
+	}
+	if options.RetryState != nil {
+		return production.RestoreRetryBudget(*options.RetryState).CanContinue(ctx)
+	}
+	if err := ctx.Err(); err != nil {
+		return err
+	}
+	if options.RecoveryAttempt >= options.RetryPolicy.WithDefaults().MaxAttempts {
+		return fmt.Errorf("production retry stopped: max_attempts_reached")
+	}
+	return nil
+}
 
 func productionRecoveryRequest(req interaction.SemanticRequest, result production.ActionResult, recovery tools.RecoveryDecision) interaction.SemanticRequest {
 	out := req
@@ -84,12 +112,14 @@ func (e *Engine) applyProductionRecovery(
 		options.RecoveryAttempt = 1
 	}
 
+	options = productionRecoveryOptions(options, result)
+	if recovery.Action == tools.RecoveryRetry || recovery.Action == tools.RecoveryReplan {
+		if err := productionRecoveryStop(options); err != nil {
+			recovery = tools.RecoveryDecision{Action: tools.RecoveryBlock, Reason: err.Error()}
+		}
+	}
 	handlers := productionRecoveryHandlers{
 		Retry: func() bool {
-			if options.RecoveryAttempt >= maxAutomaticProductionRecoveryTransitions {
-				e.finalizeProductionRecoveryWork(result, recovery)
-				return e.renderProductionRecoveryOutcome(req, result, recovery)
-			}
 			if e.flowTrace != nil {
 				e.flowTrace.Mark("RECOVERY OWNER", "retry → authorityExecute with observed failure evidence")
 			}
@@ -105,10 +135,6 @@ func (e *Engine) applyProductionRecovery(
 			return e.authorityExecuteWithOptions(decision, options, retryReq).Handled
 		},
 		Replan: func() bool {
-			if options.RecoveryAttempt >= maxAutomaticProductionRecoveryTransitions {
-				e.finalizeProductionRecoveryWork(result, recovery)
-				return e.renderProductionRecoveryOutcome(req, result, recovery)
-			}
 			if e.capabilityResolver == nil {
 				e.finalizeProductionRecoveryWork(result, recovery)
 				return e.renderProductionRecoveryOutcome(req, result, recovery)
@@ -123,6 +149,7 @@ func (e *Engine) applyProductionRecovery(
 			replanReq := productionRecoveryRequest(req, result, recovery)
 			_ = e.capabilityResolver.Resolve(decision, replanReq)
 			options.RecoveryAttempt++
+			options.AttemptNumber = 0
 			return e.authorityExecuteWithOptions(decision, options, replanReq).Handled
 		},
 		Block: func() bool {

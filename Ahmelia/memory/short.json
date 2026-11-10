@@ -52,6 +52,14 @@
     "crea carpeta PruebaPaso4",
     "salir",
     "hola",
+    "salir",
+    "hola",
+    "Crea un programa Go nuevo llamado sumador_b con una funcion Add(a, b int) int y una prueba TestAdd que verifique Add(2, 3) == 5. Guardalo en el proyecto. Sin dependencias externas.",
+    "Sí, autorizo la ejecución pendiente",
+    "salir",
+    "hola",
+    "salir",
+    "hola",
     "salir"
   ]
 }

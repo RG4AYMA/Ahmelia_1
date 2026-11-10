@@ -13,6 +13,8 @@ import (
 // recovery attempt ordinal. Approval is supplied by the identity/permission
 // owner; Production never invents it.
 type ExecutionOptions struct {
+	RetryPolicy RetryPolicy
+	RetryState  *RetryState // continuation snapshot; policy cannot reset it
 	// Context propagates cancellation/deadlines from the owning workflow into the provider boundary.
 	Context  context.Context
 	Approval autonomy.Approval
