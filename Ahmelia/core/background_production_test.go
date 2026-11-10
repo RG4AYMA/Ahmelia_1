@@ -15,15 +15,19 @@ import (
 )
 
 type slowProductionProvider struct {
-	started chan struct{}
-	release chan struct{}
-	result  production.ProviderResult
-	calls   atomic.Int32
+	started  chan struct{}
+	release  chan struct{}
+	finished chan struct{}
+	result   production.ProviderResult
+	calls    atomic.Int32
 }
 
 func (p *slowProductionProvider) ID() string { return "slow-provider" }
 
 func (p *slowProductionProvider) Execute(ctx context.Context, _ production.ProviderRequest) production.ProviderResult {
+	if p.finished != nil {
+		defer close(p.finished)
+	}
 	p.calls.Add(1)
 	close(p.started)
 	select {

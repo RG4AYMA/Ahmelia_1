@@ -33,6 +33,24 @@ func (e *Engine) deliverInitiativeIntervention(d *InitiativeDelivery) bool {
 	if e == nil || d == nil || e.initiativeActionContract == nil || e.conversationState == nil {
 		return false
 	}
+	// The owner's turn has priority over any unsolicited initiative. If a user
+	// turn is already waiting for the engine lock, do not spend the language
+	// slot on an intervention; release the turn immediately.
+	if e.userTurnPending.Load() {
+		if e.flowTrace != nil {
+			e.flowTrace.Mark("INITIATIVE", "suppressed: user turn pending")
+		}
+		return false
+	}
+	// While durable background work is running, unsolicited initiatives are
+	// not allowed to take the turn or the language slot. The owner can still
+	// ask, cancel or redirect; those paths do not need this intervention.
+	if e.hasRunningBackgroundJob() {
+		if e.flowTrace != nil {
+			e.flowTrace.Mark("INITIATIVE", "suppressed: background work running")
+		}
+		return false
+	}
 	snap := e.conversationState.Snapshot()
 	actionContract, err := e.initiativeActionContract.Build(d.Decision)
 	if err != nil {
@@ -56,6 +74,14 @@ func (e *Engine) deliverInitiativeIntervention(d *InitiativeDelivery) bool {
 		e.lastInitiativeUserTurnAt = snap.LastTurnAt
 		if e.flowTrace != nil {
 			e.flowTrace.Mark("INITIATIVE", fmt.Sprintf("decision=%s source=%s suppressed: no generated content", d.Decision.Decision, d.Opportunity.Source))
+		}
+		return false
+	}
+	if e.userTurnPending.Load() {
+		// A user turn arrived while the initiative was rendering. Do not
+		// deliver a stale intervention over it.
+		if e.flowTrace != nil {
+			e.flowTrace.Mark("INITIATIVE", "suppressed after generation: user turn pending")
 		}
 		return false
 	}

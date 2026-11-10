@@ -867,6 +867,7 @@ func (e *Engine) resumePendingAuthorizationIfConfirmed(t *processTurn) bool {
 		WorkID:                     work.ID,
 		TaskID:                     pending.TaskID,
 		AttemptNumber:              pending.AttemptNumber,
+		Async:                      e.asyncProduction,
 		ResumePendingAuthorization: true,
 		ExpectedCapabilityID:       capability.ID(pending.CapabilityID),
 		ExpectedOperation:          pending.Operation,
@@ -878,6 +879,11 @@ func (e *Engine) resumePendingAuthorizationIfConfirmed(t *processTurn) bool {
 			e.flowTrace.Mark("AUTHORIZATION CONTINUATION", "resume rejected by canonical authority; turn consumed fail-closed")
 		}
 		e.renderCanonicalSystemResponse(t.semanticReq, "authorization_resume_rejected", "No pude reanudar exactamente la operación autorizada. No ejecuté una alternativa. El trabajo queda detenido para revisión.", interaction.MoveClarify, interaction.ResponseIntentClarify, true)
+	}
+	if authority.BackgroundJobID != "" {
+		// Authorization resumed an async production. The job now owns the
+		// language slot; the operational start notice must not wait for it.
+		e.renderVerbatimSystemResponse(t.semanticReq, "production_async_started", "Lo estoy trabajando en segundo plano. Te aviso cuando termine.", interaction.MoveAcknowledge, interaction.ResponseIntentAcknowledge, false)
 	}
 	return true
 }
@@ -941,7 +947,7 @@ func (e *Engine) cancelBackgroundWorkPhase(t *processTurn) bool {
 	if canceled == 0 {
 		return false
 	}
-	e.renderCanonicalSystemResponse(
+	e.renderVerbatimSystemResponse(
 		t.semanticReq,
 		"background_canceled",
 		"Cancelé el trabajo en segundo plano. No aplicaré un resultado tardío; queda bloqueado para reconciliar.",
@@ -1073,7 +1079,12 @@ func (e *Engine) preExecutionPhase(t *processTurn) bool {
 			Approval: autonomy.ApprovalNone, RecoveryAttempt: 1, Async: e.asyncProduction,
 		}, t.semanticReq)
 		if authority.Handled && authority.BackgroundJobID != "" {
-			e.renderCanonicalSystemResponse(
+			// Starting background work is an operational state, not a
+			// conversational opinion. It must be delivered verbatim and
+			// immediately: the language model is the same single slot the
+			// background job just took, so asking it to rewrite this notice
+			// would block the turn behind the work it just started.
+			e.renderVerbatimSystemResponse(
 				t.semanticReq,
 				"production_async_started",
 				"Lo estoy trabajando en segundo plano. Te aviso cuando termine.",

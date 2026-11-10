@@ -250,6 +250,13 @@ func (e *Engine) deliverBackgroundResults(input string, channel interaction.Inpu
 		if strings.TrimSpace(text) == "" {
 			continue
 		}
+		// Canceled, interrupted and failed work are operational states. Their
+		// notice must not wait behind the model that may still be finishing the
+		// job; completed results can be rendered conversationally.
+		if item.Canceled || item.Interrupted || item.Err != nil {
+			e.renderVerbatimSystemResponse(req, "background_result", text, interaction.MoveAcknowledge, interaction.ResponseIntentAcknowledge, false)
+			continue
+		}
 		_ = e.renderCanonicalSystemResponse(req, "background_result", text, interaction.MoveAcknowledge, interaction.ResponseIntentAcknowledge, false)
 	}
 }
@@ -327,6 +334,20 @@ func (e *Engine) BackgroundJob(id string) (BackgroundJob, bool) {
 		return BackgroundJob{}, false
 	}
 	return e.backgroundJobs.snapshot(id)
+}
+
+// hasRunningBackgroundJob reports whether durable background work currently
+// owns a job. Unsolicited initiatives are suppressed while it does.
+func (e *Engine) hasRunningBackgroundJob() bool {
+	if e == nil {
+		return false
+	}
+	for _, job := range e.BackgroundJobs() {
+		if job.Status == BackgroundJobRunning {
+			return true
+		}
+	}
+	return false
 }
 
 // BackgroundJobs returns snapshots of all known jobs.

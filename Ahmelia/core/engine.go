@@ -11,6 +11,7 @@ import (
 	"strconv"
 	"strings"
 	"sync"
+	"sync/atomic"
 	"time"
 
 	"ahmelia/agency"
@@ -379,6 +380,7 @@ type Engine struct {
 	// suites); marca la petición y la raíz viva (main.go) la observa.
 	exitMu                   sync.Mutex
 	exitRequested            bool
+	userTurnPending          atomic.Bool
 	linguisticInterpreter    *linguistics.Interpreter
 	linguisticPipeline       *linguistics.Pipeline
 	deferredLinguistic       *linguistics.DeferredResolver // B96.39.35 — delayed linguistic evidence, never a response authority
@@ -3834,6 +3836,11 @@ func (e *Engine) Process(input string) {
 }
 
 func (e *Engine) ProcessWithChannel(input string, channel interaction.InputChannel) {
+	// A user turn is pending even while it waits for the engine lock. The
+	// initiative path consults this flag so it cannot occupy the single LLM
+	// slot ahead of the owner's turn.
+	e.userTurnPending.Store(true)
+	defer e.userTurnPending.Store(false)
 	// Process owns only turn lifecycle and phase ordering. Terminal behavior is
 	// delegated to the phase responsible for the corresponding authority.
 	e.autonomyRuntimeMu.Lock()
@@ -3866,6 +3873,18 @@ func (e *Engine) ProcessWithChannel(input string, channel interaction.InputChann
 	e.shortMem.Commands = append(e.shortMem.Commands, input)
 
 	t := &processTurn{input: input, channel: channel}
+	// Explicit cancellation must not wait for linguistic enrichment or the
+	// single LLM slot. Detect it from the raw input before the language phase;
+	// the normal phase remains the fallback when this fast path does not match.
+	if e.hasRunningBackgroundJob() {
+		cancelReq := interaction.Analyze(input, interaction.Context{})
+		if isCancelWorkRequest(cancelReq) {
+			t.semanticReq = cancelReq
+			if e.cancelBackgroundWorkPhase(t) {
+				return
+			}
+		}
+	}
 	// Fase 2 (2026-10-18): las lecturas diferidas de este turno se envían
 	// cuando el turno ya habló — el render del propio turno usa el modelo
 	// primero (openReadingAwaitEligible marca la única excepción, que espera
@@ -4175,7 +4194,7 @@ func (e *Engine) authorityExecuteWithOptions(decision interaction.CapabilityInte
 				text += " Motivo: " + reason + "."
 			}
 			text += " Puedes autorizarla explícitamente cuando quieras."
-			e.renderCanonicalSystemResponse(semanticReq[0], "execution_authorization_required", text, interaction.MoveAsk, interaction.ResponseIntentClarify, true)
+			e.renderVerbatimSystemResponse(semanticReq[0], "execution_authorization_required", text, interaction.MoveAsk, interaction.ResponseIntentClarify, true)
 		}
 		out := production.AuthorityResultFromAction(result)
 		out.Handled = true
